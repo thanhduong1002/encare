@@ -7,6 +7,7 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import callApi from '../apis/axiosLoginDoctor';
 
@@ -22,6 +23,7 @@ const LoginPage = () => {
         }).then(res => {
           console.log(res.data);
           navigate('/home');
+          localStorage.setItem('data', JSON.stringify(res.data.accountId));
         })
       : // onLogin(username, password)
         postLogin({
@@ -35,18 +37,6 @@ const LoginPage = () => {
   const [show, setShow] = React.useState(false);
   const handleClick = () => setShow(!show);
   let navigate = useNavigate();
-//   const postLogin = async (phoneNumber, password) => {
-//     await callApi('user/login', 'post', {
-//         phone: phoneNumber,
-//         password: password,
-//     })
-//         .then((res) => {
-//             console.log(res.data);
-//         })
-//         .catch((error) => {
-//           console.log(error);
-//         });
-// };
   const postLogin = async params => {
     return await APIPost(params);
   };
@@ -110,7 +100,7 @@ const LoginPage = () => {
             />
             <InputRightElement>
               <Button h="30" w="40" onClick={handleClick}>
-                {show ? 'Hide' : 'Show'}
+                {show ? <FaEyeSlash /> : <FaEye />}
               </Button>
             </InputRightElement>
           </InputGroup>
@@ -125,13 +115,6 @@ const LoginPage = () => {
           </Button>
         </VStack>
       </form>
-      <button
-        onClick={() => {
-          navigate('/home');
-        }}
-      >
-        oke oke
-      </button>
     </VStack>
   );
 };

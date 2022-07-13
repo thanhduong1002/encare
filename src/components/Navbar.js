@@ -1,6 +1,6 @@
 import { Box, HStack, Image } from '@chakra-ui/react';
 import React from 'react';
-import { FaPowerOff } from 'react-icons/fa';
+import { FaPowerOff, FaKey } from 'react-icons/fa';
 import { FiSettings } from 'react-icons/fi';
 import { NavLink } from 'react-router-dom';
 
@@ -68,11 +68,14 @@ const Navbar = () => {
           borderRadius={90}
           left={50}
         />
-        <NavLink to="/">
-          <FaPowerOff />
+        <NavLink to="/changePass">
+          <FaKey />
         </NavLink>
         <NavLink to="/changeProfile">
           <FiSettings />
+        </NavLink>
+        <NavLink to="/">
+          <FaPowerOff />
         </NavLink>
       </HStack>
     );

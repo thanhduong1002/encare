@@ -1,14 +1,7 @@
 import {
   Box,
-  Button,
-  color,
   HStack,
-  IconButton,
   Image,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
   Text,
   VStack,
 } from '@chakra-ui/react';
