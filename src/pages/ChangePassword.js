@@ -17,24 +17,27 @@ import {
 } from 'react-icons/fa';
 import { useToast } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
+import { loginSchema } from '../schemas/loginSchema';
+import { useFormik } from 'formik';
 
 const ChangePassword = () => {
-  const [username, setUsername] = useState('');
-  const [oldpass, setOldPass] = useState('');
-  const [newpass, setNewPass] = useState('');
+
   const navigate = useNavigate();
   const toast = useToast();
   const [show1, setShow1] = React.useState(false);
   const handleClick1 = () => setShow1(!show1);
   const [show2, setShow2] = React.useState(false);
   const handleClick2 = () => setShow2(!show2);
+  const [show3, setShow3] = React.useState(false);
+  const handleClick3 = () => setShow3(!show3);
   const handleBack = () => {
     navigate('/home');
-  }
-  const handleSubmit = () => {
-    oldpass.split(' ').join('') !== '' &&
-    newpass.split(' ').join('') !== '' &&
-    oldpass.split(' ').join('') === newpass.split(' ').join('')
+  };
+  const handleChangePass = () => {
+    values.oldpass.split(' ').join('') !== '' &&
+    values.newpass.split(' ').join('') !== '' &&
+    // values.oldpass.split(' ').join('') !== values.newpass.split(' ').join('') &&
+    values.confirmNewPass.split(' ').join('') === values.newpass.split(' ').join('')
       ? toast({
           title: 'Change sucessfully',
           status: 'success',
@@ -45,8 +48,20 @@ const ChangePassword = () => {
           status: 'error',
           isClosable: true,
         });
-
   };
+  const onSubmit = () => {
+    console.log('summited');
+  };
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
+    useFormik({
+      initialValues: {
+        newpass: '',
+        oldpass: '',
+        confirmNewPass:'',
+      },
+      validationSchema: loginSchema,
+      onSubmit,
+    });
   return (
     <VStack w="100vw" h="100vh" bgColor="#B3E8E5">
       <HStack
@@ -78,70 +93,114 @@ const ChangePassword = () => {
         boxShadow="dark-lg"
         padding="10vw"
       >
-        <VStack
-          w="30vw"
-          h="50vh"
-          borderRadius="8px"
-          bgColor="white"
-          justify="center"
-          padding="2vw"
-        >
-          <Input
-            type="text"
-            padding="10px"
-            h="50px"
-            color="#000"
-            borderWidth="2px"
-            borderColor="blue.700"
-            value={localStorage.getItem('data') && localStorage.getItem('data')}
-            onChange={e => setUsername(e.target.value)}
-          />
-          <InputGroup>
-            <Input
-              type={show1 ? 'text' : 'password'}
-              placeholder={'Current password'}
-              padding="10px"
-              h="50px"
-              color="#000"
-              borderWidth="2px"
-              borderColor="blue.700"
-              value={oldpass}
-              onChange={e => setOldPass(e.target.value)}
-            />
-            <InputRightElement>
-              <Button h="30" w="40" onClick={handleClick1}>
-                {show1 ? <FaEyeSlash /> : <FaEye />}
-              </Button>
-            </InputRightElement>
-          </InputGroup>
-          <InputGroup>
-            <Input
-              type={show2 ? 'text' : 'password'}
-              placeholder={'New password'}
-              padding="10px"
-              h="50px"
-              color="#000"
-              borderWidth="2px"
-              borderColor="blue.700"
-              value={newpass}
-              onChange={e => setNewPass(e.target.value)}
-            />
-            <InputRightElement>
-              <Button h="30" w="40" onClick={handleClick2}>
-                {show2 ? <FaEyeSlash /> : <FaEye />}
-              </Button>
-            </InputRightElement>
-          </InputGroup>
-          <Button
-            paddingX="20px"
-            paddingY="10px"
-            bgColor="#3BACB6"
-            w="100%"
-            onClick={handleSubmit}
+        <form onSubmit={handleSubmit}>
+          <VStack
+            w="30vw"
+            h="50vh"
+            borderRadius="8px"
+            bgColor="white"
+            justify="center"
+            padding="2vw"
           >
-            <Text color="white">Submit</Text>
-          </Button>
-        </VStack>
+            <Input
+              type="text"
+              padding="10px"
+              h="50px"
+              color="#000"
+              borderWidth="2px"
+              borderColor="blue.700"
+              value={
+                localStorage.getItem('data') && localStorage.getItem('data')
+              }
+              onChange={handleChange}
+            />
+            <InputGroup>
+              <Input
+                id="oldpass"
+                type={show1 ? 'text' : 'password'}
+                placeholder={'Current password'}
+                padding="10px"
+                h="50px"
+                color="#000"
+                borderWidth="2px"
+                borderColor="blue.700"
+                value={values.oldpass}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+              <InputRightElement>
+                <Button h="30" w="40" onClick={handleClick1}>
+                  {show1 ? <FaEyeSlash /> : <FaEye />}
+                </Button>
+              </InputRightElement>
+            </InputGroup>
+            {errors.oldpass && touched.oldpass ? (
+              <Text fontSize="md" color="red.400">
+                {errors.oldpass}
+              </Text>
+            ) : null}
+            <InputGroup>
+              <Input
+              id='newpass'
+                type={show2 ? 'text' : 'password'}
+                placeholder={'New password'}
+                padding="10px"
+                h="50px"
+                color="#000"
+                borderWidth="2px"
+                borderColor="blue.700"
+                value={values.newpass}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+              <InputRightElement>
+                <Button h="30" w="40" onClick={handleClick2}>
+                  {show2 ? <FaEyeSlash /> : <FaEye />}
+                </Button>
+              </InputRightElement>
+            </InputGroup>
+            {errors.newpass && touched.newpass ? (
+              <Text fontSize="md" color="red.400">
+                {errors.newpass}
+              </Text>
+            ) : null}
+            <InputGroup>
+              <Input
+              id='confirmNewPass'
+                type={show3 ? 'text' : 'password'}
+                placeholder={'Confirm new password'}
+                padding="10px"
+                h="50px"
+                color="#000"
+                borderWidth="2px"
+                borderColor="blue.700"
+                value={values.confirmNewPass}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+              <InputRightElement>
+                <Button h="30" w="40" onClick={handleClick3}>
+                  {show3 ? <FaEyeSlash /> : <FaEye />}
+                </Button>
+              </InputRightElement>
+            </InputGroup>
+            {errors.confirmNewPass && touched.confirmNewPass ? (
+              <Text fontSize="md" color="red.400">
+                {errors.confirmNewPass}
+              </Text>
+            ) : null}
+            <Button
+              paddingX="20px"
+              paddingY="10px"
+              bgColor="#3BACB6"
+              w="100%"
+              onClick={handleChangePass}
+              type="submit"
+            >
+              <Text color="white">Submit</Text>
+            </Button>
+          </VStack>
+        </form>
         <VStack
           w="30vw"
           h="50vh"
