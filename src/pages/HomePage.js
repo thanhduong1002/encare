@@ -1,18 +1,13 @@
 import {
-  Box,
   HStack,
   Image,
   Text,
   VStack,
 } from '@chakra-ui/react';
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { NavLink } from 'react-router-dom';
-import { FaPowerOff, FaCalendarAlt } from 'react-icons/fa';
-import { FiSettings } from 'react-icons/fi';
+import { FaCalendarAlt } from 'react-icons/fa';
 import Navbar from '../components/Navbar';
 const HomePage = () => {
-  const navigate = useNavigate();
   return (
     <VStack>
       <Navbar />

@@ -100,9 +100,7 @@ const ChangeProfile = () => {
               variant="outline"
               borderWidth="1px"
               borderColor="#B2C8DF"
-            ></Input>
-            {/* <Button bgColor='#6E85B7'>Save</Button> */}
-            
+            ></Input>            
           </Box>
         </VStack>
       </HStack>

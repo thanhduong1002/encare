@@ -5,6 +5,7 @@ import ChangePassword from './pages/ChangePassword';
 import ChangeProfile from './pages/ChangeProfile';
 import ChatPage from './pages/ChatPage';
 import HomePage from './pages/HomePage';
+import InformationAppointment from './pages/InformationAppointment';
 
 import LoginPage from './pages/LoginPage';
 import NotFoundPage from './pages/NotFoundPage';
@@ -22,6 +23,7 @@ function App() {
       <Route path='/test' element={<Test />} />
       <Route path='/testlocal' element={<TestLocalStorage />} />
       <Route path='/changePass' element={<ChangePassword />} />
+      <Route path='/infoapp' element={<InformationAppointment />} />
       <Route path='*' element={<NotFoundPage />} />
     </Routes>
   );

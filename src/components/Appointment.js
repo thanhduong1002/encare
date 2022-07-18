@@ -1,6 +1,7 @@
 import { HStack, Image, Text, VStack } from '@chakra-ui/react';
 import React from 'react';
 import { FaCalendarAlt } from 'react-icons/fa';
+import { NavLink } from 'react-router-dom';
 
 const Appointment = () => {
   return (
@@ -40,6 +41,7 @@ const Appointment = () => {
           <Text fontSize={'sm'} color={'#2155CD'} fontWeight="600">
             9:30
           </Text>
+          <NavLink to="/infoapp">More</NavLink>
         </VStack>
       </HStack>
       <HStack
@@ -77,6 +79,7 @@ const Appointment = () => {
           <Text fontSize={'sm'} color={'#2155CD'} fontWeight="600">
             10:30
           </Text>
+          <NavLink to="/infoapp">More</NavLink>
         </VStack>
       </HStack>
       <HStack
@@ -114,6 +117,7 @@ const Appointment = () => {
           <Text fontSize={'sm'} color={'#2155CD'} fontWeight="600">
             11:30
           </Text>
+          <NavLink to="/infoapp">More</NavLink>
         </VStack>
       </HStack>
     </VStack>
