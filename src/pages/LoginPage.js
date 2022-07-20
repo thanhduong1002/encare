@@ -13,8 +13,14 @@ import {
 } from '@chakra-ui/react';
 import { useFormik } from 'formik';
 import React from 'react';
-import { FaEye, FaEyeSlash, FaSignInAlt } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
+import {
+  FaClock,
+  FaEye,
+  FaEyeSlash,
+  FaHeart,
+  FaSignInAlt,
+} from 'react-icons/fa';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { loginSchema } from '../schemas/loginSchema';
 import { useToast } from '@chakra-ui/react';
 
@@ -67,15 +73,14 @@ const LoginPage = () => {
   const onSubmit = () => {
     console.log('summited');
   };
-  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
-    useFormik({
-      initialValues: {
-        phone: '',
-        password: '',
-      },
-      validationSchema: loginSchema,
-      onSubmit,
-    });
+  const { values, errors, touched, handleBlur, handleChange } = useFormik({
+    initialValues: {
+      phone: '',
+      password: '',
+    },
+    validationSchema: loginSchema,
+    onSubmit,
+  });
   return (
     <VStack
       w="100wh"
@@ -90,71 +95,109 @@ const LoginPage = () => {
         boxShadow="dark-lg"
         borderRadius="8px"
       >
-        <VStack w="50%" h="100%" justify="center" bgColor='red.100'>
-          <form onSubmit={handleSubmit} >  
-              <InputGroup>
-                <InputLeftAddon children="+84" h='64px' />
-                <Input
-                  id="phone"
-                  type="text"
-                  placeholder={'Phone number'}
-                  h="64px"
-                  color="#000"
-                  borderWidth="2px"
-                  borderColor="blue.700"
-                  value={values.phone}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                />
-              </InputGroup>
-              {errors.phone && touched.phone ? (
-                <Text color="red.400" fontSize="md">
-                  {errors.phone}
-                </Text>
-              ) : null}
-              <InputGroup>
-                <Input
-                  id="password"
-                  type={show ? 'text' : 'password'}
-                  placeholder={'Enter your password'}
-                  padding="10px"
-                  h="50px"
-                  color="#000"
-                  borderWidth="2px"
-                  borderColor="blue.700"
-                  value={values.password}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                />
+        <VStack w="50%" h="100%" justify="center">
+          <Text fontSize="36px" fontWeight="700" color="#07AEB8">
+            WELCOME
+          </Text>
+          <HStack>
+            <Text
+              fontSize="64px"
+              fontWeight="extrabold"
+              bgGradient="linear(to-r, #BFEFFF, #66BFBF)"
+              bgClip="text"
+            >
+              EnCare
+            </Text>
+            <FaHeart size="50" color="#66BFBF" />
+          </HStack>
+          <Text
+            fontSize="20px"
+            fontWeight="600"
+            color="#07AEB8"
+            letterSpacing="1px"
+          >
+            Login to your account
+          </Text>
+          <Box h="64px" w='80%'>
+          <InputGroup>
+            <InputLeftAddon children="+84" h="64px" w="15%" borderTopLeftRadius='50px' borderBottomLeftRadius='50px'/>
+            <Input
+              id="phone"
+              type="text"
+              placeholder={'Phone number'}
+              w="85%"
+              h="64px"
+              color="#000"
+              borderWidth="1px"
+              borderRadius="50px"
+              borderColor="#07AEB8"
+              value={values.phone}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+          </InputGroup>
+          </Box>
+          {errors.phone && touched.phone ? (
+            <Text color="red.400" fontSize="md">
+              {errors.phone}
+            </Text>
+          ) : null}
+          <Box h="64px" w='80%'>
+          <InputGroup>
+            <Input
+              id="password"
+              type={show ? 'text' : 'password'}
+              placeholder={'Your password'}
+              w="100%"
+              h="64px"
+              color="#000"
+              borderWidth="1px"
+              borderRadius="50px"
+              borderColor="#07AEB8"
+              value={values.password}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
 
-                <InputRightElement>
-                  <Button
-                    h="40px"
-                    w="50px"
-                    top="5px"
-                    right="5px"
-                    onClick={handleClick}
-                  >
-                    {show ? <FaEyeSlash /> : <FaEye />}
-                  </Button>
-                </InputRightElement>
-              </InputGroup>
-              {errors.password && touched.password ? (
-                <Text color="red.400" fontSize="md">
-                  {errors.password}
-                </Text>
-              ) : null}
-
+            <InputRightElement w='15%'>
               <Button
-                paddingX="20px"
-                paddingY="10px"
-                bgColor="#B2C8DF"
-                w="100%"
-                onClick={handleLogin}
+                h="63px"
+                top="12px"
+                borderTopRightRadius='50px'
+                borderBottomRightRadius='50px'
+                right='-0.9vw'
+                onClick={handleClick}
               >
-                Submit
+                {show ? <FaEyeSlash /> : <FaEye />}
               </Button>
-          </form>
+            </InputRightElement>
+          </InputGroup>
+          </Box>
+          {errors.password && touched.password ? (
+            <Text color="red.400" fontSize="md">
+              {errors.password}
+            </Text>
+          ) : null}
+
+          <Button
+            paddingX="20px"
+            paddingY="10px"
+            bgGradient="linear(to-r, #07AEB8, #BFEFFF)"
+            borderRadius="50px"
+            h="64px"
+            w="80%"
+            color="white"
+            fontSize="24px"
+            fontWeight="700"
+            onClick={handleLogin}
+            colorScheme="twitter"
+          >
+            Login
+          </Button>
+          <Box color='#07AEB8' w='80%' display='flex' flexDirection='row-reverse'>
+          <NavLink to='/test' color='#07AEB8'>Forgot Password?</NavLink>
+          </Box>
+          
         </VStack>
         <Img
           w="50%"
