@@ -16,7 +16,7 @@ const Test = () => {
   let token = localStorage.getItem("token")
   const postData =  () => {
     return axios({
-      baseURL: 'https://enclave-encare.herokuapp.com/api/user/appointment?id=1',
+      baseURL: 'https://enclave-encare.herokuapp.com/api/doctor/',
       method: 'get',
       headers: {
         'Content-Type': 'application/json',

@@ -5,9 +5,9 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import React from 'react';
-import { FaCalendarAlt } from 'react-icons/fa';
 import Appointment from '../components/Appointment';
 import Navbar from '../components/Navbar';
+import TestAppoint from '../components/TestAppoint';
 const HomePage = () => {
   return (
     <VStack>
@@ -22,7 +22,7 @@ const HomePage = () => {
       />
       <Text fontSize={'4xl'}>Upcoming Appointment</Text>
 
-      <Appointment />
+      <TestAppoint />
     </VStack>
   );
 };

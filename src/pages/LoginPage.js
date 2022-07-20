@@ -3,6 +3,7 @@ import {
   Button,
   HStack,
   Image,
+  Img,
   Input,
   InputGroup,
   InputLeftAddon,
@@ -20,29 +21,31 @@ import { useToast } from '@chakra-ui/react';
 const LoginPage = () => {
   const toast = useToast();
   let result = '';
-  const tranferPage = () =>{
+  const tranferPage = () => {
     localStorage.setItem('data', result.accountId);
     localStorage.setItem('token', result.token);
     console.log(result);
-    navigate('/test');
-  }
+    navigate('/home');
+  };
   const handleLogin = () => {
     postLogin({
-          phone: values.phone,
-          password: values.password,
-        }).then(res => {
-          console.log(values.phone, values.password); 
-          console.log(res);
-          result = res.data;
-          res.status === 200 ? tranferPage() : toast({
-            title: 'Password or phone is wrong',
-            status: 'error',
-            isClosable: true,
-          });
-          // localStorage.setItem('data', JSON.stringify(res.data.accountId))
-          
-        })
-      .catch((e) => console.log(e));
+      phone: values.phone,
+      password: values.password,
+    })
+      .then(res => {
+        console.log(values.phone, values.password);
+        console.log(res);
+        result = res.data;
+        res.status === 200
+          ? tranferPage()
+          : toast({
+              title: 'Password or phone is wrong',
+              status: 'error',
+              isClosable: true,
+            });
+        // localStorage.setItem('data', JSON.stringify(res.data.accountId))
+      })
+      .catch(e => console.log(e));
   };
   const [show, setShow] = React.useState(false);
   const handleClick = () => setShow(!show);
@@ -77,57 +80,25 @@ const LoginPage = () => {
     <VStack
       w="100wh"
       h="100vh"
-      bgColor="blue.200"
       justify="center"
-      align="center"
-      bgGradient="linear(to-l, white, #EAF6F6)"
+      bgGradient="linear(to-b, #EEFBFF, #66BFBF)"
     >
       <HStack
-        w="10vw"
-        h="7vh"
-        bgColor="#66BFBF"
-        borderRadius="8px"
-        justify="center"
-        marginBottom="3vh"
-      >
-        <FaSignInAlt size="35" color="white" />
-      </HStack>
-      <Box
-        w="80vw"
+        w="90vw"
         h="80vh"
-        bgColor="#CDF0EA"
+        bgColor="white"
         boxShadow="dark-lg"
         borderRadius="8px"
-        display="flex"
-        flexDirection="row"
-        justifyContent="space-between"
       >
-        <Image
-          w="35%"
-          h="100%"
-          src="https://i.pinimg.com/564x/8a/78/d5/8a78d5ea74ac9b9878753bd1cbb95708.jpg"
-        />
-        <HStack justify="center">
-          <form onSubmit={handleSubmit}>
-            <VStack
-              w={{ md: '70%', xl: '100%' }}
-              h={{ md: '70%', xl: '100%' }}
-              bgColor="white"
-              spacing={'10px'}
-              borderRadius="15px"
-              padding="3vw"
-              boxShadow="dark-lg"
-              p="6"
-              rounded="md"
-            >
+        <VStack w="50%" h="100%" justify="center" bgColor='red.100'>
+          <form onSubmit={handleSubmit} >  
               <InputGroup>
-                <InputLeftAddon children="+84" h={50} />
+                <InputLeftAddon children="+84" h='64px' />
                 <Input
                   id="phone"
                   type="text"
-                  placeholder={'Enter your phone number'}
-                  padding="10px"
-                  h="50px"
+                  placeholder={'Phone number'}
+                  h="64px"
                   color="#000"
                   borderWidth="2px"
                   borderColor="blue.700"
@@ -183,15 +154,16 @@ const LoginPage = () => {
               >
                 Submit
               </Button>
-            </VStack>
           </form>
-        </HStack>
-        <Image
-          w="35%"
+        </VStack>
+        <Img
+          w="50%"
           h="100%"
-          src="https://i.pinimg.com/564x/a8/fd/9a/a8fd9a32d47961a76215ad60eda6e51a.jpg"
-        />
-      </Box>
+          src="https://images.unsplash.com/photo-1638202993928-7267aad84c31?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80"
+          borderTopRightRadius="8px"
+          borderBottomRightRadius="8px"
+        ></Img>
+      </HStack>
     </VStack>
   );
 };
