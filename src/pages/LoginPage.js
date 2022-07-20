@@ -19,6 +19,13 @@ import { useToast } from '@chakra-ui/react';
 
 const LoginPage = () => {
   const toast = useToast();
+  let result = '';
+  const tranferPage = () =>{
+    localStorage.setItem('data', result.accountId);
+    localStorage.setItem('token', result.token);
+    console.log(result);
+    navigate('/test');
+  }
   const handleLogin = () => {
     postLogin({
           phone: values.phone,
@@ -26,7 +33,8 @@ const LoginPage = () => {
         }).then(res => {
           console.log(values.phone, values.password); 
           console.log(res);
-          res.status === 200 ?  navigate('/home') : toast({
+          result = res.data;
+          res.status === 200 ? tranferPage() : toast({
             title: 'Password or phone is wrong',
             status: 'error',
             isClosable: true,

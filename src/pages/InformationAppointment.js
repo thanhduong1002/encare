@@ -1,6 +1,6 @@
 import { Box, Button, HStack, Image, Text, VStack } from '@chakra-ui/react';
 import React from 'react';
-import { FaLongArrowAltLeft, FaMapMarkedAlt } from 'react-icons/fa';
+import { FaAngleLeft, FaMapMarkedAlt } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@chakra-ui/react'
 
@@ -32,14 +32,15 @@ const InformationAppointment = () => {
       justify="center"
     >
       <Button
-        w="5vw"
-        h="5vh"
+        w="10vw"
+        h="10vh"
         bgColor="blackAlpha.200"
         justify="center"
         onClick={handleBack}
+        letterSpacing='2px'
       >
-        <FaLongArrowAltLeft />
-        <Text> Back</Text>
+        <FaAngleLeft size='30'/>
+        <Text fontSize='23' fontWeight='bold'> Back</Text>
       </Button>
       <HStack
         w="95%"

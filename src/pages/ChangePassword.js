@@ -21,7 +21,6 @@ import { loginSchema } from '../schemas/loginSchema';
 import { useFormik } from 'formik';
 
 const ChangePassword = () => {
-
   const navigate = useNavigate();
   const toast = useToast();
   const [show1, setShow1] = React.useState(false);
@@ -37,7 +36,8 @@ const ChangePassword = () => {
     values.oldpass.split(' ').join('') !== '' &&
     values.newpass.split(' ').join('') !== '' &&
     // values.oldpass.split(' ').join('') !== values.newpass.split(' ').join('') &&
-    values.confirmNewPass.split(' ').join('') === values.newpass.split(' ').join('')
+    values.confirmNewPass.split(' ').join('') ===
+      values.newpass.split(' ').join('')
       ? toast({
           title: 'Change sucessfully',
           status: 'success',
@@ -57,7 +57,7 @@ const ChangePassword = () => {
       initialValues: {
         newpass: '',
         oldpass: '',
-        confirmNewPass:'',
+        confirmNewPass: '',
       },
       validationSchema: loginSchema,
       onSubmit,
@@ -129,7 +129,13 @@ const ChangePassword = () => {
                 onBlur={handleBlur}
               />
               <InputRightElement>
-                <Button h="30" w="40" onClick={handleClick1}>
+                <Button
+                  h="40px"
+                  w="50px"
+                  top="5px"
+                  right="5px"
+                  onClick={handleClick1}
+                >
                   {show1 ? <FaEyeSlash /> : <FaEye />}
                 </Button>
               </InputRightElement>
@@ -141,7 +147,7 @@ const ChangePassword = () => {
             ) : null}
             <InputGroup>
               <Input
-              id='newpass'
+                id="newpass"
                 type={show2 ? 'text' : 'password'}
                 placeholder={'New password'}
                 padding="10px"
@@ -154,7 +160,13 @@ const ChangePassword = () => {
                 onBlur={handleBlur}
               />
               <InputRightElement>
-                <Button h="30" w="40" onClick={handleClick2}>
+                <Button
+                  h="40px"
+                  w="50px"
+                  top="5px"
+                  right="5px"
+                  onClick={handleClick2}
+                >
                   {show2 ? <FaEyeSlash /> : <FaEye />}
                 </Button>
               </InputRightElement>
@@ -166,7 +178,7 @@ const ChangePassword = () => {
             ) : null}
             <InputGroup>
               <Input
-              id='confirmNewPass'
+                id="confirmNewPass"
                 type={show3 ? 'text' : 'password'}
                 placeholder={'Confirm new password'}
                 padding="10px"
@@ -179,7 +191,13 @@ const ChangePassword = () => {
                 onBlur={handleBlur}
               />
               <InputRightElement>
-                <Button h="30" w="40" onClick={handleClick3}>
+                <Button
+                  h="40px"
+                  w="50px"
+                  top="5px"
+                  right="5px"
+                  onClick={handleClick3}
+                >
                   {show3 ? <FaEyeSlash /> : <FaEye />}
                 </Button>
               </InputRightElement>
