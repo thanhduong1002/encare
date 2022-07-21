@@ -2,7 +2,6 @@ import {
   Box,
   Button,
   HStack,
-  Image,
   Img,
   Input,
   InputGroup,
@@ -14,11 +13,9 @@ import {
 import { useFormik } from 'formik';
 import React from 'react';
 import {
-  FaClock,
   FaEye,
   FaEyeSlash,
   FaHeart,
-  FaSignInAlt,
 } from 'react-icons/fa';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { loginSchema } from '../schemas/loginSchema';
@@ -31,7 +28,7 @@ const LoginPage = () => {
     localStorage.setItem('data', result.accountId);
     localStorage.setItem('token', result.token);
     console.log(result);
-    navigate('/home');
+    navigate('/test');
   };
   const handleLogin = () => {
     postLogin({
@@ -49,7 +46,6 @@ const LoginPage = () => {
               status: 'error',
               isClosable: true,
             });
-        // localStorage.setItem('data', JSON.stringify(res.data.accountId))
       })
       .catch(e => console.log(e));
   };

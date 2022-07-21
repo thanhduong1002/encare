@@ -26,7 +26,7 @@ const TestAppoint = () => {
       .catch(error => {
         console.log(error);
       });
-  });
+  },[]);
 
   return (
     <VStack w="100vw" h="100vh">

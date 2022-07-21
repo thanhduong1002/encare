@@ -1,5 +1,6 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
+import Navigation from './components/Navigation';
 import AppointmentPage from './pages/AppointmentPage';
 import ChangePassword from './pages/ChangePassword';
 import ChangeProfile from './pages/ChangeProfile';
@@ -24,6 +25,7 @@ function App() {
       <Route path='/testlocal' element={<TestLocalStorage />} />
       <Route path='/changePass' element={<ChangePassword />} />
       <Route path='/infoapp' element={<InformationAppointment />} />
+      <Route path='/navi' element={<Navigation />} />
       <Route path='*' element={<NotFoundPage />} />
     </Routes>
   );
