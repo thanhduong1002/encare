@@ -1,9 +1,12 @@
 import { HStack, Text, VStack, Button, Avatar } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
 const Appointment = () => {
   const [infoAllApp, setInfoAllApp] = useState([]);
   let token = localStorage.getItem('token');
+  const navigate = useNavigate();
   useEffect(() => {
     axios({
       baseURL: 'https://enclave-encare.herokuapp.com/api/doctor/appointments',
@@ -21,7 +24,12 @@ const Appointment = () => {
         console.log(error);
       });
   }, []);
-
+let x;
+const handleTest = () => {
+  console.log(x);
+  localStorage.setItem('IDAppoint', x);
+  navigate('/infoapp')
+}
   return (
     <VStack w="80vw" h="100vh">
       <HStack
@@ -100,18 +108,19 @@ const Appointment = () => {
             </HStack>
             <HStack w="10%" h="100%">
               {element.statusResponse?.statusId === 1 ? (
-                <Button colorScheme="yellow">Wait</Button>
+                <Button colorScheme="yellow" onClick={() => x = element.appointmentId}>Wait</Button>
               ) : element.statusResponse?.statusId === 2 ? (
-                <Button colorScheme="green">Confirmed</Button>
+                <Button colorScheme="green" onClick={() => x = element.appointmentId}>Confirmed</Button>
               ) : element.statusResponse?.statusId === 3 ? (
-                <Button colorScheme="blue">Done</Button>
+                <Button colorScheme="blue" onClick={() => x = element.appointmentId}>Done</Button>
               ) : (
-                <Button colorScheme="red">Cancelled</Button>
+                <Button colorScheme="red" onClick={() => x = element.appointmentId}>Cancelled</Button>
               )}
             </HStack>
           </HStack>
         );
       })}
+      <Button onClick={handleTest}>Test</Button>
     </VStack>
   );
 };

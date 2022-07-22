@@ -1,28 +1,49 @@
 import { Box, Button, HStack, Image, Text, VStack } from '@chakra-ui/react';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaAngleLeft, FaMapMarkedAlt } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import { useToast } from '@chakra-ui/react'
+import { useToast } from '@chakra-ui/react';
+import axios from 'axios';
 
 const InformationAppointment = () => {
-    const toast = useToast();
-    const handleCancel = () => {
-        toast({
-            title: 'Appointment canceled',
-            status: 'error',
-            isClosable: true,
-          })
-    }
+  let idAppoint = localStorage.getItem('IDAppoint');
+  const [infoApp, setInfoApp] = useState([]);
+  let token = localStorage.getItem('token');
+  useEffect(() => {
+    axios({
+      baseURL: `https://enclave-encare.herokuapp.com/api/doctor/appointment/${idAppoint}`,
+      method: 'get',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then(res => {
+        console.log(res.data.data);
+        setInfoApp(res.data.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }, []);
+  const toast = useToast();
+  const handleCancel = () => {
+    toast({
+      title: 'Appointment canceled',
+      status: 'error',
+      isClosable: true,
+    });
+  };
   const handleConfirm = () => {
     toast({
-        title: 'Appointment confirmed',
-        status: 'success',
-        isClosable: true,
-      })
+      title: 'Appointment confirmed',
+      status: 'success',
+      isClosable: true,
+    });
   };
   const navigate = useNavigate();
   const handleBack = () => {
-    navigate('/appointment');
+    navigate('/home');
   };
   return (
     <VStack
@@ -37,10 +58,13 @@ const InformationAppointment = () => {
         bgColor="blackAlpha.200"
         justify="center"
         onClick={handleBack}
-        letterSpacing='2px'
+        letterSpacing="2px"
       >
-        <FaAngleLeft size='30'/>
-        <Text fontSize='23' fontWeight='bold'> Back</Text>
+        <FaAngleLeft size="30" />
+        <Text fontSize="23" fontWeight="bold">
+          {' '}
+          Back
+        </Text>
       </Button>
       <HStack
         w="95%"
@@ -52,16 +76,20 @@ const InformationAppointment = () => {
       >
         <VStack w="30%" h="90%">
           <Image
-            src="https://i.pinimg.com/564x/e9/27/18/e92718fef313e59f1e6ae10a6273cfc4.jpg"
+            src={infoApp.userResponse?.accountResponse?.avatar ? infoApp.userResponse?.accountResponse?.avatar : "https://i.pinimg.com/564x/e9/27/18/e92718fef313e59f1e6ae10a6273cfc4.jpg"}
             w="100%"
+            h="32vh"
             borderRadius="8px"
           />
           {/* <VStack w='100%' h='15%' bgColor='#E7F6F2' boxShadow='dark-lg' borderRadius='8px'> */}
           <Text fontWeight={'600'} fontSize="xl" color={'#2155CD'}>
-            Nguyen Van Son
+            {infoApp.userResponse?.accountResponse?.name}
           </Text>
           <Text fontWeight={'600'} fontSize="md" color={'#2155CD'}>
-            16/05/1993
+            {infoApp.userResponse?.accountResponse?.birthday}
+          </Text>
+          <Text fontWeight={'600'} fontSize="md" color={'#2155CD'}>
+            {infoApp.userResponse?.accountResponse?.phone}
           </Text>
           {/* </VStack> */}
           <HStack w="100%" h="20%" justifyContent="space-around">
@@ -86,7 +114,7 @@ const InformationAppointment = () => {
           <Text fontWeight="bold" fontSize="xl">
             Symptoms:
           </Text>
-          <Text>Tê tay mỏi gối đau lưng</Text>
+          <Text>{infoApp.symptoms}</Text>
           <Text fontWeight="bold" fontSize="xl">
             Location:
           </Text>
@@ -109,7 +137,7 @@ const InformationAppointment = () => {
                 justify="center"
               >
                 <Text fontWeight="bold" fontSize="23">
-                  16
+                {infoApp.day?.slice(0, 2)}
                 </Text>
               </HStack>
             </VStack>
@@ -124,7 +152,7 @@ const InformationAppointment = () => {
                 justify="center"
               >
                 <Text fontWeight="bold" fontSize="23">
-                  5
+                {infoApp.day?.slice(3, 5)}
                 </Text>
               </HStack>
             </VStack>
@@ -139,7 +167,7 @@ const InformationAppointment = () => {
                 justify="center"
               >
                 <Text fontWeight="bold" fontSize="23">
-                  1993
+                {infoApp.day?.slice(6, 10)}
                 </Text>
               </HStack>
             </VStack>
@@ -154,13 +182,19 @@ const InformationAppointment = () => {
                 justify="center"
               >
                 <Text fontWeight="bold" fontSize="23">
-                  8:00
+                {infoApp.time}:00
                 </Text>
               </HStack>
             </VStack>
           </HStack>
           <HStack w="100%" h="20%" marginTop="5%" justifyContent="space-around">
-            <Button bgColor="red.300" w="20%" fontSize="16" fontWeight="bold" onClick={handleCancel}>
+            <Button
+              bgColor="red.300"
+              w="20%"
+              fontSize="16"
+              fontWeight="bold"
+              onClick={handleCancel}
+            >
               Cancel
             </Button>
             <Button
