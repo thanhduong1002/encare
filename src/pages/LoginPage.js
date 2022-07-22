@@ -11,15 +11,12 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { useFormik } from 'formik';
-import React from 'react';
-import {
-  FaEye,
-  FaEyeSlash,
-  FaHeart,
-} from 'react-icons/fa';
+import React, { useEffect } from 'react';
+import { FaEye, FaEyeSlash, FaHeart } from 'react-icons/fa';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { loginSchema } from '../schemas/loginSchema';
 import { useToast } from '@chakra-ui/react';
+import axios from 'axios';
 
 const LoginPage = () => {
   const toast = useToast();
@@ -28,8 +25,18 @@ const LoginPage = () => {
     localStorage.setItem('data', result.accountId);
     localStorage.setItem('token', result.token);
     console.log(result);
-    navigate('/test');
+    navigate('/home');
   };
+  // useEffect(() => {
+  //   fetch('https://enclave-encare.herokuapp.com/api/user/login', {
+  //     method: 'OPTIONS',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //   })
+  //     .then(response => response.json())
+  //     .catch(error => console.log(error));
+  // }, []);
   const handleLogin = () => {
     postLogin({
       phone: values.phone,
@@ -61,11 +68,12 @@ const LoginPage = () => {
     return fetch(url, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json', 
       },
       body: JSON.stringify(params),
     }).then(response => response.json());
   }
+
   const onSubmit = () => {
     console.log('summited');
   };
@@ -114,60 +122,66 @@ const LoginPage = () => {
           >
             Login to your account
           </Text>
-          <Box h="64px" w='80%'>
-          <InputGroup>
-            <InputLeftAddon children="+84" h="64px" w="15%" borderTopLeftRadius='50px' borderBottomLeftRadius='50px'/>
-            <Input
-              id="phone"
-              type="text"
-              placeholder={'Phone number'}
-              w="85%"
-              h="64px"
-              color="#000"
-              borderWidth="1px"
-              borderRadius="50px"
-              borderColor="#07AEB8"
-              value={values.phone}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
-          </InputGroup>
+          <Box h="64px" w="80%">
+            <InputGroup>
+              <InputLeftAddon
+                children="+84"
+                h="64px"
+                w="15%"
+                borderTopLeftRadius="50px"
+                borderBottomLeftRadius="50px"
+              />
+              <Input
+                id="phone"
+                type="text"
+                placeholder={'Phone number'}
+                w="85%"
+                h="64px"
+                color="#000"
+                borderWidth="1px"
+                borderRadius="50px"
+                borderColor="#07AEB8"
+                value={values.phone}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+            </InputGroup>
           </Box>
           {errors.phone && touched.phone ? (
             <Text color="red.400" fontSize="md">
               {errors.phone}
             </Text>
           ) : null}
-          <Box h="64px" w='80%'>
-          <InputGroup>
-            <Input
-              id="password"
-              type={show ? 'text' : 'password'}
-              placeholder={'Your password'}
-              w="100%"
-              h="64px"
-              color="#000"
-              borderWidth="1px"
-              borderRadius="50px"
-              borderColor="#07AEB8"
-              value={values.password}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
+          <Box h="64px" w="80%">
+            <InputGroup>
+              <Input
+                id="password"
+                type={show ? 'text' : 'password'}
+                placeholder={'Your password'}
+                w="100%"
+                h="64px"
+                color="#000"
+                borderWidth="1px"
+                borderRadius="50px"
+                borderColor="#07AEB8"
+                value={values.password}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
 
-            <InputRightElement w='15%'>
-              <Button
-                h="63px"
-                top="12px"
-                borderTopRightRadius='50px'
-                borderBottomRightRadius='50px'
-                right='-0.9vw'
-                onClick={handleClick}
-              >
-                {show ? <FaEyeSlash /> : <FaEye />}
-              </Button>
-            </InputRightElement>
-          </InputGroup>
+              <InputRightElement w="15%">
+                <Button
+                  h="63px"
+                  top="12px"
+                  borderTopRightRadius="50px"
+                  borderBottomRightRadius="50px"
+                  right="-0.9vw"
+                  onClick={handleClick}
+                >
+                  {show ? <FaEyeSlash /> : <FaEye />}
+                </Button>
+              </InputRightElement>
+            </InputGroup>
           </Box>
           {errors.password && touched.password ? (
             <Text color="red.400" fontSize="md">
@@ -190,10 +204,16 @@ const LoginPage = () => {
           >
             Login
           </Button>
-          <Box color='#07AEB8' w='80%' display='flex' flexDirection='row-reverse'>
-          <NavLink to='/test' color='#07AEB8'>Forgot Password?</NavLink>
+          <Box
+            color="#07AEB8"
+            w="80%"
+            display="flex"
+            flexDirection="row-reverse"
+          >
+            <NavLink to="/test" color="#07AEB8">
+              Forgot Password?
+            </NavLink>
           </Box>
-          
         </VStack>
         <Img
           w="50%"

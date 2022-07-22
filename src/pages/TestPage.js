@@ -6,6 +6,7 @@ import { FaAngleLeft, FaMapMarkedAlt } from 'react-icons/fa';
 const Test = () => {
   const [infoapp, setInfoapp] = useState([]);
   let token = localStorage.getItem('token');
+  console.log(token);
   useEffect(() => {
     axios({
       baseURL: 'https://enclave-encare.herokuapp.com/api/doctor/appointment/5',
@@ -16,13 +17,14 @@ const Test = () => {
       },
     })
       .then(res => {
-        console.log(res.data.data);
+        console.log(res);
         setInfoapp(res.data.data);
       })
       .catch(error => {
         console.log(error);
       });
   }, []);
+  // console.log('infoapp:' , infoapp);
   const handleConfirm = () => {
     axios({
       baseURL:
@@ -40,6 +42,7 @@ const Test = () => {
         console.log(error);
       });
   };
+  
   return (
     <VStack
       w="100vw"
@@ -70,12 +73,12 @@ const Test = () => {
       >
         <VStack w="30%" h="90%">
           <Image
-            // src="https://i.pinimg.com/564x/e9/27/18/e92718fef313e59f1e6ae10a6273cfc4.jpg"
-            src={
-              infoapp.userResponse.accountResponse.avatar !== null
-                ? infoapp.userResponse.accountResponse.avatar
-                : 'https://i.pinimg.com/564x/e9/27/18/e92718fef313e59f1e6ae10a6273cfc4.jpg'
-            }
+            src="https://i.pinimg.com/564x/e9/27/18/e92718fef313e59f1e6ae10a6273cfc4.jpg"
+            // src={
+            //   infoapp.userResponse.accountResponse.avatar !== null
+            //     ? infoapp.userResponse.accountResponse.avatar
+            //     : 'https://i.pinimg.com/564x/e9/27/18/e92718fef313e59f1e6ae10a6273cfc4.jpg'
+            // }
             w="100%"
             h="32vh"
             borderRadius="8px"
@@ -83,14 +86,14 @@ const Test = () => {
           {/* <VStack w='100%' h='15%' bgColor='#E7F6F2' boxShadow='dark-lg' borderRadius='8px'> */}
           <Text fontWeight={'600'} fontSize="xl" color={'#2155CD'}>
             {/* Nguyen Thanh Duong */}
-            {infoapp.userResponse.accountResponse.name}
+            {infoapp.userResponse?.accountResponse?.name}
           </Text>
           <Text fontWeight={'600'} fontSize="md" color={'#2155CD'}>
-            {infoapp.userResponse.accountResponse.birthday}
+            {infoapp.userResponse?.accountResponse?.birthday}
             {/* 10/02/2001 */}
           </Text>
           <Text fontWeight={'600'} fontSize="md" color={'#2155CD'}>
-            {infoapp.userResponse.accountResponse.phone}
+            {infoapp.userResponse?.accountResponse?.phone}
             {/* 0336364692 */}
           </Text>
           {/* </VStack> */}
@@ -140,7 +143,7 @@ const Test = () => {
                 justify="center"
               >
                 <Text fontWeight="bold" fontSize="23">
-                  {infoapp.day.slice(0, 2)}
+                  {infoapp.day?.slice(0, 2)}
                   {/* 10 */}
                 </Text>
               </HStack>
@@ -156,7 +159,7 @@ const Test = () => {
                 justify="center"
               >
                 <Text fontWeight="bold" fontSize="23">
-                  {infoapp.day.slice(3, 5)}
+                  {infoapp.day?.slice(3, 5)}
                   {/* 02 */}
                 </Text>
               </HStack>
@@ -172,7 +175,7 @@ const Test = () => {
                 justify="center"
               >
                 <Text fontWeight="bold" fontSize="23">
-                  {infoapp.day.slice(6, 10)}
+                  {infoapp.day?.slice(6, 10)}
                   {/* 2001 */}
                 </Text>
               </HStack>

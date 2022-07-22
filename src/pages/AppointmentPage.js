@@ -1,16 +1,15 @@
-import {VStack } from '@chakra-ui/react';
+import {HStack} from '@chakra-ui/react';
 import React from 'react';
-import Appointment from '../components/Appointment';
 
-import Navbar from '../components/Navbar';
-import TestAppoint from '../components/TestAppoint';
+import Navigation from '../components/Navigation';
+import Appointment from '../components/Appointment';
 
 const AppointmentPage = () => {
   return (
-    <VStack>
-      <Navbar />
-      <TestAppoint/>
-    </VStack>
+    <HStack>
+      <Navigation />
+      <Appointment />
+    </HStack>
   );
 };
 

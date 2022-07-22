@@ -1,125 +1,117 @@
-import { HStack, Image, Text, VStack } from '@chakra-ui/react';
-import React from 'react';
-import { FaCalendarAlt } from 'react-icons/fa';
-import { NavLink } from 'react-router-dom';
-
+import { HStack, Text, VStack, Button, Avatar } from '@chakra-ui/react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 const Appointment = () => {
+  const [infoAllApp, setInfoAllApp] = useState([]);
+  let token = localStorage.getItem('token');
+  useEffect(() => {
+    axios({
+      baseURL: 'https://enclave-encare.herokuapp.com/api/doctor/appointments',
+      method: 'get',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then(res => {
+        console.log(res.data.data);
+        setInfoAllApp(res.data.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }, []);
+
   return (
-    <VStack w="100vw" h="100vh">
+    <VStack w="80vw" h="100vh">
       <HStack
-        w={'70%'}
-        h={'20vh'}
-        bgColor="#E8F9FD"
-        justify={'space-around'}
-        alignItems={'center'}
-        borderRadius="8px"
+        w="95%"
+        h="8%"
+        borderColor="#6AE0D9"
+        borderTopWidth="2px"
+        borderBottomWidth="2px"
       >
-        <Image
-          src="https://i.pinimg.com/564x/e9/27/18/e92718fef313e59f1e6ae10a6273cfc4.jpg"
-          w={'15%'}
-          h={'15vh'}
-          borderRadius="8px"
-        />
-
-        <VStack w={'45%'} h={'15vh'} borderRadius={'8px'}>
-          <Text fontWeight={'600'} fontSize="xl" color={'#2155CD'}>
-            Nguyen Van Son
+        <HStack w="25%" h="100%">
+          <Text fontSize="18px" fontWeight="600">
+            Name
           </Text>
-          <Text fontSize={'sm'} color={'#2155CD'}>
-            Kham Rang
+        </HStack>
+        <HStack w="15%" h="100%">
+          <Text fontSize="18px" fontWeight="600">
+            Date
           </Text>
-          <Text fontSize={'sm'} color={'#2155CD'}>
-            123 Ngo Si Lien, Hoa Khanh Bac, Lien Chieu, Da Nang
+        </HStack>
+        <HStack w="10%" h="100%">
+          <Text fontSize="18px" fontWeight="600">
+            Time
           </Text>
-        </VStack>
-        <VStack w={'20%'} h={'15vh'} borderRadius={'8px'}>
-          <FaCalendarAlt color={'#2155CD'} size={23} />
-
-          <Text fontSize={'sm'} color={'#2155CD'}>
-            26 June 2022
+        </HStack>
+        <HStack w="25%" h="100%">
+          <Text fontSize="18px" fontWeight="600">
+            Address
           </Text>
-          <Text fontSize={'sm'} color={'#2155CD'} fontWeight="600">
-            9:30
+        </HStack>
+        <HStack w="15%" h="100%">
+          <Text fontSize="18px" fontWeight="600">
+            Description
           </Text>
-          <NavLink to="/infoapp">More</NavLink>
-        </VStack>
+        </HStack>
+        <HStack w="10%" h="100%">
+          <Text fontSize="18px" fontWeight="600">
+            Status
+          </Text>
+        </HStack>
       </HStack>
-      <HStack
-        w={'70%'}
-        h={'20vh'}
-        bgColor="#E8F9FD"
-        justify={'space-around'}
-        alignItems={'center'}
-        borderRadius="8px"
-      >
-        <Image
-          src="https://i.pinimg.com/564x/90/84/a9/9084a973b2f8792386b81342706a5ee4.jpg"
-          w={'15%'}
-          h={'15vh'}
-          borderRadius="8px"
-        />
-
-        <VStack w={'45%'} h={'15vh'} borderRadius={'8px'}>
-          <Text fontWeight={'600'} fontSize="xl" color={'#2155CD'}>
-            Tran Van Ro
-          </Text>
-          <Text fontSize={'sm'} color={'#2155CD'}>
-            Kham Tim
-          </Text>
-          <Text fontSize={'sm'} color={'#2155CD'}>
-            50 Ngo Thi Nham, Hoa Khanh Bac, Lien Chieu, Da Nang
-          </Text>
-        </VStack>
-        <VStack w={'20%'} h={'15vh'} borderRadius={'8px'}>
-          <FaCalendarAlt color={'#2155CD'} size={23} />
-
-          <Text fontSize={'sm'} color={'#2155CD'}>
-            26 June 2022
-          </Text>
-          <Text fontSize={'sm'} color={'#2155CD'} fontWeight="600">
-            10:30
-          </Text>
-          <NavLink to="/infoapp">More</NavLink>
-        </VStack>
-      </HStack>
-      <HStack
-        w={'70%'}
-        h={'20vh'}
-        bgColor="#E8F9FD"
-        justify={'space-around'}
-        alignItems={'center'}
-        borderRadius="8px"
-      >
-        <Image
-          src="https://i.pinimg.com/564x/a5/9f/9d/a59f9d1df60d36d801a4bb7b70246f25.jpg"
-          w={'15%'}
-          h={'15vh'}
-          borderRadius="8px"
-        />
-
-        <VStack w={'45%'} h={'15vh'} borderRadius={'8px'}>
-          <Text fontWeight={'600'} fontSize="xl" color={'#2155CD'}>
-            Le Van Si
-          </Text>
-          <Text fontSize={'sm'} color={'#2155CD'}>
-            Kham Tai Mui Hong
-          </Text>
-          <Text fontSize={'sm'} color={'#2155CD'}>
-            52 Nguyen Luong Bang, Hoa Khanh Bac, Lien Chieu, Da Nang
-          </Text>
-        </VStack>
-        <VStack w={'20%'} h={'15vh'} borderRadius={'8px'}>
-          <FaCalendarAlt color={'#2155CD'} size={23} />
-
-          <Text fontSize={'sm'} color={'#2155CD'}>
-            26 June 2022
-          </Text>
-          <Text fontSize={'sm'} color={'#2155CD'} fontWeight="600">
-            11:30
-          </Text>
-          <NavLink to="/infoapp">More</NavLink>
-        </VStack>
-      </HStack>
+      {infoAllApp.map((element, index) => {
+        return (
+          <HStack w="95%" h="8%" key={index}>
+            <HStack w="25%" h="100%">
+              <Avatar
+                name="Segun Adebayo"
+                src={
+                  element.userResponse?.accountResponse?.avatar
+                    ? element.userResponse?.accountResponse?.avatar
+                    : 'https://media.istockphoto.com/vectors/health-icon-vector-of-male-person-profile-avatar-symbol-for-patient-vector-id1147248211'
+                }
+              />
+              <Text fontSize="15px" fontWeight="400">
+                {element.userResponse?.accountResponse?.name}
+              </Text>
+            </HStack>
+            <HStack w="15%" h="100%">
+              <Text fontSize="15px" fontWeight="400">
+                {element.day?.slice(0, 10)}
+              </Text>
+            </HStack>
+            <HStack w="10%" h="100%">
+              <Text fontSize="18px" fontWeight="700">
+                {element.time}:00
+              </Text>
+            </HStack>
+            <HStack w="25%" h="100%">
+              <Text fontSize="15px" fontWeight="400">
+                74/2 Nguyen Luong Bang, Lien Chieu, Da Nang
+              </Text>
+            </HStack>
+            <HStack w="15%" h="100%">
+              <Text fontSize="15px" fontWeight="400">
+                {element.doctorResponse?.categoryResponse?.name}
+              </Text>
+            </HStack>
+            <HStack w="10%" h="100%">
+              {element.statusResponse?.statusId === 1 ? (
+                <Button colorScheme="yellow">Wait</Button>
+              ) : element.statusResponse?.statusId === 2 ? (
+                <Button colorScheme="green">Confirmed</Button>
+              ) : element.statusResponse?.statusId === 3 ? (
+                <Button colorScheme="blue">Done</Button>
+              ) : (
+                <Button colorScheme="red">Cancelled</Button>
+              )}
+            </HStack>
+          </HStack>
+        );
+      })}
     </VStack>
   );
 };

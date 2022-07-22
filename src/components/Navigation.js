@@ -1,7 +1,5 @@
 import {
-  Box,
   Button,
-  Divider,
   HStack,
   ScaleFade,
   Text,
@@ -17,10 +15,14 @@ import {
   FaSignOutAlt,
   FaUserCircle,
 } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 const Navigation = () => {
   const { isOpen, onToggle } = useDisclosure();
-
+const navigate = useNavigate();
+const handleLogout = () =>{
+  navigate('/');
+}
   return (
     <HStack w="20vw" h="100vh" bgGradient="linear(to-b, #ccdadf, #07AEB8)">
       <VStack w="100%" h="100%">
@@ -109,12 +111,12 @@ const Navigation = () => {
             </Button>
           </HStack>
         </ScaleFade>
-        <VStack w="100%" h="10%">
-          <Button w="70%" h="50px" fontSize="19px" color="#07AEB8">
-            <FaSignOutAlt />
+        <HStack w="100%" h="10%" justify='center'>
+          <Button w="70%" h="50px" fontSize="19px" color="#07AEB8" onClick={handleLogout}>
+            <FaSignOutAlt/>
             Logout
           </Button>
-        </VStack>
+        </HStack>
       </VStack>
     </HStack>
   );
