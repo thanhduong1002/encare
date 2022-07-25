@@ -6,7 +6,8 @@ import { useToast } from '@chakra-ui/react';
 import axios from 'axios';
 
 const InformationAppointment = () => {
-  let idAppoint = localStorage.getItem('IDAppoint');
+  const idAppoint = localStorage.getItem('IDAppoint');
+  const idStatus = localStorage.getItem('IDStatus');
   const [infoApp, setInfoApp] = useState([]);
   let token = localStorage.getItem('token');
   useEffect(() => {
@@ -28,6 +29,20 @@ const InformationAppointment = () => {
   }, []);
   const toast = useToast();
   const handleCancel = () => {
+    axios({
+      baseURL: `https://enclave-encare.herokuapp.com/api/doctor/appointment/${idAppoint}/cancel`,
+      method: 'put',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then(res => {
+        console.log(res.data.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
     toast({
       title: 'Appointment canceled',
       status: 'error',
@@ -35,9 +50,44 @@ const InformationAppointment = () => {
     });
   };
   const handleConfirm = () => {
+    axios({
+      baseURL: `https://enclave-encare.herokuapp.com/api/doctor/appointment/${idAppoint}/confirm`,
+      method: 'put',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then(res => {
+        console.log(res.data.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
     toast({
       title: 'Appointment confirmed',
       status: 'success',
+      isClosable: true,
+    });
+  };
+  const handleDone = () => {
+    axios({
+      baseURL: `https://enclave-encare.herokuapp.com/api/doctor/appointment/${idAppoint}/done`,
+      method: 'put',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then(res => {
+        console.log(res.data.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    toast({
+      title: 'Appointment done',
+      status: 'info',
       isClosable: true,
     });
   };
@@ -76,7 +126,11 @@ const InformationAppointment = () => {
       >
         <VStack w="30%" h="90%">
           <Image
-            src={infoApp.userResponse?.accountResponse?.avatar ? infoApp.userResponse?.accountResponse?.avatar : "https://i.pinimg.com/564x/e9/27/18/e92718fef313e59f1e6ae10a6273cfc4.jpg"}
+            src={
+              infoApp.userResponse?.accountResponse?.avatar
+                ? infoApp.userResponse?.accountResponse?.avatar
+                : 'https://i.pinimg.com/564x/e9/27/18/e92718fef313e59f1e6ae10a6273cfc4.jpg'
+            }
             w="100%"
             h="32vh"
             borderRadius="8px"
@@ -137,7 +191,7 @@ const InformationAppointment = () => {
                 justify="center"
               >
                 <Text fontWeight="bold" fontSize="23">
-                {infoApp.day?.slice(0, 2)}
+                  {infoApp.day?.slice(0, 2)}
                 </Text>
               </HStack>
             </VStack>
@@ -152,7 +206,7 @@ const InformationAppointment = () => {
                 justify="center"
               >
                 <Text fontWeight="bold" fontSize="23">
-                {infoApp.day?.slice(3, 5)}
+                  {infoApp.day?.slice(3, 5)}
                 </Text>
               </HStack>
             </VStack>
@@ -167,7 +221,7 @@ const InformationAppointment = () => {
                 justify="center"
               >
                 <Text fontWeight="bold" fontSize="23">
-                {infoApp.day?.slice(6, 10)}
+                  {infoApp.day?.slice(6, 10)}
                 </Text>
               </HStack>
             </VStack>
@@ -182,31 +236,51 @@ const InformationAppointment = () => {
                 justify="center"
               >
                 <Text fontWeight="bold" fontSize="23">
-                {infoApp.time}:00
+                  {infoApp.time}:00
                 </Text>
               </HStack>
             </VStack>
           </HStack>
-          <HStack w="100%" h="20%" marginTop="5%" justifyContent="space-around">
-            <Button
-              bgColor="red.300"
-              w="20%"
-              fontSize="16"
-              fontWeight="bold"
-              onClick={handleCancel}
+          {console.log(idStatus)}
+          {idStatus === '1' ? (
+            <HStack
+              w="100%"
+              h="20%"
+              marginTop="5%"
+              justifyContent="space-around"
             >
-              Cancel
-            </Button>
-            <Button
-              bgColor="green.400"
-              w="20%"
-              fontSize="16"
-              fontWeight="bold"
-              onClick={handleConfirm}
-            >
-              Confirm
-            </Button>
-          </HStack>
+              <Button
+                bgColor="red.300"
+                w="20%"
+                fontSize="16"
+                fontWeight="bold"
+                onClick={handleCancel}
+              >
+                Cancel
+              </Button>
+              <Button
+                bgColor="green.400"
+                w="20%"
+                fontSize="16"
+                fontWeight="bold"
+                onClick={handleConfirm}
+              >
+                Confirm
+              </Button>
+            </HStack>
+          ) : idStatus === '2' ? (
+            <HStack w="100%" h="20%" marginTop="5%" justify="center">
+              <Button
+                bgColor="blue.300"
+                w="20%"
+                fontSize="16"
+                fontWeight="bold"
+                onClick={handleDone}
+              >
+                Done
+              </Button>
+            </HStack>
+          ) : null}
         </Box>
       </HStack>
     </VStack>

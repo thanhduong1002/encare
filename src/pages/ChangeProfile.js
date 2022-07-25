@@ -1,5 +1,6 @@
-import { Box, Button, HStack, Image, Input, Text, VStack } from '@chakra-ui/react';
-import React from 'react';
+import { Avatar, Box, Button, HStack, Image, Input, Text, VStack } from '@chakra-ui/react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { FaLongArrowAltLeft, FaSave } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 
@@ -8,6 +9,25 @@ const ChangeProfile = () => {
     const handleBack = () =>{
         navigate('/home');
     }
+  const [infoDoctor, setInfoDoctor] = useState([]);
+  let token = localStorage.getItem('token');
+  useEffect(() => {
+    axios({
+      baseURL: 'https://enclave-encare.herokuapp.com/api/doctor',
+      method: 'get',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then(res => {
+        console.log(res.data.data);
+        setInfoDoctor(res.data.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }, []);
   return (
     <VStack w="100vw" h="100vh" bgColor="#EAF6F6" justify="center">
         <Box w="80vw" h="10vh" display='flex' flexDirection='row' justifyContent='space-between'>
@@ -21,17 +41,13 @@ const ChangeProfile = () => {
         bgColor="#B2C8DF"
         boxShadow="dark-lg"
       >
-        <VStack w="30%" h="100%">
-          <Image
-            src="https://scontent.fdad1-3.fna.fbcdn.net/v/t1.15752-9/280230014_5624651480918911_5248351531552767759_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=ae9488&_nc_ohc=5ipIiDOfb4YAX-soNM6&_nc_ht=scontent.fdad1-3.fna&oh=03_AVKjrAkPtY1a53wguwTrw99Mkboaj_PLateyoqcNkrkuUw&oe=62F5AA2D"
-            boxSize="60%"
-            borderRadius="full"
-          />
+        <VStack w="30%" h="100%" justify='center'>
+        <Avatar size='3xl' name='Segun Adebayo' src={infoDoctor.categoryResponse?.avatar ? infoDoctor.categoryResponse?.avatar : 'https://bit.ly/sage-adebayo'} />
           <Text fontWeight="bold" fontSize="2xl">
-            Dr. IU
+            Dr. {infoDoctor.accountResponse?.name}
           </Text>
-          <Text fontSize="xl">Khoa Tim mach</Text>
-          <Text fontSize="xl">Benh vien TW Hue</Text>
+          <Text fontSize="md">{infoDoctor.categoryResponse?.name}</Text>
+          <Text fontSize="md">{infoDoctor.hospitalResponse?.name}</Text>
         </VStack>
         <VStack w="70%" h="100%" justify="center">
           <Box
@@ -46,11 +62,13 @@ const ChangeProfile = () => {
               Name:
             </Text>
             <Input
+              className='name'
               placeholder="Enter your name"
               type="text"
               variant="outline"
               borderWidth="1px"
               borderColor="#B2C8DF"
+              value={infoDoctor.accountResponse?.name}
             ></Input>
             <Text fontWeight="bold" fontSize="md">
               Birthday:
@@ -70,6 +88,7 @@ const ChangeProfile = () => {
               variant="outline"
               borderWidth="1px"
               borderColor="#B2C8DF"
+              value={infoDoctor.accountResponse?.phone}
             ></Input>
             <Text fontWeight="bold" fontSize="md">
               Address:
@@ -80,6 +99,7 @@ const ChangeProfile = () => {
               variant="outline"
               borderWidth="1px"
               borderColor="#B2C8DF"
+              value='74/2 Ngo Si Lien, Lien Chieu, Da Nang'
             ></Input>
             <Text fontWeight="bold" fontSize="md">
               Hospital:
@@ -90,6 +110,7 @@ const ChangeProfile = () => {
               variant="outline"
               borderWidth="1px"
               borderColor="#B2C8DF"
+              value={infoDoctor.hospitalResponse?.name}
             ></Input>
             <Text fontWeight="bold" fontSize="md">
               Dept:
@@ -100,6 +121,7 @@ const ChangeProfile = () => {
               variant="outline"
               borderWidth="1px"
               borderColor="#B2C8DF"
+              value={infoDoctor.categoryResponse?.name}
             ></Input>            
           </Box>
         </VStack>

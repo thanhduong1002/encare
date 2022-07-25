@@ -16,7 +16,6 @@ import { FaEye, FaEyeSlash, FaHeart } from 'react-icons/fa';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { loginSchema } from '../schemas/loginSchema';
 import { useToast } from '@chakra-ui/react';
-import axios from 'axios';
 
 const LoginPage = () => {
   const toast = useToast();

@@ -15,7 +15,7 @@ import {
   FaSignOutAlt,
   FaUserCircle,
 } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 const Navigation = () => {
   const { isOpen, onToggle } = useDisclosure();
@@ -58,8 +58,10 @@ const handleLogout = () =>{
                 variant="ghost"
                 fontSize="20px"
                 color="white"
+                
               >
-                Home
+              <NavLink to="/home">Home</NavLink>
+                
               </Button>
             </HStack>
             <HStack w="100%">
@@ -69,8 +71,9 @@ const handleLogout = () =>{
                 variant="ghost"
                 fontSize="20px"
                 color="white"
+                
               >
-                Appointment
+                <NavLink to="/appointment">Appointment</NavLink>
               </Button>
             </HStack>
             <HStack w="100%">
@@ -80,8 +83,9 @@ const handleLogout = () =>{
                 variant="ghost"
                 fontSize="20px"
                 color="white"
+                
               >
-                Message
+                <NavLink to="/chat">Message</NavLink>
               </Button>
             </HStack>
           </VStack>
@@ -106,8 +110,9 @@ const handleLogout = () =>{
               variant="ghost"
               fontSize="20px"
               color="white"
+              
             >
-              Profile
+              <NavLink to="/changeProfile">Profile</NavLink>
             </Button>
           </HStack>
         </ScaleFade>

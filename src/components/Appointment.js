@@ -10,6 +10,7 @@ const Appointment = () => {
   useEffect(() => {
     axios({
       baseURL: 'https://enclave-encare.herokuapp.com/api/doctor/appointments',
+      // baseURL: 'http://13.229.228.132/api/doctor/appointments',
       method: 'get',
       headers: {
         'Content-Type': 'application/json',
@@ -24,12 +25,13 @@ const Appointment = () => {
         console.log(error);
       });
   }, []);
-let x;
-const handleTest = () => {
-  console.log(x);
-  localStorage.setItem('IDAppoint', x);
-  navigate('/infoapp')
-}
+  let x, sta;
+  const handleTest = () => {
+    console.log(x);
+    localStorage.setItem('IDAppoint', x);
+    localStorage.setItem('IDStatus', sta);
+    navigate('/infoapp');
+  };
   return (
     <VStack w="80vw" h="100vh">
       <HStack
@@ -108,19 +110,54 @@ const handleTest = () => {
             </HStack>
             <HStack w="10%" h="100%">
               {element.statusResponse?.statusId === 1 ? (
-                <Button colorScheme="yellow" onClick={() => x = element.appointmentId}>Wait</Button>
+                <Button
+                  colorScheme="yellow"
+                  onClick={() => {
+                    x = element.appointmentId;
+                    sta = element.statusResponse?.statusId;
+                    handleTest();
+                  }}
+                >
+                  Wait
+                </Button>
               ) : element.statusResponse?.statusId === 2 ? (
-                <Button colorScheme="green" onClick={() => x = element.appointmentId}>Confirmed</Button>
+                <Button
+                  colorScheme="green"
+                  onClick={() => {
+                    x = element.appointmentId;
+                    sta = element.statusResponse?.statusId;
+                    handleTest();
+                  }}
+                >
+                  Confirmed
+                </Button>
               ) : element.statusResponse?.statusId === 3 ? (
-                <Button colorScheme="blue" onClick={() => x = element.appointmentId}>Done</Button>
+                <Button
+                  colorScheme="blue"
+                  onClick={() => {
+                    x = element.appointmentId;
+                    sta = element.statusResponse?.statusId;
+                    handleTest();
+                  }}
+                >
+                  Done
+                </Button>
               ) : (
-                <Button colorScheme="red" onClick={() => x = element.appointmentId}>Cancelled</Button>
+                <Button
+                  colorScheme="red"
+                  onClick={() => {
+                    x = element.appointmentId;
+                    sta = element.statusResponse?.statusId;
+                    handleTest();
+                  }}
+                >
+                  Cancelled
+                </Button>
               )}
             </HStack>
           </HStack>
         );
       })}
-      <Button onClick={handleTest}>Test</Button>
     </VStack>
   );
 };
