@@ -63,11 +63,11 @@ const ChangePassword = () => {
       onSubmit,
     });
   return (
-    <VStack w="100vw" h="100vh" bgColor="#B3E8E5">
+    <VStack w="100vw" h="100vh" bgColor="#EAEAFF">
       <HStack
         w="10vw"
         h="7vh"
-        bgColor="#3BACB6"
+        bgColor="#2B55BC"
         borderBottomRightRadius="8px"
         borderBottomLeftRadius="8px"
         justify="center"
@@ -76,19 +76,23 @@ const ChangePassword = () => {
         <FaExchangeAlt size="35" color="white" />
         <FaKey size="35" color="white" />
       </HStack>
+      <VStack w='70%' h='10vh' alignItems='start'>
       <Button
+      h='100%'
         leftIcon={<FaAngleLeft />}
-        variant="outline"
         color="white"
-        colorScheme="#CDF0EA"
+        colorScheme="blue"
         onClick={handleBack}
+        size='lg'
       >
         Back
       </Button>
+      </VStack>
       <HStack
         w="70vw"
         h="70vh"
-        bgColor="#B3E8E5"
+        bgImg='url("https://scontent.fdad1-1.fna.fbcdn.net/v/t1.15752-9/289429842_1245697359568477_5427190611156351214_n.png?_nc_cat=103&ccb=1-7&_nc_sid=ae9488&_nc_ohc=aNmKPh-4GCMAX-rL8Bz&_nc_ht=scontent.fdad1-1.fna&oh=03_AVK7b7w__JxScifnKpOMzEo3nCdypoHnFkDB0pf-4-vRkw&oe=6304CD61")'
+        opacity='1'
         borderRadius="8px"
         boxShadow="dark-lg"
         padding="10vw"
@@ -210,7 +214,7 @@ const ChangePassword = () => {
             <Button
               paddingX="20px"
               paddingY="10px"
-              bgColor="#3BACB6"
+              bgColor="#2B55BC"
               w="100%"
               onClick={handleChangePass}
               type="submit"

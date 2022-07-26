@@ -51,7 +51,7 @@ const Appointment = () => {
             Date
           </Text>
         </HStack>
-        <HStack w="10%" h="100%">
+        <HStack w="10%" h="100%" justify='center'>
           <Text fontSize="18px" fontWeight="600">
             Time
           </Text>
@@ -93,7 +93,7 @@ const Appointment = () => {
                 {element.day?.slice(0, 10)}
               </Text>
             </HStack>
-            <HStack w="10%" h="100%">
+            <HStack w="10%" h="100%" justify='center'>
               <Text fontSize="18px" fontWeight="700">
                 {element.time}:00
               </Text>
@@ -118,7 +118,7 @@ const Appointment = () => {
                     handleTest();
                   }}
                 >
-                  Wait
+                  Waiting
                 </Button>
               ) : element.statusResponse?.statusId === 2 ? (
                 <Button

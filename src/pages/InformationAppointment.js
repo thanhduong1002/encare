@@ -1,4 +1,12 @@
-import { Box, Button, HStack, Image, Text, VStack } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  HStack,
+  Image,
+  Input,
+  Text,
+  VStack,
+} from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { FaAngleLeft, FaMapMarkedAlt } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
@@ -9,6 +17,7 @@ const InformationAppointment = () => {
   const idAppoint = localStorage.getItem('IDAppoint');
   const idStatus = localStorage.getItem('IDStatus');
   const [infoApp, setInfoApp] = useState([]);
+  const [descrip, setDescrip] = useState('');
   let token = localStorage.getItem('token');
   useEffect(() => {
     axios({
@@ -91,6 +100,29 @@ const InformationAppointment = () => {
       isClosable: true,
     });
   };
+  const handleUpdate = () => {
+    axios({
+      baseURL: `https://enclave-encare.herokuapp.com/api/doctor/appointment/${idAppoint}/descriptions`,
+      method: 'put',
+      headers: {
+        'Content-Type': 'text/plain',
+        Authorization: `Bearer ${token}`,
+      },
+      data: {descrip},
+    })
+      .then(res => {
+        console.log(res.data.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    toast({
+      title: 'Appointment done',
+      status: 'info',
+      isClosable: true,
+    });
+    console.log(descrip);
+  };
   const navigate = useNavigate();
   const handleBack = () => {
     navigate('/home');
@@ -169,13 +201,31 @@ const InformationAppointment = () => {
             Symptoms:
           </Text>
           <Text>{infoApp.symptoms}</Text>
-          <Text fontWeight="bold" fontSize="xl">
-            Location:
-          </Text>
-          <Text>
-            <FaMapMarkedAlt size="40" />
-            123 Ngo Si Lien, Hoa Khanh Bac, Lien Chieu, Da Nang
-          </Text>
+          {idStatus === '3' ? (
+            <Box>
+              <Text fontWeight="bold" fontSize="xl" marginBottom="10px">
+                Descriptions:
+              </Text>
+              <Input
+                placeholder="Enter Descriptions"
+                marginBottom="10px"
+                color="white"
+                value={descrip}
+                onChange={(e) => setDescrip(e.target.value)}
+              ></Input>
+            </Box>
+          ) : (
+            <Box>
+              <Text fontWeight="bold" fontSize="xl">
+                Location:
+              </Text>
+              <Text>
+                <FaMapMarkedAlt size="40" />
+                123 Ngo Si Lien, Hoa Khanh Bac, Lien Chieu, Da Nang
+              </Text>
+            </Box>
+          )}
+
           <Text fontWeight="bold" fontSize="xl">
             Appointment:
           </Text>
@@ -241,7 +291,6 @@ const InformationAppointment = () => {
               </HStack>
             </VStack>
           </HStack>
-          {console.log(idStatus)}
           {idStatus === '1' ? (
             <HStack
               w="100%"
@@ -278,6 +327,19 @@ const InformationAppointment = () => {
                 onClick={handleDone}
               >
                 Done
+              </Button>
+            </HStack>
+          ) : idStatus === '3' ? (
+            <HStack w="100%" h="20%" marginTop="5%" justify="center">
+              <Button
+                bgColor="blue.300"
+                w="20%"
+                fontSize="16"
+                fontWeight="bold"
+                // onClick={handleUpdate}
+                onClick={handleUpdate}
+              >
+                Update
               </Button>
             </HStack>
           ) : null}

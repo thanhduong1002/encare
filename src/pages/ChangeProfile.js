@@ -41,15 +41,15 @@ const ChangeProfile = () => {
         bgColor="#B2C8DF"
         boxShadow="dark-lg"
       >
-        <VStack w="30%" h="100%" justify='center'>
-        <Avatar size='3xl' name='Segun Adebayo' src={infoDoctor.categoryResponse?.avatar ? infoDoctor.categoryResponse?.avatar : 'https://bit.ly/sage-adebayo'} />
+        <VStack w="40%" h="100%" justify='center'>
+        <Avatar size='2xl' name='Segun Adebayo' src={infoDoctor.categoryResponse?.avatar ? infoDoctor.categoryResponse?.avatar : 'https://bit.ly/sage-adebayo'} />
           <Text fontWeight="bold" fontSize="2xl">
             Dr. {infoDoctor.accountResponse?.name}
           </Text>
           <Text fontSize="md">{infoDoctor.categoryResponse?.name}</Text>
           <Text fontSize="md">{infoDoctor.hospitalResponse?.name}</Text>
         </VStack>
-        <VStack w="70%" h="100%" justify="center">
+        <VStack w="60%" h="100%" justify="center">
           <Box
             w="80%"
             h="80%"

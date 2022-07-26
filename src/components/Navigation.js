@@ -12,6 +12,7 @@ import {
   FaCommentDots,
   FaHeart,
   FaHome,
+  FaKey,
   FaSignOutAlt,
   FaUserCircle,
 } from 'react-icons/fa';
@@ -103,7 +104,7 @@ const handleLogout = () =>{
           </Button>
         </HStack>
         <ScaleFade initialScale={0.9} in={isOpen}>
-          <HStack w="23vh" paddingBottom="37vh">
+          <HStack w="23vh">
             <FaUserCircle size="20px" color="white" />
             <Button
               colorScheme="teal"
@@ -113,6 +114,18 @@ const handleLogout = () =>{
               
             >
               <NavLink to="/changeProfile">Profile</NavLink>
+            </Button>
+          </HStack>
+          <HStack w="23vh" paddingBottom="30vh">
+            <FaKey size="20px" color="white" />
+            <Button
+              colorScheme="teal"
+              variant="ghost"
+              fontSize="20px"
+              color="white"
+              
+            >
+              <NavLink to="/changePass">Password</NavLink>
             </Button>
           </HStack>
         </ScaleFade>
