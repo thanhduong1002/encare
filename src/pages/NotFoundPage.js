@@ -1,11 +1,14 @@
-import { Box, Text } from '@chakra-ui/react';
+import {Button, Image, Text, VStack } from '@chakra-ui/react';
 import React from 'react';
-
+import { useNavigate } from 'react-router-dom';
 const NotFoundPage = () => {
+    const navigate = useNavigate();
     return (
-        <Box w='100vw' h='100vh' display='flex' justifyContent='center' alignItems='center' bgImg="url('https://i.pinimg.com/564x/ca/0a/9d/ca0a9dbfaa564ba697c7c3b64481a5f9.jpg')" bg>
-            <Text fontSize='9xl'>404 Not Found Page</Text>
-        </Box>
+        <VStack w='100vw' h='100vh' justify='center'>
+            <Text fontSize='5xl'>404 Not Found Page</Text>
+            <Image h='60vh' src='https://cdn.svgator.com/images/2022/01/funny-404-error-page-design.gif' />
+            <Button colorScheme='blue' onClick={()=>navigate('/login')}>Back to Home</Button>
+        </VStack>
     );
 };
 

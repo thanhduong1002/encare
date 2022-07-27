@@ -108,7 +108,7 @@ const InformationAppointment = () => {
         'Content-Type': 'text/plain',
         Authorization: `Bearer ${token}`,
       },
-      data: {descrip},
+      data: descrip,
     })
       .then(res => {
         console.log(res.data.data);

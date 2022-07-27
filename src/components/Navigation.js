@@ -50,7 +50,7 @@ const handleLogout = () =>{
             Main menu
           </Button>
         </HStack>
-        <ScaleFade initialScale={0.9} in={isOpen}>
+        <ScaleFade initialScale={0.9} in={!isOpen}>
           <VStack w="100%" h="20%">
             <HStack w="100%">
               <FaHome size="20px" color="white" />
@@ -103,7 +103,7 @@ const handleLogout = () =>{
             Settings
           </Button>
         </HStack>
-        <ScaleFade initialScale={0.9} in={isOpen}>
+        <ScaleFade initialScale={0.9} in={!isOpen}>
           <HStack w="23vh">
             <FaUserCircle size="20px" color="white" />
             <Button

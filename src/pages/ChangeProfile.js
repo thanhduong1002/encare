@@ -1,14 +1,28 @@
-import { Avatar, Box, Button, HStack, Image, Input, Text, VStack } from '@chakra-ui/react';
+import {
+  Avatar,
+  Box,
+  Button,
+  HStack,
+  Input,
+  InputGroup,
+  InputLeftAddon,
+  Text,
+  VStack,
+} from '@chakra-ui/react';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { FaLongArrowAltLeft, FaSave } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 
 const ChangeProfile = () => {
-    const navigate = useNavigate();
-    const handleBack = () =>{
-        navigate('/home');
-    }
+  const navigate = useNavigate();
+  const handleBack = () => {
+    navigate('/home');
+  };
+  const handleSave = () => {
+    console.log(birth);
+    console.log(tranferBirthday('10/03/2003 12:00'));
+  };
   const [infoDoctor, setInfoDoctor] = useState([]);
   let token = localStorage.getItem('token');
   useEffect(() => {
@@ -28,12 +42,35 @@ const ChangeProfile = () => {
         console.log(error);
       });
   }, []);
+  const [name, setName] = useState('');
+  const [birth, setBirth] = useState('');
+  const [phone, setPhone] = useState('');
+  const [address, setAddress] = useState(
+    '74/2 Ngo Si Lien, Lien Chieu, Da Nang'
+  );
+  const [hospital, setHospital] = useState('');
+  const [dept, setDept] = useState('');
+  const tranferBirthday = birthday => {
+    let stringbirthday = birthday.slice(0, 10);
+    let arraybirthday = stringbirthday.split('/');
+    return arraybirthday[2] + '-' + arraybirthday[1] + '-' + arraybirthday[0];
+  };
   return (
     <VStack w="100vw" h="100vh" bgColor="#EAF6F6" justify="center">
-        <Box w="80vw" h="10vh" display='flex' flexDirection='row' justifyContent='space-between'>
-            <Button w="7vw" h="10vh" bgColor='#6E85B7' onClick={handleBack}><FaLongArrowAltLeft size='30'/></Button>
-            <Button w="7vw" h="10vh" bgColor='#6E85B7'><FaSave size='30'/></Button>
-        </Box>
+      <Box
+        w="80vw"
+        h="10vh"
+        display="flex"
+        flexDirection="row"
+        justifyContent="space-between"
+      >
+        <Button w="7vw" h="10vh" bgColor="#6E85B7" onClick={handleBack}>
+          <FaLongArrowAltLeft size="30" />
+        </Button>
+        <Button w="7vw" h="10vh" bgColor="#6E85B7" onClick={handleSave}>
+          <FaSave size="30" />
+        </Button>
+      </Box>
       <HStack
         w="80vw"
         h="80vh"
@@ -41,8 +78,16 @@ const ChangeProfile = () => {
         bgColor="#B2C8DF"
         boxShadow="dark-lg"
       >
-        <VStack w="40%" h="100%" justify='center'>
-        <Avatar size='2xl' name='Segun Adebayo' src={infoDoctor.categoryResponse?.avatar ? infoDoctor.categoryResponse?.avatar : 'https://bit.ly/sage-adebayo'} />
+        <VStack w="40%" h="100%" justify="center">
+          <Avatar
+            size="2xl"
+            name="Segun Adebayo"
+            src={
+              infoDoctor.categoryResponse?.avatar
+                ? infoDoctor.categoryResponse?.avatar
+                : 'https://bit.ly/sage-adebayo'
+            }
+          />
           <Text fontWeight="bold" fontSize="2xl">
             Dr. {infoDoctor.accountResponse?.name}
           </Text>
@@ -62,13 +107,13 @@ const ChangeProfile = () => {
               Name:
             </Text>
             <Input
-              className='name'
-              placeholder="Enter your name"
+              placeholder={infoDoctor.accountResponse?.name}
               type="text"
               variant="outline"
               borderWidth="1px"
               borderColor="#B2C8DF"
-              value={infoDoctor.accountResponse?.name}
+              value={name}
+              onChange={e => setName(e.target.value)}
             ></Input>
             <Text fontWeight="bold" fontSize="md">
               Birthday:
@@ -78,18 +123,25 @@ const ChangeProfile = () => {
               variant="outline"
               borderWidth="1px"
               borderColor="#B2C8DF"
+              value="2001-02-10"
+              onChange={e => setBirth(e.target.value)}
             ></Input>
             <Text fontWeight="bold" fontSize="md">
               Phone number:
             </Text>
-            <Input
-              placeholder="Enter your phone number"
-              type="text"
-              variant="outline"
-              borderWidth="1px"
-              borderColor="#B2C8DF"
-              value={infoDoctor.accountResponse?.phone}
-            ></Input>
+            <InputGroup>
+              <InputLeftAddon children="+84" bgColor="#B2C8DF" />
+              <Input
+                placeholder="Enter your phone number"
+                type="text"
+                variant="outline"
+                borderWidth="1px"
+                borderColor="#B2C8DF"
+                // value={infoDoctor.accountResponse?.phone.slice(3,)}
+                value={phone}
+                onChange={e => setPhone(e.target.value)}
+              ></Input>
+            </InputGroup>
             <Text fontWeight="bold" fontSize="md">
               Address:
             </Text>
@@ -99,7 +151,8 @@ const ChangeProfile = () => {
               variant="outline"
               borderWidth="1px"
               borderColor="#B2C8DF"
-              value='74/2 Ngo Si Lien, Lien Chieu, Da Nang'
+              value={address}
+              onChange={e => setAddress(e.target.value)}
             ></Input>
             <Text fontWeight="bold" fontSize="md">
               Hospital:
@@ -110,7 +163,9 @@ const ChangeProfile = () => {
               variant="outline"
               borderWidth="1px"
               borderColor="#B2C8DF"
-              value={infoDoctor.hospitalResponse?.name}
+              // value={infoDoctor.hospitalResponse?.name}
+              value={hospital}
+              onChange={e => setHospital(e.target.value)}
             ></Input>
             <Text fontWeight="bold" fontSize="md">
               Dept:
@@ -121,8 +176,10 @@ const ChangeProfile = () => {
               variant="outline"
               borderWidth="1px"
               borderColor="#B2C8DF"
-              value={infoDoctor.categoryResponse?.name}
-            ></Input>            
+              // value={infoDoctor.categoryResponse?.name}
+              value={dept}
+              onChange={e => setDept(e.target.value)}
+            ></Input>
           </Box>
         </VStack>
       </HStack>

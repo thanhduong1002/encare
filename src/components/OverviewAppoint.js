@@ -1,7 +1,28 @@
 import { Avatar, Button, HStack, Text, VStack } from '@chakra-ui/react';
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 
 const OverviewAppoint = () => {
+  const [appconf, setAppConf] = useState([]);
+  let token = localStorage.getItem('token');
+  useEffect(() => {
+    axios({
+      baseURL:
+        'https://enclave-encare.herokuapp.com/api/doctor/appointments/status=2',
+      method: 'get',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then(res => {
+        console.log(res.data.data);
+        setAppConf(res.data.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }, []);
   return (
     <VStack w="80vw">
       <HStack
@@ -42,245 +63,44 @@ const OverviewAppoint = () => {
           </Text>
         </HStack>
       </HStack>
-
-      <HStack w="95%" h="8%">
-        <HStack w="25%" h="100%">
-          <Avatar
-            name="Segun Adebayo"
-            src="https://media.istockphoto.com/vectors/health-icon-vector-of-male-person-profile-avatar-symbol-for-patient-vector-id1147248211"
-          />
-          <Text fontSize="15px" fontWeight="400">
-            Nguyen Thanh Duong
-          </Text>
-        </HStack>
-        <HStack w="15%" h="100%">
-          <Text fontSize="15px" fontWeight="400">
-            10/02/2023
-          </Text>
-        </HStack>
-        <HStack w="10%" h="100%">
-          <Text fontSize="18px" fontWeight="700">
-            15:00
-          </Text>
-        </HStack>
-        <HStack w="25%" h="100%">
-          <Text fontSize="15px" fontWeight="400">
-            74/2 Nguyen Luong Bang, Lien Chieu, Da Nang
-          </Text>
-        </HStack>
-        <HStack w="15%" h="100%">
-          <Text fontSize="15px" fontWeight="400">
-            Kham tim mach
-          </Text>
-        </HStack>
-        <HStack w="10%" h="100%">
-          <Button colorScheme="green">Confirmed</Button>
-        </HStack>
-      </HStack>
-      <HStack w="95%" h="8%">
-        <HStack w="25%" h="100%">
-          <Avatar
-            name="Segun Adebayo"
-            src="https://media.istockphoto.com/vectors/health-icon-vector-of-male-person-profile-avatar-symbol-for-patient-vector-id1147248211"
-          />
-          <Text fontSize="15px" fontWeight="400">
-            Nguyen Thanh Duong
-          </Text>
-        </HStack>
-        <HStack w="15%" h="100%">
-          <Text fontSize="15px" fontWeight="400">
-            10/02/2023
-          </Text>
-        </HStack>
-        <HStack w="10%" h="100%">
-          <Text fontSize="18px" fontWeight="700">
-            15:00
-          </Text>
-        </HStack>
-        <HStack w="25%" h="100%">
-          <Text fontSize="15px" fontWeight="400">
-            74/2 Nguyen Luong Bang, Lien Chieu, Da Nang
-          </Text>
-        </HStack>
-        <HStack w="15%" h="100%">
-          <Text fontSize="15px" fontWeight="400">
-            Kham tim mach
-          </Text>
-        </HStack>
-        <HStack w="10%" h="100%">
-          <Button colorScheme="green">Confirmed</Button>
-        </HStack>
-      </HStack>
-      <HStack w="95%" h="8%">
-        <HStack w="25%" h="100%">
-          <Avatar
-            name="Segun Adebayo"
-            src="https://media.istockphoto.com/vectors/health-icon-vector-of-male-person-profile-avatar-symbol-for-patient-vector-id1147248211"
-          />
-          <Text fontSize="15px" fontWeight="400">
-            Nguyen Thanh Duong
-          </Text>
-        </HStack>
-        <HStack w="15%" h="100%">
-          <Text fontSize="15px" fontWeight="400">
-            10/02/2023
-          </Text>
-        </HStack>
-        <HStack w="10%" h="100%">
-          <Text fontSize="18px" fontWeight="700">
-            15:00
-          </Text>
-        </HStack>
-        <HStack w="25%" h="100%">
-          <Text fontSize="15px" fontWeight="400">
-            74/2 Nguyen Luong Bang, Lien Chieu, Da Nang
-          </Text>
-        </HStack>
-        <HStack w="15%" h="100%">
-          <Text fontSize="15px" fontWeight="400">
-            Kham tim mach
-          </Text>
-        </HStack>
-        <HStack w="10%" h="100%">
-          <Button colorScheme="green">Confirmed</Button>
-        </HStack>
-      </HStack>
-      <HStack w="95%" h="8%">
-        <HStack w="25%" h="100%">
-          <Avatar
-            name="Segun Adebayo"
-            src="https://media.istockphoto.com/vectors/health-icon-vector-of-male-person-profile-avatar-symbol-for-patient-vector-id1147248211"
-          />
-          <Text fontSize="15px" fontWeight="400">
-            Nguyen Thanh Duong
-          </Text>
-        </HStack>
-        <HStack w="15%" h="100%">
-          <Text fontSize="15px" fontWeight="400">
-            10/02/2023
-          </Text>
-        </HStack>
-        <HStack w="10%" h="100%">
-          <Text fontSize="18px" fontWeight="700">
-            15:00
-          </Text>
-        </HStack>
-        <HStack w="25%" h="100%">
-          <Text fontSize="15px" fontWeight="400">
-            74/2 Nguyen Luong Bang, Lien Chieu, Da Nang
-          </Text>
-        </HStack>
-        <HStack w="15%" h="100%">
-          <Text fontSize="15px" fontWeight="400">
-            Kham tim mach
-          </Text>
-        </HStack>
-        <HStack w="10%" h="100%">
-          <Button colorScheme="red">Cancelled</Button>
-        </HStack>
-      </HStack>
-      <HStack w="95%" h="8%">
-        <HStack w="25%" h="100%">
-          <Avatar
-            name="Segun Adebayo"
-            src="https://media.istockphoto.com/vectors/health-icon-vector-of-male-person-profile-avatar-symbol-for-patient-vector-id1147248211"
-          />
-          <Text fontSize="15px" fontWeight="400">
-            Nguyen Thanh Duong
-          </Text>
-        </HStack>
-        <HStack w="15%" h="100%">
-          <Text fontSize="15px" fontWeight="400">
-            10/02/2023
-          </Text>
-        </HStack>
-        <HStack w="10%" h="100%">
-          <Text fontSize="18px" fontWeight="700">
-            15:00
-          </Text>
-        </HStack>
-        <HStack w="25%" h="100%">
-          <Text fontSize="15px" fontWeight="400">
-            74/2 Nguyen Luong Bang, Lien Chieu, Da Nang
-          </Text>
-        </HStack>
-        <HStack w="15%" h="100%">
-          <Text fontSize="15px" fontWeight="400">
-            Kham tim mach
-          </Text>
-        </HStack>
-        <HStack w="10%" h="100%">
-          <Button colorScheme="green">Confirmed</Button>
-        </HStack>
-      </HStack>
-      <HStack w="95%" h="8%">
-        <HStack w="25%" h="100%">
-          <Avatar
-            name="Segun Adebayo"
-            src="https://media.istockphoto.com/vectors/health-icon-vector-of-male-person-profile-avatar-symbol-for-patient-vector-id1147248211"
-          />
-          <Text fontSize="15px" fontWeight="400">
-            Nguyen Thanh Duong
-          </Text>
-        </HStack>
-        <HStack w="15%" h="100%">
-          <Text fontSize="15px" fontWeight="400">
-            10/02/2023
-          </Text>
-        </HStack>
-        <HStack w="10%" h="100%">
-          <Text fontSize="18px" fontWeight="700">
-            15:00
-          </Text>
-        </HStack>
-        <HStack w="25%" h="100%">
-          <Text fontSize="15px" fontWeight="400">
-            74/2 Nguyen Luong Bang, Lien Chieu, Da Nang
-          </Text>
-        </HStack>
-        <HStack w="15%" h="100%">
-          <Text fontSize="15px" fontWeight="400">
-            Kham tim mach
-          </Text>
-        </HStack>
-        <HStack w="10%" h="100%">
-          <Button colorScheme="red">Cancelled</Button>
-        </HStack>
-      </HStack>
-      <HStack w="95%" h="8%">
-        <HStack w="25%" h="100%">
-          <Avatar
-            name="Segun Adebayo"
-            src="https://media.istockphoto.com/vectors/health-icon-vector-of-male-person-profile-avatar-symbol-for-patient-vector-id1147248211"
-          />
-          <Text fontSize="15px" fontWeight="400">
-            Nguyen Thanh Duong
-          </Text>
-        </HStack>
-        <HStack w="15%" h="100%">
-          <Text fontSize="15px" fontWeight="400">
-            10/02/2023
-          </Text>
-        </HStack>
-        <HStack w="10%" h="100%">
-          <Text fontSize="18px" fontWeight="700">
-            15:00
-          </Text>
-        </HStack>
-        <HStack w="25%" h="100%">
-          <Text fontSize="15px" fontWeight="400">
-            74/2 Nguyen Luong Bang, Lien Chieu, Da Nang
-          </Text>
-        </HStack>
-        <HStack w="15%" h="100%">
-          <Text fontSize="15px" fontWeight="400">
-            Kham tim mach
-          </Text>
-        </HStack>
-        <HStack w="10%" h="100%">
-          <Button colorScheme="green">Confirmed</Button>
-        </HStack>
-      </HStack>
+      {appconf.map((element, index) => {
+        return (
+          <HStack w="95%" h="8%" key={index}>
+            <HStack w="25%" h="100%">
+              <Avatar
+                name="Segun Adebayo"
+                src="https://media.istockphoto.com/vectors/health-icon-vector-of-male-person-profile-avatar-symbol-for-patient-vector-id1147248211"
+              />
+              <Text fontSize="15px" fontWeight="400">
+                {element.userResponse?.accountResponse?.name}
+              </Text>
+            </HStack>
+            <HStack w="15%" h="100%">
+              <Text fontSize="15px" fontWeight="400">
+                {element.day?.slice(0, 10)}
+              </Text>
+            </HStack>
+            <HStack w="10%" h="100%">
+              <Text fontSize="18px" fontWeight="700">
+                {element.time}:00
+              </Text>
+            </HStack>
+            <HStack w="20%" h="100%">
+              <Text fontSize="15px" fontWeight="400">
+                74/2 Nguyen Luong Bang, Lien Chieu, Da Nang
+              </Text>
+            </HStack>
+            <HStack w="20%" h="100%">
+              <Text fontSize="15px" fontWeight="400">
+                {element.doctorResponse?.categoryResponse?.name}
+              </Text>
+            </HStack>
+            <HStack w="10%" h="100%">
+              <Button colorScheme="green">Confirmed</Button>
+            </HStack>
+          </HStack>
+        );
+      })}
     </VStack>
   );
 };
