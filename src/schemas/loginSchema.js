@@ -8,13 +8,13 @@ export const loginSchema = Yup.object().shape({
     .min(10, 'Your phone number has at least 10 digits')
     .required('Required'),
   password: Yup.string()
-    .min(6, 'Your password has at least 6 characters')
+    .min(8, 'Your password has at least 8 characters')
     .required('Required'),
   oldpass: Yup.string()
-    .min(6, 'Your password has at least 6 characters')
+    .min(8, 'Your password has at least 8 characters')
     .required('Required'),
   newpass: Yup.string()
-    .min(6, 'Your password has at least 6 characters')
+    .min(8, 'Your password has at least 8 characters')
     .required('Required'),
   confirmNewPass: Yup.string()
     .oneOf([Yup.ref('newpass'), null], 'Passwords must match')

@@ -10,7 +10,6 @@ const Appointment = () => {
   useEffect(() => {
     axios({
       baseURL: 'https://enclave-encare.herokuapp.com/api/doctor/appointments',
-      // baseURL: 'http://13.229.228.132/api/doctor/appointments',
       method: 'get',
       headers: {
         'Content-Type': 'application/json',

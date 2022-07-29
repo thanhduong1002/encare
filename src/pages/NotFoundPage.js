@@ -7,7 +7,7 @@ const NotFoundPage = () => {
         <VStack w='100vw' h='100vh' justify='center'>
             <Text fontSize='5xl'>404 Not Found Page</Text>
             <Image h='60vh' src='https://cdn.svgator.com/images/2022/01/funny-404-error-page-design.gif' />
-            <Button colorScheme='blue' onClick={()=>navigate('/login')}>Back to Home</Button>
+            <Button colorScheme='blue' onClick={()=>navigate('/')}>Back to Home</Button>
         </VStack>
     );
 };

@@ -6,22 +6,78 @@ import {
   Input,
   InputGroup,
   InputLeftAddon,
+  Menu,
+  MenuButton,
+  MenuGroup,
+  MenuItem,
+  MenuList,
   Text,
+  useToast,
   VStack,
 } from '@chakra-ui/react';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { FaLongArrowAltLeft, FaSave } from 'react-icons/fa';
+import {
+  FaArrowDown,
+  FaAtom,
+  FaBaby,
+  FaBattleNet,
+  FaEye,
+  FaHeadphones,
+  FaLongArrowAltLeft,
+  FaRunning,
+  FaSave,
+} from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 
 const ChangeProfile = () => {
+  const toast = useToast();
   const navigate = useNavigate();
   const handleBack = () => {
     navigate('/home');
   };
   const handleSave = () => {
-    console.log(birth);
-    console.log(tranferBirthday('10/03/2003 12:00'));
+    console.log(nameDoc);
+    console.log(tranferReverseBirthday(birthDoc));
+    console.log(descripDoc);
+    console.log(phoneDoc);
+    console.log(hospitalDoc);
+    console.log(deptDoc);
+    var data = JSON.stringify({
+      "accountId": localStorage.getItem('data'),
+      "name": nameDoc,
+      "description": descripDoc,
+      "birthDay": tranferReverseBirthday(birthDoc),
+      "doctorId": 17,
+      "categoryId": deptDoc,
+      "hospitalId": 1,
+      "avatar": "string",
+      "phone": phoneDoc
+    });
+    axios({
+      baseURL: 'https://enclave-encare.herokuapp.com/api/doctor',
+      method: 'put',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      data: data,
+    })
+      .then(res => {
+        console.log(res.data.status);
+        res.data.status === 200 ? (toast({
+          title: 'Change success',
+          status: 'success',
+          isClosable: true,
+        })) : (toast({
+          title: 'Change fail. Please retry!',
+          status: 'error',
+          isClosable: true,
+        }))
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
   const [infoDoctor, setInfoDoctor] = useState([]);
   let token = localStorage.getItem('token');
@@ -37,24 +93,32 @@ const ChangeProfile = () => {
       .then(res => {
         console.log(res.data.data);
         setInfoDoctor(res.data.data);
+        setNameDoc(res.data.data.accountResponse?.name);
+        setDescripDoc(res.data.data.accountResponse?.description);
+        setBirthDoc(tranferBirthday(res.data.data.accountResponse?.birthday));
+        setPhoneDoc('0' + res.data.data.accountResponse?.phone.slice(3));
+        setHospitalDoc(res.data.data.hospitalResponse?.name);
+        setDeptDoc(res.data.data.categoryResponse?.categoryId);
       })
       .catch(error => {
         console.log(error);
       });
   }, []);
-  const [name, setName] = useState('');
-  const [birth, setBirth] = useState('');
-  const [phone, setPhone] = useState('');
-  const [address, setAddress] = useState(
-    '74/2 Ngo Si Lien, Lien Chieu, Da Nang'
-  );
-  const [hospital, setHospital] = useState('');
-  const [dept, setDept] = useState('');
   const tranferBirthday = birthday => {
     let stringbirthday = birthday.slice(0, 10);
     let arraybirthday = stringbirthday.split('/');
     return arraybirthday[2] + '-' + arraybirthday[1] + '-' + arraybirthday[0];
   };
+  const tranferReverseBirthday = (birthday) => {
+    let arraybirthday = birthday.split('-');
+    return arraybirthday[2] + '/' + arraybirthday[1] + '/' + arraybirthday[0];
+  }
+  const [nameDoc, setNameDoc] = useState('');
+  const [birthDoc, setBirthDoc] = useState('');
+  const [phoneDoc, setPhoneDoc] = useState('');
+  const [descripDoc, setDescripDoc] = useState('');
+  const [hospitalDoc, setHospitalDoc] = useState('');
+  const [deptDoc, setDeptDoc] = useState('');
   return (
     <VStack w="100vw" h="100vh" bgColor="#EAF6F6" justify="center">
       <Box
@@ -107,13 +171,16 @@ const ChangeProfile = () => {
               Name:
             </Text>
             <Input
+              id="name"
               placeholder={infoDoctor.accountResponse?.name}
               type="text"
               variant="outline"
               borderWidth="1px"
               borderColor="#B2C8DF"
-              value={name}
-              onChange={e => setName(e.target.value)}
+              value={nameDoc}
+              onChange={(e) => {
+                setNameDoc(e.target.value);
+              }}
             ></Input>
             <Text fontWeight="bold" fontSize="md">
               Birthday:
@@ -123,8 +190,9 @@ const ChangeProfile = () => {
               variant="outline"
               borderWidth="1px"
               borderColor="#B2C8DF"
-              value="2001-02-10"
-              onChange={e => setBirth(e.target.value)}
+              value={birthDoc}
+              onChange={(e) => {
+                setBirthDoc(e.target.value);}}
             ></Input>
             <Text fontWeight="bold" fontSize="md">
               Phone number:
@@ -132,54 +200,115 @@ const ChangeProfile = () => {
             <InputGroup>
               <InputLeftAddon children="+84" bgColor="#B2C8DF" />
               <Input
-                placeholder="Enter your phone number"
+                id="phone"
+                placeholder='Enter your phone'
                 type="text"
                 variant="outline"
                 borderWidth="1px"
                 borderColor="#B2C8DF"
-                // value={infoDoctor.accountResponse?.phone.slice(3,)}
-                value={phone}
-                onChange={e => setPhone(e.target.value)}
+                value={phoneDoc}
+                onChange={(e) => {
+                  setPhoneDoc(e.target.value);
+                }}
               ></Input>
             </InputGroup>
             <Text fontWeight="bold" fontSize="md">
-              Address:
+              Description:
             </Text>
             <Input
-              placeholder="Enter your address"
+              placeholder="Enter your description"
               type="text"
               variant="outline"
               borderWidth="1px"
               borderColor="#B2C8DF"
-              value={address}
-              onChange={e => setAddress(e.target.value)}
+              value={descripDoc}
+              onChange={(e) => {
+                setDescripDoc(e.target.value);
+              }}
             ></Input>
             <Text fontWeight="bold" fontSize="md">
               Hospital:
             </Text>
             <Input
-              placeholder="Enter your hospital"
+              id="hospital"
+              placeholder={infoDoctor.hospitalResponse?.name}
               type="text"
               variant="outline"
               borderWidth="1px"
               borderColor="#B2C8DF"
-              // value={infoDoctor.hospitalResponse?.name}
-              value={hospital}
-              onChange={e => setHospital(e.target.value)}
+              value={hospitalDoc}
+              onChange={(e) => {
+                setHospitalDoc(e.target.value);
+              }}
+              isDisabled={true}
             ></Input>
             <Text fontWeight="bold" fontSize="md">
               Dept:
             </Text>
-            <Input
-              placeholder="Enter your major"
-              type="text"
-              variant="outline"
-              borderWidth="1px"
-              borderColor="#B2C8DF"
-              // value={infoDoctor.categoryResponse?.name}
-              value={dept}
-              onChange={e => setDept(e.target.value)}
-            ></Input>
+            <Menu>
+              <MenuButton as={Button} colorScheme="twitter" rightIcon={<FaArrowDown />}>
+                {deptDoc === 24
+                  ? 'Neuroscience'
+                  : deptDoc === 25
+                  ? 'Orthopaedic Surgery & Sports Medicine'
+                  : deptDoc === 26
+                  ? 'Oncology Department'
+                  : deptDoc === 27
+                  ? 'Pediatrics'
+                  : deptDoc === 28
+                  ? 'Department of Otolaryngology'
+                  : deptDoc === 29
+                  ? 'Ophthalmology'
+                  : 'Dept'}
+              </MenuButton>
+              <MenuList>
+                <MenuGroup>
+                  <MenuItem icon={<FaBattleNet />}
+                    onClick={() => {
+                      setDeptDoc(24);
+                    }}
+                  >
+                     Neuroscience
+                  </MenuItem>
+                  <MenuItem icon={<FaRunning />}
+                    onClick={() => {
+                      setDeptDoc(25);
+                    }}
+                  >
+                     Orthopaedic Surgery & Sports Medicine
+                  </MenuItem>
+                  <MenuItem icon={<FaAtom />}
+                    onClick={() => {
+                      setDeptDoc(26);
+                    }}
+                  >
+                    
+                    Oncology Department
+                  </MenuItem>
+                  <MenuItem icon={<FaBaby />}
+                    onClick={() => {
+                      setDeptDoc(27);
+                    }}
+                  >
+                     Pediatrics
+                  </MenuItem>
+                  <MenuItem icon={<FaHeadphones />}
+                    onClick={() => {
+                      setDeptDoc(28);
+                    }}
+                  >
+                     Department of Otolaryngology
+                  </MenuItem>
+                  <MenuItem icon={<FaEye />}
+                    onClick={() => {
+                      setDeptDoc(29);
+                    }}
+                  >
+                     Ophthalmology
+                  </MenuItem>
+                </MenuGroup>
+              </MenuList>
+            </Menu>
           </Box>
         </VStack>
       </HStack>

@@ -76,23 +76,23 @@ const ChangePassword = () => {
         <FaExchangeAlt size="35" color="white" />
         <FaKey size="35" color="white" />
       </HStack>
-      <VStack w='70%' h='10vh' alignItems='start'>
-      <Button
-      h='100%'
-        leftIcon={<FaAngleLeft />}
-        color="white"
-        colorScheme="blue"
-        onClick={handleBack}
-        size='lg'
-      >
-        Back
-      </Button>
+      <VStack w="70%" h="10vh" alignItems="start">
+        <Button
+          h="100%"
+          leftIcon={<FaAngleLeft />}
+          color="white"
+          colorScheme="blue"
+          onClick={handleBack}
+          size="lg"
+        >
+          Back
+        </Button>
       </VStack>
       <HStack
         w="70vw"
         h="70vh"
         bgImg='url("https://scontent.fdad1-1.fna.fbcdn.net/v/t1.15752-9/289429842_1245697359568477_5427190611156351214_n.png?_nc_cat=103&ccb=1-7&_nc_sid=ae9488&_nc_ohc=aNmKPh-4GCMAX-rL8Bz&_nc_ht=scontent.fdad1-1.fna&oh=03_AVK7b7w__JxScifnKpOMzEo3nCdypoHnFkDB0pf-4-vRkw&oe=6304CD61")'
-        opacity='1'
+        opacity="1"
         borderRadius="8px"
         boxShadow="dark-lg"
         padding="10vw"
@@ -106,18 +106,6 @@ const ChangePassword = () => {
             justify="center"
             padding="2vw"
           >
-            <Input
-              type="text"
-              padding="10px"
-              h="50px"
-              color="#000"
-              borderWidth="2px"
-              borderColor="blue.700"
-              value={
-                localStorage.getItem('data') && localStorage.getItem('data')
-              }
-              onChange={handleChange}
-            />
             <InputGroup>
               <Input
                 id="oldpass"
@@ -132,14 +120,8 @@ const ChangePassword = () => {
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
-              <InputRightElement>
-                <Button
-                  h="40px"
-                  w="50px"
-                  top="5px"
-                  right="5px"
-                  onClick={handleClick1}
-                >
+              <InputRightElement h="40px" w="50px">
+                <Button top="5px" right="5px" onClick={handleClick1}>
                   {show1 ? <FaEyeSlash /> : <FaEye />}
                 </Button>
               </InputRightElement>
@@ -163,14 +145,8 @@ const ChangePassword = () => {
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
-              <InputRightElement>
-                <Button
-                  h="40px"
-                  w="50px"
-                  top="5px"
-                  right="5px"
-                  onClick={handleClick2}
-                >
+              <InputRightElement h="40px" w="50px">
+                <Button top="5px" right="5px" onClick={handleClick2}>
                   {show2 ? <FaEyeSlash /> : <FaEye />}
                 </Button>
               </InputRightElement>
@@ -194,14 +170,8 @@ const ChangePassword = () => {
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
-              <InputRightElement>
-                <Button
-                  h="40px"
-                  w="50px"
-                  top="5px"
-                  right="5px"
-                  onClick={handleClick3}
-                >
+              <InputRightElement h="40px" w="50px">
+                <Button top="5px" right="5px" onClick={handleClick3}>
                   {show3 ? <FaEyeSlash /> : <FaEye />}
                 </Button>
               </InputRightElement>
