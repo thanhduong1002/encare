@@ -23,6 +23,7 @@ const LoginPage = () => {
   const tranferPage = () => {
     localStorage.setItem('data', result.accountId);
     localStorage.setItem('token', result.token);
+    localStorage.setItem('password', values.password);
     console.log(result);
     navigate('/home');
   };

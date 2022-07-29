@@ -54,6 +54,12 @@ const ChangeProfile = () => {
           status: 'error',
           isClosable: true,
         })
+      : /^[0-9]{9,11}$/.test(phoneDoc) === false
+      ? toast({
+          title: 'Invalid phone number',
+          status: 'error',
+          isClosable: true,
+        })
       : nameDoc === '' ||
         birthDoc === '' ||
         descripDoc === '' ||
@@ -135,14 +141,14 @@ const ChangeProfile = () => {
   const [deptDoc, setDeptDoc] = useState('');
   const [IdDoc, setIdDoc] = useState('');
   const handleTest = () => {
-    /^[a-zA-Z]{2,}(?: [a-zA-Z]{2,}){1,}$/.test(nameDoc)
+    /^[0-9]{9,11}$/.test(phoneDoc)
       ? toast({
-          title: 'True name',
+          title: 'True phone number',
           status: 'success',
           isClosable: true,
         })
       : toast({
-          title: 'Fail name',
+          title: 'Fail phone number',
           status: 'error',
           isClosable: true,
         });

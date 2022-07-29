@@ -19,6 +19,7 @@ import { useToast } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { loginSchema } from '../schemas/loginSchema';
 import { useFormik } from 'formik';
+import axios from 'axios';
 
 const ChangePassword = () => {
   const navigate = useNavigate();
@@ -32,22 +33,47 @@ const ChangePassword = () => {
   const handleBack = () => {
     navigate('/home');
   };
+  let token = localStorage.getItem('token');
+  let password = localStorage.getItem('password');
   const handleChangePass = () => {
-    values.oldpass.split(' ').join('') !== '' &&
-    values.newpass.split(' ').join('') !== '' &&
-    values.confirmNewPass.split(' ').join('') ===
-      values.newpass.split(' ').join('')
-      ? toast({
-          title: 'Change sucessfully',
-          status: 'success',
-          isClosable: true,
+    values.oldpass === password && values.newpass === values.confirmNewPass
+      ? axios({
+          baseURL: 'https://encare-doctor.herokuapp.com/api/doctor/password',
+          method: 'put',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          data: JSON.stringify({
+            accountId: localStorage.getItem('data'),
+            oldPassword: values.oldpass,
+            newPassword: values.newpass,
+          }),
         })
+          .then(res => {
+            console.log(res.data.status);
+            res.data.status === 200
+              ? toast({
+                  title: 'Change success',
+                  status: 'success',
+                  isClosable: true,
+                })
+              : toast({
+                  title: res.data.data,
+                  status: 'error',
+                  isClosable: true,
+                });
+          })
+          .catch(error => {
+            console.log(error);
+          })
       : toast({
-          title: 'Password mismatch',
+          title: 'Old password not right',
           status: 'error',
           isClosable: true,
         });
   };
+
   const onSubmit = () => {
     console.log('summited');
   };
