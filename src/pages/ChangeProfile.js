@@ -37,48 +37,60 @@ const ChangeProfile = () => {
     navigate('/home');
   };
   const handleSave = () => {
-    console.log(nameDoc);
-    console.log(tranferReverseBirthday(birthDoc));
-    console.log(descripDoc);
-    console.log(phoneDoc);
-    console.log(hospitalDoc);
-    console.log(deptDoc);
     var data = JSON.stringify({
-      "accountId": localStorage.getItem('data'),
-      "name": nameDoc,
-      "description": descripDoc,
-      "birthDay": tranferReverseBirthday(birthDoc),
-      "doctorId": 17,
-      "categoryId": deptDoc,
-      "hospitalId": 1,
-      "avatar": "string",
-      "phone": phoneDoc
+      accountId: localStorage.getItem('data'),
+      name: nameDoc,
+      description: descripDoc,
+      birthDay: tranferReverseBirthday(birthDoc),
+      doctorId: IdDoc,
+      categoryId: deptDoc,
+      hospitalId: 1,
+      avatar: 'string',
+      phone: phoneDoc,
     });
-    axios({
-      baseURL: 'https://enclave-encare.herokuapp.com/api/doctor',
-      method: 'put',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      data: data,
-    })
-      .then(res => {
-        console.log(res.data.status);
-        res.data.status === 200 ? (toast({
-          title: 'Change success',
-          status: 'success',
-          isClosable: true,
-        })) : (toast({
-          title: 'Change fail. Please retry!',
+    /^[a-zA-Z]{2,}(?: [a-zA-Z]{2,}){1,}$/.test(nameDoc) === false
+      ? toast({
+          title: 'Invalid name',
           status: 'error',
           isClosable: true,
-        }))
-      })
-      .catch(error => {
-        console.log(error);
-      });
+        })
+      : nameDoc === '' ||
+        birthDoc === '' ||
+        descripDoc === '' ||
+        phoneDoc === ''
+      ? toast({
+          title: 'Please complete all information',
+          status: 'error',
+          isClosable: true,
+        })
+      : axios({
+          baseURL: 'https://enclave-encare.herokuapp.com/api/doctor',
+          method: 'put',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          data: data,
+        })
+          .then(res => {
+            console.log(res.data.status);
+            res.data.status === 200
+              ? toast({
+                  title: 'Change success',
+                  status: 'success',
+                  isClosable: true,
+                })
+              : toast({
+                  title: 'Change fail. Please retry!',
+                  status: 'error',
+                  isClosable: true,
+                });
+          })
+          .catch(error => {
+            console.log(error);
+          });
   };
+
   const [infoDoctor, setInfoDoctor] = useState([]);
   let token = localStorage.getItem('token');
   useEffect(() => {
@@ -99,26 +111,42 @@ const ChangeProfile = () => {
         setPhoneDoc('0' + res.data.data.accountResponse?.phone.slice(3));
         setHospitalDoc(res.data.data.hospitalResponse?.name);
         setDeptDoc(res.data.data.categoryResponse?.categoryId);
+        setIdDoc(res.data.data.doctorId);
       })
       .catch(error => {
         console.log(error);
       });
   }, []);
+
   const tranferBirthday = birthday => {
     let stringbirthday = birthday.slice(0, 10);
     let arraybirthday = stringbirthday.split('/');
     return arraybirthday[2] + '-' + arraybirthday[1] + '-' + arraybirthday[0];
   };
-  const tranferReverseBirthday = (birthday) => {
+  const tranferReverseBirthday = birthday => {
     let arraybirthday = birthday.split('-');
     return arraybirthday[2] + '/' + arraybirthday[1] + '/' + arraybirthday[0];
-  }
+  };
   const [nameDoc, setNameDoc] = useState('');
   const [birthDoc, setBirthDoc] = useState('');
   const [phoneDoc, setPhoneDoc] = useState('');
   const [descripDoc, setDescripDoc] = useState('');
   const [hospitalDoc, setHospitalDoc] = useState('');
   const [deptDoc, setDeptDoc] = useState('');
+  const [IdDoc, setIdDoc] = useState('');
+  const handleTest = () => {
+    /^[a-zA-Z]{2,}(?: [a-zA-Z]{2,}){1,}$/.test(nameDoc)
+      ? toast({
+          title: 'True name',
+          status: 'success',
+          isClosable: true,
+        })
+      : toast({
+          title: 'Fail name',
+          status: 'error',
+          isClosable: true,
+        });
+  };
   return (
     <VStack w="100vw" h="100vh" bgColor="#EAF6F6" justify="center">
       <Box
@@ -178,7 +206,7 @@ const ChangeProfile = () => {
               borderWidth="1px"
               borderColor="#B2C8DF"
               value={nameDoc}
-              onChange={(e) => {
+              onChange={e => {
                 setNameDoc(e.target.value);
               }}
             ></Input>
@@ -191,8 +219,9 @@ const ChangeProfile = () => {
               borderWidth="1px"
               borderColor="#B2C8DF"
               value={birthDoc}
-              onChange={(e) => {
-                setBirthDoc(e.target.value);}}
+              onChange={e => {
+                setBirthDoc(e.target.value);
+              }}
             ></Input>
             <Text fontWeight="bold" fontSize="md">
               Phone number:
@@ -201,13 +230,13 @@ const ChangeProfile = () => {
               <InputLeftAddon children="+84" bgColor="#B2C8DF" />
               <Input
                 id="phone"
-                placeholder='Enter your phone'
+                placeholder="Enter your phone"
                 type="text"
                 variant="outline"
                 borderWidth="1px"
                 borderColor="#B2C8DF"
                 value={phoneDoc}
-                onChange={(e) => {
+                onChange={e => {
                   setPhoneDoc(e.target.value);
                 }}
               ></Input>
@@ -222,7 +251,7 @@ const ChangeProfile = () => {
               borderWidth="1px"
               borderColor="#B2C8DF"
               value={descripDoc}
-              onChange={(e) => {
+              onChange={e => {
                 setDescripDoc(e.target.value);
               }}
             ></Input>
@@ -237,7 +266,7 @@ const ChangeProfile = () => {
               borderWidth="1px"
               borderColor="#B2C8DF"
               value={hospitalDoc}
-              onChange={(e) => {
+              onChange={e => {
                 setHospitalDoc(e.target.value);
               }}
               isDisabled={true}
@@ -246,7 +275,12 @@ const ChangeProfile = () => {
               Dept:
             </Text>
             <Menu>
-              <MenuButton as={Button} colorScheme="twitter" rightIcon={<FaArrowDown />}>
+              <MenuButton
+                as={Button}
+                bgColor="#B2C8DF"
+                color="black"
+                rightIcon={<FaArrowDown />}
+              >
                 {deptDoc === 24
                   ? 'Neuroscience'
                   : deptDoc === 25
@@ -263,48 +297,53 @@ const ChangeProfile = () => {
               </MenuButton>
               <MenuList>
                 <MenuGroup>
-                  <MenuItem icon={<FaBattleNet />}
+                  <MenuItem
+                    icon={<FaBattleNet />}
                     onClick={() => {
                       setDeptDoc(24);
                     }}
                   >
-                     Neuroscience
+                    Neuroscience
                   </MenuItem>
-                  <MenuItem icon={<FaRunning />}
+                  <MenuItem
+                    icon={<FaRunning />}
                     onClick={() => {
                       setDeptDoc(25);
                     }}
                   >
-                     Orthopaedic Surgery & Sports Medicine
+                    Orthopaedic Surgery & Sports Medicine
                   </MenuItem>
-                  <MenuItem icon={<FaAtom />}
+                  <MenuItem
+                    icon={<FaAtom />}
                     onClick={() => {
                       setDeptDoc(26);
                     }}
                   >
-                    
                     Oncology Department
                   </MenuItem>
-                  <MenuItem icon={<FaBaby />}
+                  <MenuItem
+                    icon={<FaBaby />}
                     onClick={() => {
                       setDeptDoc(27);
                     }}
                   >
-                     Pediatrics
+                    Pediatrics
                   </MenuItem>
-                  <MenuItem icon={<FaHeadphones />}
+                  <MenuItem
+                    icon={<FaHeadphones />}
                     onClick={() => {
                       setDeptDoc(28);
                     }}
                   >
-                     Department of Otolaryngology
+                    Department of Otolaryngology
                   </MenuItem>
-                  <MenuItem icon={<FaEye />}
+                  <MenuItem
+                    icon={<FaEye />}
                     onClick={() => {
                       setDeptDoc(29);
                     }}
                   >
-                     Ophthalmology
+                    Ophthalmology
                   </MenuItem>
                 </MenuGroup>
               </MenuList>
@@ -312,6 +351,7 @@ const ChangeProfile = () => {
           </Box>
         </VStack>
       </HStack>
+      <Button onClick={handleTest}>Test</Button>
     </VStack>
   );
 };

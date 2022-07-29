@@ -35,7 +35,6 @@ const ChangePassword = () => {
   const handleChangePass = () => {
     values.oldpass.split(' ').join('') !== '' &&
     values.newpass.split(' ').join('') !== '' &&
-    // values.oldpass.split(' ').join('') !== values.newpass.split(' ').join('') &&
     values.confirmNewPass.split(' ').join('') ===
       values.newpass.split(' ').join('')
       ? toast({
