@@ -1,9 +1,11 @@
 import { Avatar, Button, HStack, Text, VStack } from '@chakra-ui/react';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const HistoryAppoint = () => {
   const [apphis, setAppHis] = useState([]);
+  const navigate = useNavigate();
   let token = localStorage.getItem('token');
   useEffect(() => {
     axios({
@@ -23,6 +25,13 @@ const HistoryAppoint = () => {
         console.log(error);
       });
   }, []);
+  let x, sta;
+  const handleTest = () => {
+    console.log(x);
+    localStorage.setItem('IDAppoint', x);
+    localStorage.setItem('IDStatus', sta);
+    navigate('/infoapp');
+  };
   return (
     <VStack w="80vw">
       <HStack
@@ -96,7 +105,16 @@ const HistoryAppoint = () => {
               </Text>
             </HStack>
             <HStack w="10%" h="100%">
-              <Button colorScheme="blue">Done</Button>
+              <Button
+                colorScheme="blue"
+                onClick={() => {
+                  x = element.appointmentId;
+                  sta = element.statusResponse?.statusId;
+                  handleTest();
+                }}
+              >
+                Done
+              </Button>
             </HStack>
           </HStack>
         );

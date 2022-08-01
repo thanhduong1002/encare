@@ -3,14 +3,14 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const ConfirmAppoint = () => {
-  const [appconf, setAppConf] = useState([]);
+const CancelAppoint = () => {
+  const [apphis, setAppHis] = useState([]);
   const navigate = useNavigate();
   let token = localStorage.getItem('token');
   useEffect(() => {
     axios({
       baseURL:
-        'https://enclave-encare.herokuapp.com/api/doctor/appointments/status=1',
+        'https://enclave-encare.herokuapp.com/api/doctor/appointments/status=4',
       method: 'get',
       headers: {
         'Content-Type': 'application/json',
@@ -19,7 +19,7 @@ const ConfirmAppoint = () => {
     })
       .then(res => {
         console.log(res.data.data);
-        setAppConf(res.data.data);
+        setAppHis(res.data.data);
       })
       .catch(error => {
         console.log(error);
@@ -72,7 +72,7 @@ const ConfirmAppoint = () => {
           </Text>
         </HStack>
       </HStack>
-      {appconf.map((element, index) => {
+      {apphis.map((element, index) => {
         return (
           <HStack w="95%" h="8%" key={index}>
             <HStack w="25%" h="100%">
@@ -106,14 +106,14 @@ const ConfirmAppoint = () => {
             </HStack>
             <HStack w="10%" h="100%">
               <Button
-                colorScheme="yellow"
+                colorScheme="red"
                 onClick={() => {
                   x = element.appointmentId;
                   sta = element.statusResponse?.statusId;
                   handleTest();
                 }}
               >
-                Waiting
+                Canceled
               </Button>
             </HStack>
           </HStack>
@@ -123,4 +123,4 @@ const ConfirmAppoint = () => {
   );
 };
 
-export default ConfirmAppoint;
+export default CancelAppoint;

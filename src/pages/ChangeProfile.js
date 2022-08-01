@@ -70,7 +70,7 @@ const ChangeProfile = () => {
           isClosable: true,
         })
       : axios({
-          baseURL: 'https://enclave-encare.herokuapp.com/api/doctor',
+          baseURL: 'https://encare-doctor.herokuapp.com/api/doctor',
           method: 'put',
           headers: {
             'Content-Type': 'application/json',

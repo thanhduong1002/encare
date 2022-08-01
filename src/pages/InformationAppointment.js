@@ -31,6 +31,7 @@ const InformationAppointment = () => {
       .then(res => {
         console.log(res.data.data);
         setInfoApp(res.data.data);
+        
       })
       .catch(error => {
         console.log(error);
@@ -48,15 +49,21 @@ const InformationAppointment = () => {
     })
       .then(res => {
         console.log(res.data.data);
+        res.data.status === 200
+              ? toast({
+                  title: 'Canceled Appointment',
+                  status: 'error',
+                  isClosable: true,
+                })
+              : toast({
+                  title: "Can't cancel appointment",
+                  status: 'warning',
+                  isClosable: true,
+                });
       })
       .catch(error => {
         console.log(error);
       });
-    toast({
-      title: 'Appointment canceled',
-      status: 'error',
-      isClosable: true,
-    });
   };
   const handleConfirm = () => {
     axios({
@@ -69,15 +76,21 @@ const InformationAppointment = () => {
     })
       .then(res => {
         console.log(res.data.data);
+        res.data.status === 200
+              ? toast({
+                  title: 'Confirmed Appointment',
+                  status: 'success',
+                  isClosable: true,
+                })
+              : toast({
+                  title: "Can't confirm appointment",
+                  status: 'warning',
+                  isClosable: true,
+                });
       })
       .catch(error => {
         console.log(error);
       });
-    toast({
-      title: 'Appointment confirmed',
-      status: 'success',
-      isClosable: true,
-    });
   };
   const handleDone = () => {
     axios({

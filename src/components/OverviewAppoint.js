@@ -1,10 +1,12 @@
 import { Avatar, Button, HStack, Text, VStack } from '@chakra-ui/react';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const OverviewAppoint = () => {
   const [appconf, setAppConf] = useState([]);
   let token = localStorage.getItem('token');
+  const navigate = useNavigate();
   useEffect(() => {
     axios({
       baseURL:
@@ -23,6 +25,13 @@ const OverviewAppoint = () => {
         console.log(error);
       });
   }, []);
+  let x, sta;
+  const handleTest = () => {
+    console.log(x);
+    localStorage.setItem('IDAppoint', x);
+    localStorage.setItem('IDStatus', sta);
+    navigate('/infoapp');
+  };
   return (
     <VStack w="80vw">
       <HStack
@@ -96,7 +105,16 @@ const OverviewAppoint = () => {
               </Text>
             </HStack>
             <HStack w="10%" h="100%">
-              <Button colorScheme="green">Confirmed</Button>
+              <Button
+                colorScheme="green"
+                onClick={() => {
+                  x = element.appointmentId;
+                  sta = element.statusResponse?.statusId;
+                  handleTest();
+                }}
+              >
+                Confirmed
+              </Button>
             </HStack>
           </HStack>
         );
