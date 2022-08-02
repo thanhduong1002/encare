@@ -16,6 +16,7 @@ import { FaEye, FaEyeSlash, FaHeart } from 'react-icons/fa';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { loginSchema } from '../schemas/loginSchema';
 import { useToast } from '@chakra-ui/react';
+import axios from 'axios';
 
 const LoginPage = () => {
   const toast = useToast();
@@ -25,18 +26,31 @@ const LoginPage = () => {
     localStorage.setItem('token', result.token);
     localStorage.setItem('password', values.password);
     console.log(result);
+    let token = localStorage.getItem('token');
+    axios({
+      baseURL: 'https://enclave-encare.herokuapp.com/api/doctor',
+      method: 'get',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then(res => {
+        console.log(res.data.data);
+        localStorage.setItem('Id',res.data.data.doctorId);
+        localStorage.setItem('Name',res.data.data.accountResponse?.name);
+        localStorage.setItem('Birthday',res.data.data.accountResponse?.birthday?.slice(0,10));
+        localStorage.setItem('Phone',res.data.data.accountResponse?.phone);
+        localStorage.setItem('Description',res.data.data.accountResponse?.description);
+        localStorage.setItem('Hospital',res.data.data.hospitalResponse?.name);
+        localStorage.setItem('Dept',res.data.data.categoryResponse?.categoryId);
+        localStorage.setItem('Avatar',res.data.data.accountResponse?.avatar);
+      })
+      .catch(error => {
+        console.log(error);
+      });
     navigate('/home');
   };
-  // useEffect(() => {
-  //   fetch('https://enclave-encare.herokuapp.com/api/user/login', {
-  //     method: 'OPTIONS',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //   })
-  //     .then(response => response.json())
-  //     .catch(error => console.log(error));
-  // }, []);
   const handleLogin = () => {
     postLogin({
       phone: values.phone,

@@ -12,7 +12,6 @@ import React, { useEffect, useState } from 'react';
 import { FaCalendarAlt, FaChild, FaSearch } from 'react-icons/fa';
 import Appointment from '../components/Appointment';
 import Navigation from '../components/Navigation';
-import OverviewAppoint from '../components/OverviewAppoint';
 const HomePage = () => {
   const [infoDoctor, setInfoDoctor] = useState([]);
   let token = localStorage.getItem('token');
@@ -40,7 +39,7 @@ const HomePage = () => {
         <HStack w="100%" h="7%" flexDirection="row-reverse">
           <Avatar
             name={infoDoctor.accountResponse?.name}
-            src={infoDoctor.accountResponse?.avatar ? infoDoctor.accountResponse?.avatar : "https://i.pinimg.com/736x/22/75/e9/2275e96e3c8b92ccf02f47ad365c38bb.jpg"}
+            src={infoDoctor.accountResponse?.avatar ? infoDoctor.accountResponse?.avatar : "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"}
             margin="5px"
             padding="1px"
           />
@@ -142,7 +141,7 @@ const HomePage = () => {
             Today's Appointments
           </Text>
         </Box>
-        <Appointment/>
+        {/* <Appointment/> */}
       </VStack>
     </HStack>
   );

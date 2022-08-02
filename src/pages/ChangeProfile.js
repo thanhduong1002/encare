@@ -33,8 +33,13 @@ import { useNavigate } from 'react-router-dom';
 const ChangeProfile = () => {
   const toast = useToast();
   const navigate = useNavigate();
+  let token = localStorage.getItem('token');
   const handleBack = () => {
     navigate('/home');
+  };
+  const tranferReverseBirthday = birthday => {
+    let arraybirthday = birthday.split('-');
+    return arraybirthday[2] + '/' + arraybirthday[1] + '/' + arraybirthday[0];
   };
   const handleSave = () => {
     var data = JSON.stringify({
@@ -42,12 +47,17 @@ const ChangeProfile = () => {
       name: nameDoc,
       description: descripDoc,
       birthDay: tranferReverseBirthday(birthDoc),
-      doctorId: IdDoc,
-      categoryId: deptDoc,
+      doctorId: localStorage.getItem('Id'),
+      categoryId: parseInt(deptDoc),
       hospitalId: 1,
       avatar: 'string',
       phone: phoneDoc,
     });
+    localStorage.setItem('Name', nameDoc);
+    localStorage.setItem('Birthday', tranferReverseBirthday(birthDoc));
+    localStorage.setItem('Phone', phoneDoc);
+    localStorage.setItem('Description', descripDoc);
+    localStorage.setItem('Dept', parseInt(deptDoc));
     /^[a-zA-Z]{2,}(?: [a-zA-Z]{2,}){1,}$/.test(nameDoc) === false
       ? toast({
           title: 'Invalid name',
@@ -96,63 +106,25 @@ const ChangeProfile = () => {
             console.log(error);
           });
   };
-
-  const [infoDoctor, setInfoDoctor] = useState([]);
-  let token = localStorage.getItem('token');
-  useEffect(() => {
-    axios({
-      baseURL: 'https://enclave-encare.herokuapp.com/api/doctor',
-      method: 'get',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then(res => {
-        console.log(res.data.data);
-        setInfoDoctor(res.data.data);
-        setNameDoc(res.data.data.accountResponse?.name);
-        setDescripDoc(res.data.data.accountResponse?.description);
-        setBirthDoc(tranferBirthday(res.data.data.accountResponse?.birthday));
-        setPhoneDoc('0' + res.data.data.accountResponse?.phone.slice(3));
-        setHospitalDoc(res.data.data.hospitalResponse?.name);
-        setDeptDoc(res.data.data.categoryResponse?.categoryId);
-        setIdDoc(res.data.data.doctorId);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }, []);
-
   const tranferBirthday = birthday => {
     let stringbirthday = birthday.slice(0, 10);
     let arraybirthday = stringbirthday.split('/');
     return arraybirthday[2] + '-' + arraybirthday[1] + '-' + arraybirthday[0];
   };
-  const tranferReverseBirthday = birthday => {
-    let arraybirthday = birthday.split('-');
-    return arraybirthday[2] + '/' + arraybirthday[1] + '/' + arraybirthday[0];
-  };
-  const [nameDoc, setNameDoc] = useState('');
-  const [birthDoc, setBirthDoc] = useState('');
-  const [phoneDoc, setPhoneDoc] = useState('');
-  const [descripDoc, setDescripDoc] = useState('');
-  const [hospitalDoc, setHospitalDoc] = useState('');
-  const [deptDoc, setDeptDoc] = useState('');
-  const [IdDoc, setIdDoc] = useState('');
-  const handleTest = () => {
-    /^[0-9]{9,11}$/.test(phoneDoc)
-      ? toast({
-          title: 'True phone number',
-          status: 'success',
-          isClosable: true,
-        })
-      : toast({
-          title: 'Fail phone number',
-          status: 'error',
-          isClosable: true,
-        });
-  };
+  const [nameDoc, setNameDoc] = useState(() => localStorage.getItem('Name'));
+  const [birthDoc, setBirthDoc] = useState(() =>
+    tranferBirthday(localStorage.getItem('Birthday'))
+  );
+  const [phoneDoc, setPhoneDoc] = useState(
+    () => '0' + localStorage.getItem('Phone').slice(1,)
+  );
+  const [descripDoc, setDescripDoc] = useState(() =>
+    localStorage.getItem('Description')
+  );
+  const [hospitalDoc, setHospitalDoc] = useState(() =>
+    localStorage.getItem('Hospital')
+  );
+  const [deptDoc, setDeptDoc] = useState(() => localStorage.getItem('Dept'));
   return (
     <VStack w="100vw" h="100vh" bgColor="#EAF6F6" justify="center">
       <Box
@@ -179,18 +151,32 @@ const ChangeProfile = () => {
         <VStack w="40%" h="100%" justify="center">
           <Avatar
             size="2xl"
-            name="Segun Adebayo"
+            name={nameDoc}
             src={
-              infoDoctor.categoryResponse?.avatar
-                ? infoDoctor.categoryResponse?.avatar
-                : 'https://bit.ly/sage-adebayo'
+              localStorage.getItem('Avatar')
+                ? localStorage.getItem('Avatar')
+                : 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80'
             }
           />
           <Text fontWeight="bold" fontSize="2xl">
-            Dr. {infoDoctor.accountResponse?.name}
+            Dr. {nameDoc}
           </Text>
-          <Text fontSize="md">{infoDoctor.categoryResponse?.name}</Text>
-          <Text fontSize="md">{infoDoctor.hospitalResponse?.name}</Text>
+          <Text fontSize="md">
+            {deptDoc === '24'
+              ? 'Neuroscience'
+              : deptDoc === '25'
+              ? 'Orthopaedic Surgery & Sports Medicine'
+              : deptDoc === '26'
+              ? 'Oncology Department'
+              : deptDoc === '27'
+              ? 'Pediatrics'
+              : deptDoc === '28'
+              ? 'Department of Otolaryngology'
+              : deptDoc === '29'
+              ? 'Ophthalmology'
+              : null}
+          </Text>
+          <Text fontSize="md">{hospitalDoc}</Text>
         </VStack>
         <VStack w="60%" h="100%" justify="center">
           <Box
@@ -206,7 +192,7 @@ const ChangeProfile = () => {
             </Text>
             <Input
               id="name"
-              placeholder={infoDoctor.accountResponse?.name}
+              placeholder="Enter your name"
               type="text"
               variant="outline"
               borderWidth="1px"
@@ -266,7 +252,7 @@ const ChangeProfile = () => {
             </Text>
             <Input
               id="hospital"
-              placeholder={infoDoctor.hospitalResponse?.name}
+              placeholder="Enter your hospital"
               type="text"
               variant="outline"
               borderWidth="1px"
@@ -287,17 +273,17 @@ const ChangeProfile = () => {
                 color="black"
                 rightIcon={<FaArrowDown />}
               >
-                {deptDoc === 24
+                {deptDoc === '24'
                   ? 'Neuroscience'
-                  : deptDoc === 25
+                  : deptDoc === '25'
                   ? 'Orthopaedic Surgery & Sports Medicine'
-                  : deptDoc === 26
+                  : deptDoc === '26'
                   ? 'Oncology Department'
-                  : deptDoc === 27
+                  : deptDoc === '27'
                   ? 'Pediatrics'
-                  : deptDoc === 28
+                  : deptDoc === '28'
                   ? 'Department of Otolaryngology'
-                  : deptDoc === 29
+                  : deptDoc === '29'
                   ? 'Ophthalmology'
                   : 'Dept'}
               </MenuButton>
@@ -306,7 +292,7 @@ const ChangeProfile = () => {
                   <MenuItem
                     icon={<FaBattleNet />}
                     onClick={() => {
-                      setDeptDoc(24);
+                      setDeptDoc('24');
                     }}
                   >
                     Neuroscience
@@ -314,7 +300,7 @@ const ChangeProfile = () => {
                   <MenuItem
                     icon={<FaRunning />}
                     onClick={() => {
-                      setDeptDoc(25);
+                      setDeptDoc('25');
                     }}
                   >
                     Orthopaedic Surgery & Sports Medicine
@@ -322,7 +308,7 @@ const ChangeProfile = () => {
                   <MenuItem
                     icon={<FaAtom />}
                     onClick={() => {
-                      setDeptDoc(26);
+                      setDeptDoc('26');
                     }}
                   >
                     Oncology Department
@@ -330,7 +316,7 @@ const ChangeProfile = () => {
                   <MenuItem
                     icon={<FaBaby />}
                     onClick={() => {
-                      setDeptDoc(27);
+                      setDeptDoc('27');
                     }}
                   >
                     Pediatrics
@@ -338,7 +324,7 @@ const ChangeProfile = () => {
                   <MenuItem
                     icon={<FaHeadphones />}
                     onClick={() => {
-                      setDeptDoc(28);
+                      setDeptDoc('28');
                     }}
                   >
                     Department of Otolaryngology
@@ -346,7 +332,7 @@ const ChangeProfile = () => {
                   <MenuItem
                     icon={<FaEye />}
                     onClick={() => {
-                      setDeptDoc(29);
+                      setDeptDoc('29');
                     }}
                   >
                     Ophthalmology
@@ -357,7 +343,6 @@ const ChangeProfile = () => {
           </Box>
         </VStack>
       </HStack>
-      <Button onClick={handleTest}>Test</Button>
     </VStack>
   );
 };

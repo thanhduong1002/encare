@@ -58,7 +58,7 @@ const CancelAppoint = () => {
         </HStack>
         <HStack w="25%" h="100%">
           <Text fontSize="18px" fontWeight="600">
-            Address
+            Symptoms
           </Text>
         </HStack>
         <HStack w="15%" h="100%">
@@ -96,12 +96,12 @@ const CancelAppoint = () => {
             </HStack>
             <HStack w="20%" h="100%">
               <Text fontSize="15px" fontWeight="400">
-                74/2 Nguyen Luong Bang, Lien Chieu, Da Nang
+                {element.symptoms}
               </Text>
             </HStack>
-            <HStack w="20%" h="100%">
+            <HStack w="20%" h="100%" justify='center'>
               <Text fontSize="15px" fontWeight="400">
-                {element.doctorResponse?.categoryResponse?.name}
+                {element.description}
               </Text>
             </HStack>
             <HStack w="10%" h="100%">

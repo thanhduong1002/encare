@@ -31,7 +31,6 @@ const InformationAppointment = () => {
       .then(res => {
         console.log(res.data.data);
         setInfoApp(res.data.data);
-        
       })
       .catch(error => {
         console.log(error);
@@ -50,16 +49,16 @@ const InformationAppointment = () => {
       .then(res => {
         console.log(res.data.data);
         res.data.status === 200
-              ? toast({
-                  title: 'Canceled Appointment',
-                  status: 'error',
-                  isClosable: true,
-                })
-              : toast({
-                  title: "Can't cancel appointment",
-                  status: 'warning',
-                  isClosable: true,
-                });
+          ? toast({
+              title: 'Canceled Appointment',
+              status: 'error',
+              isClosable: true,
+            })
+          : toast({
+              title: "Can't cancel appointment",
+              status: 'warning',
+              isClosable: true,
+            });
       })
       .catch(error => {
         console.log(error);
@@ -77,16 +76,16 @@ const InformationAppointment = () => {
       .then(res => {
         console.log(res.data.data);
         res.data.status === 200
-              ? toast({
-                  title: 'Confirmed Appointment',
-                  status: 'success',
-                  isClosable: true,
-                })
-              : toast({
-                  title: "Can't confirm appointment",
-                  status: 'warning',
-                  isClosable: true,
-                });
+          ? toast({
+              title: 'Confirmed Appointment',
+              status: 'success',
+              isClosable: true,
+            })
+          : toast({
+              title: "Can't confirm appointment",
+              status: 'warning',
+              isClosable: true,
+            });
       })
       .catch(error => {
         console.log(error);
@@ -147,20 +146,22 @@ const InformationAppointment = () => {
       bgGradient="linear(to-r, #E7F6F2, #A5C9CA)"
       justify="center"
     >
-      <Button
-        w="10vw"
-        h="10vh"
-        bgColor="blackAlpha.200"
-        justify="center"
-        onClick={handleBack}
-        letterSpacing="2px"
-      >
-        <FaAngleLeft size="30" />
-        <Text fontSize="23" fontWeight="bold">
-          {' '}
-          Back
-        </Text>
-      </Button>
+      <Box w="95%" h="10vh">
+        <Button
+          w="10vw"
+          h="100%"
+          bgColor="blackAlpha.200"
+          justify="center"
+          onClick={handleBack}
+          letterSpacing="2px"
+        >
+          <FaAngleLeft size="30" />
+          <Text fontSize="23" fontWeight="bold">
+            {' '}
+            Back
+          </Text>
+        </Button>
+      </Box>
       <HStack
         w="95%"
         h="60%"
@@ -174,23 +175,21 @@ const InformationAppointment = () => {
             src={
               infoApp.userResponse?.accountResponse?.avatar
                 ? infoApp.userResponse?.accountResponse?.avatar
-                : 'https://i.pinimg.com/564x/e9/27/18/e92718fef313e59f1e6ae10a6273cfc4.jpg'
+                : 'https://images.unsplash.com/photo-1576765974028-008094730ee4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1178&q=80'
             }
             w="100%"
             h="32vh"
             borderRadius="8px"
           />
-          {/* <VStack w='100%' h='15%' bgColor='#E7F6F2' boxShadow='dark-lg' borderRadius='8px'> */}
           <Text fontWeight={'600'} fontSize="xl" color={'#2155CD'}>
             {infoApp.userResponse?.accountResponse?.name}
           </Text>
           <Text fontWeight={'600'} fontSize="md" color={'#2155CD'}>
-            {infoApp.userResponse?.accountResponse?.birthday}
+            {infoApp.userResponse?.accountResponse?.birthday?.slice(0, 10)}
           </Text>
           <Text fontWeight={'600'} fontSize="md" color={'#2155CD'}>
             {infoApp.userResponse?.accountResponse?.phone}
           </Text>
-          {/* </VStack> */}
           <HStack w="100%" h="20%" justifyContent="space-around">
             <Button bgColor="#395B64" color="#E7F6F2">
               Info
@@ -224,7 +223,7 @@ const InformationAppointment = () => {
                 marginBottom="10px"
                 color="white"
                 value={descrip}
-                onChange={(e) => setDescrip(e.target.value)}
+                onChange={e => setDescrip(e.target.value)}
               ></Input>
             </Box>
           ) : (
