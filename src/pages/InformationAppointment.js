@@ -16,26 +16,10 @@ import axios from 'axios';
 const InformationAppointment = () => {
   const idAppoint = localStorage.getItem('IDAppoint');
   const idStatus = localStorage.getItem('IDStatus');
-  const [infoApp, setInfoApp] = useState([]);
-  const [descrip, setDescrip] = useState('');
+  const [descrip, setDescrip] = useState(() =>
+    localStorage.getItem('DescripPatient')
+  );
   let token = localStorage.getItem('token');
-  useEffect(() => {
-    axios({
-      baseURL: `https://enclave-encare.herokuapp.com/api/doctor/appointment/${idAppoint}`,
-      method: 'get',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then(res => {
-        console.log(res.data.data);
-        setInfoApp(res.data.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }, []);
   const toast = useToast();
   const handleCancel = () => {
     axios({
@@ -102,15 +86,21 @@ const InformationAppointment = () => {
     })
       .then(res => {
         console.log(res.data.data);
+        res.data.status === 200
+          ? toast({
+              title: 'Done Appointment',
+              status: 'success',
+              isClosable: true,
+            })
+          : toast({
+              title: "Can't done appointment",
+              status: 'warning',
+              isClosable: true,
+            });
       })
       .catch(error => {
         console.log(error);
       });
-    toast({
-      title: 'Appointment done',
-      status: 'info',
-      isClosable: true,
-    });
   };
   const handleUpdate = () => {
     axios({
@@ -124,16 +114,21 @@ const InformationAppointment = () => {
     })
       .then(res => {
         console.log(res.data.data);
+        res.data.status === 200
+          ? toast({
+              title: 'Updated Description',
+              status: 'success',
+              isClosable: true,
+            })
+          : toast({
+              title: "Can't updated Description",
+              status: 'warning',
+              isClosable: true,
+            });
       })
       .catch(error => {
         console.log(error);
       });
-    toast({
-      title: 'Appointment done',
-      status: 'info',
-      isClosable: true,
-    });
-    console.log(descrip);
   };
   const navigate = useNavigate();
   const handleBack = () => {
@@ -173,8 +168,8 @@ const InformationAppointment = () => {
         <VStack w="30%" h="90%">
           <Image
             src={
-              infoApp.userResponse?.accountResponse?.avatar
-                ? infoApp.userResponse?.accountResponse?.avatar
+              localStorage.getItem('AvatarPatient') !== 'null'
+                ? localStorage.getItem('AvatarPatient')
                 : 'https://images.unsplash.com/photo-1576765974028-008094730ee4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1178&q=80'
             }
             w="100%"
@@ -182,13 +177,15 @@ const InformationAppointment = () => {
             borderRadius="8px"
           />
           <Text fontWeight={'600'} fontSize="xl" color={'#2155CD'}>
-            {infoApp.userResponse?.accountResponse?.name}
+            {localStorage.getItem('NamePatient')}
           </Text>
           <Text fontWeight={'600'} fontSize="md" color={'#2155CD'}>
-            {infoApp.userResponse?.accountResponse?.birthday?.slice(0, 10)}
+            {localStorage.getItem('BirthPatient') !== 'null'
+              ? localStorage.getItem('BirthPatient')?.slice(0, 10)
+              : null}
           </Text>
           <Text fontWeight={'600'} fontSize="md" color={'#2155CD'}>
-            {infoApp.userResponse?.accountResponse?.phone}
+            {localStorage.getItem('PhonePatient')}
           </Text>
           <HStack w="100%" h="20%" justifyContent="space-around">
             <Button bgColor="#395B64" color="#E7F6F2">
@@ -212,7 +209,7 @@ const InformationAppointment = () => {
           <Text fontWeight="bold" fontSize="xl">
             Symptoms:
           </Text>
-          <Text>{infoApp.symptoms}</Text>
+          <Text>{localStorage.getItem('SymptomPatient')}</Text>
           {idStatus === '3' ? (
             <Box>
               <Text fontWeight="bold" fontSize="xl" marginBottom="10px">
@@ -253,7 +250,7 @@ const InformationAppointment = () => {
                 justify="center"
               >
                 <Text fontWeight="bold" fontSize="23">
-                  {infoApp.day?.slice(0, 2)}
+                  {localStorage.getItem('DayPatient')?.slice(0, 2)}
                 </Text>
               </HStack>
             </VStack>
@@ -268,7 +265,7 @@ const InformationAppointment = () => {
                 justify="center"
               >
                 <Text fontWeight="bold" fontSize="23">
-                  {infoApp.day?.slice(3, 5)}
+                  {localStorage.getItem('DayPatient')?.slice(3, 5)}
                 </Text>
               </HStack>
             </VStack>
@@ -283,7 +280,7 @@ const InformationAppointment = () => {
                 justify="center"
               >
                 <Text fontWeight="bold" fontSize="23">
-                  {infoApp.day?.slice(6, 10)}
+                  {localStorage.getItem('DayPatient')?.slice(6, 10)}
                 </Text>
               </HStack>
             </VStack>
@@ -298,7 +295,7 @@ const InformationAppointment = () => {
                 justify="center"
               >
                 <Text fontWeight="bold" fontSize="23">
-                  {infoApp.time}:00
+                  {localStorage.getItem('TimePatient')}:00
                 </Text>
               </HStack>
             </VStack>
@@ -315,7 +312,10 @@ const InformationAppointment = () => {
                 w="20%"
                 fontSize="16"
                 fontWeight="bold"
-                onClick={handleCancel}
+                onClick={() => {
+                  localStorage.setItem('waitingPatients',(parseInt(localStorage.getItem('waitingPatients')) - 1).toString());
+                  handleCancel();
+                }}
               >
                 Cancel
               </Button>
@@ -324,7 +324,11 @@ const InformationAppointment = () => {
                 w="20%"
                 fontSize="16"
                 fontWeight="bold"
-                onClick={handleConfirm}
+                onClick={() => {
+                  localStorage.setItem('confirmedPatients',(parseInt(localStorage.getItem('confirmedPatients')) + 1).toString());
+                  localStorage.setItem('waitingPatients',(parseInt(localStorage.getItem('waitingPatients')) - 1).toString());
+                  handleConfirm();
+                }}
               >
                 Confirm
               </Button>
@@ -336,7 +340,11 @@ const InformationAppointment = () => {
                 w="20%"
                 fontSize="16"
                 fontWeight="bold"
-                onClick={handleDone}
+                onClick={() => {
+                  localStorage.setItem('confirmedPatients',(parseInt(localStorage.getItem('confirmedPatients')) - 1).toString());
+                  localStorage.setItem('donePatients',(parseInt(localStorage.getItem('donePatients')) + 1).toString());
+                  handleDone();
+                }}
               >
                 Done
               </Button>
@@ -348,7 +356,6 @@ const InformationAppointment = () => {
                 w="20%"
                 fontSize="16"
                 fontWeight="bold"
-                // onClick={handleUpdate}
                 onClick={handleUpdate}
               >
                 Update

@@ -6,7 +6,7 @@ export const loginSchema = Yup.object().shape({
   phone: Yup.string()
     .matches(phoneRegExp, 'Phone number is not valid')
     .max(11, 'Your phone number must have at maximum 11 digits')
-    .min(10, 'Your phone number has at least 10 digits')
+    .min(9, 'Your phone number has at least 9 digits')
     .required('Required'),
   password: Yup.string()
     .min(8, 'Your password has at least 8 characters')

@@ -1,4 +1,17 @@
-import {Avatar, Box, Button, HStack, Input, Tab, TabList, TabPanel, TabPanels, Tabs, Text, VStack} from '@chakra-ui/react';
+import {
+  Avatar,
+  Box,
+  Button,
+  HStack,
+  Input,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
+  Text,
+  VStack,
+} from '@chakra-ui/react';
 import React from 'react';
 
 import Navigation from '../components/Navigation';
@@ -15,14 +28,18 @@ const AppointmentPage = () => {
       <VStack w="80vw" h="100vh">
         <HStack w="100%" h="7%" flexDirection="row-reverse">
           <Avatar
-            name="Thanh Duong"
-            src="https://i.pinimg.com/736x/22/75/e9/2275e96e3c8b92ccf02f47ad365c38bb.jpg"
+            name={localStorage.getItem('Name')}
+            src={
+              localStorage.getItem('Avatar') !== 'string'
+                ? localStorage.getItem('Avatar')
+                : 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80'
+            }
             margin="5px"
             padding="1px"
           />
           <HStack w="15%" h="100%">
             <Text fontSize="16px" fontWeight="600">
-              Thanh Duong
+              {localStorage.getItem('Name')}
             </Text>
           </HStack>
 
@@ -53,7 +70,7 @@ const AppointmentPage = () => {
                 Total Patients
               </Text>
               <Text fontSize="20px" fontWeight="600">
-                7
+                {localStorage.getItem('total')}
               </Text>
             </Box>
           </HStack>
@@ -69,10 +86,10 @@ const AppointmentPage = () => {
             </HStack>
             <Box>
               <Text fontSize="20px" fontWeight="400">
-                Appointments
+                Waiting Appointments
               </Text>
               <Text fontSize="20px" fontWeight="600">
-                7
+                {localStorage.getItem('waitingPatients')}
               </Text>
             </Box>
           </HStack>
@@ -88,10 +105,10 @@ const AppointmentPage = () => {
             </HStack>
             <Box>
               <Text fontSize="20px" fontWeight="400">
-                Appointments
+                Confirmed Appointments
               </Text>
               <Text fontSize="20px" fontWeight="600">
-                7
+                {localStorage.getItem('confirmedPatients')}
               </Text>
             </Box>
           </HStack>
@@ -107,10 +124,10 @@ const AppointmentPage = () => {
             </HStack>
             <Box>
               <Text fontSize="20px" fontWeight="400">
-                Appointments
+                Done Appointments
               </Text>
               <Text fontSize="20px" fontWeight="600">
-                7
+                {localStorage.getItem('donePatients')}
               </Text>
             </Box>
           </HStack>{' '}
@@ -126,16 +143,16 @@ const AppointmentPage = () => {
             </TabList>
             <TabPanels>
               <TabPanel>
-                <OverviewAppoint/>
+                <OverviewAppoint />
               </TabPanel>
               <TabPanel>
-                <HistoryAppoint/>
+                <HistoryAppoint />
               </TabPanel>
               <TabPanel>
-                <ConfirmAppoint/>
+                <ConfirmAppoint />
               </TabPanel>
               <TabPanel>
-                <CancelAppoint/>
+                <CancelAppoint />
               </TabPanel>
             </TabPanels>
           </Tabs>

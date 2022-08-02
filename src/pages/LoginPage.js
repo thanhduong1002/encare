@@ -27,6 +27,7 @@ const LoginPage = () => {
     localStorage.setItem('password', values.password);
     console.log(result);
     let token = localStorage.getItem('token');
+    //Get profile doctor
     axios({
       baseURL: 'https://enclave-encare.herokuapp.com/api/doctor',
       method: 'get',
@@ -49,6 +50,70 @@ const LoginPage = () => {
       .catch(error => {
         console.log(error);
       });
+      //Total Patients
+      axios({
+        baseURL: 'https://encare-doctor.herokuapp.com/api/doctor/appointments/size',
+        method: 'get',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then(res => {
+          console.log(res.data.data);
+          localStorage.setItem('total',res.data.data);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+        //Number of patients waiting 
+        axios({
+          baseURL: 'https://encare-doctor.herokuapp.com/api/doctor/appointments/status=1/size',
+          method: 'get',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        })
+          .then(res => {
+            console.log(res.data.data);
+            localStorage.setItem('waitingPatients',res.data.data);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+        //Number of patients confirmed  
+        axios({
+          baseURL: 'https://encare-doctor.herokuapp.com/api/doctor/appointments/status=2/size',
+          method: 'get',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        })
+          .then(res => {
+            console.log(res.data.data);
+            localStorage.setItem('confirmedPatients',res.data.data);
+          })
+          .catch(error => {
+            console.log(error);
+          }); 
+        //Number of patients done 
+        axios({
+          baseURL: 'https://encare-doctor.herokuapp.com/api/doctor/appointments/status=3/size',
+          method: 'get',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        })
+          .then(res => {
+            console.log(res.data.data);
+            localStorage.setItem('donePatients',res.data.data);
+          })
+          .catch(error => {
+            console.log(error);
+          });
     navigate('/home');
   };
   const handleLogin = () => {

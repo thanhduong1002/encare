@@ -16,7 +16,7 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   FaArrowDown,
   FaAtom,
@@ -41,6 +41,9 @@ const ChangeProfile = () => {
     let arraybirthday = birthday.split('-');
     return arraybirthday[2] + '/' + arraybirthday[1] + '/' + arraybirthday[0];
   };
+  const soChuan = phonenum => {
+    return '+84' + phonenum.slice(1,);
+  };
   const handleSave = () => {
     var data = JSON.stringify({
       accountId: localStorage.getItem('data'),
@@ -53,9 +56,10 @@ const ChangeProfile = () => {
       avatar: 'string',
       phone: phoneDoc,
     });
+    let phonefake = phoneDoc;
     localStorage.setItem('Name', nameDoc);
     localStorage.setItem('Birthday', tranferReverseBirthday(birthDoc));
-    localStorage.setItem('Phone', phoneDoc);
+    localStorage.setItem('Phone', soChuan(phonefake));
     localStorage.setItem('Description', descripDoc);
     localStorage.setItem('Dept', parseInt(deptDoc));
     /^[a-zA-Z]{2,}(?: [a-zA-Z]{2,}){1,}$/.test(nameDoc) === false
@@ -116,7 +120,7 @@ const ChangeProfile = () => {
     tranferBirthday(localStorage.getItem('Birthday'))
   );
   const [phoneDoc, setPhoneDoc] = useState(
-    () => '0' + localStorage.getItem('Phone').slice(1,)
+    () =>'0' + localStorage.getItem('Phone').slice(3)
   );
   const [descripDoc, setDescripDoc] = useState(() =>
     localStorage.getItem('Description')
@@ -153,7 +157,7 @@ const ChangeProfile = () => {
             size="2xl"
             name={nameDoc}
             src={
-              localStorage.getItem('Avatar')
+              localStorage.getItem('Avatar') !== 'string'
                 ? localStorage.getItem('Avatar')
                 : 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80'
             }

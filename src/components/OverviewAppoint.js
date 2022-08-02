@@ -25,11 +25,7 @@ const OverviewAppoint = () => {
         console.log(error);
       });
   }, []);
-  let x, sta;
   const handleTest = () => {
-    console.log(x);
-    localStorage.setItem('IDAppoint', x);
-    localStorage.setItem('IDStatus', sta);
     navigate('/infoapp');
   };
   return (
@@ -108,8 +104,16 @@ const OverviewAppoint = () => {
               <Button
                 colorScheme="green"
                 onClick={() => {
-                  x = element.appointmentId;
-                  sta = element.statusResponse?.statusId;
+                  localStorage.setItem('IDAppoint', element.appointmentId);
+                  localStorage.setItem('IDStatus', element.statusResponse?.statusId);
+                  localStorage.setItem('AvatarPatient', element.userResponse?.accountResponse?.avatar);
+                  localStorage.setItem('NamePatient', element.userResponse?.accountResponse?.name);
+                  localStorage.setItem('BirthPatient', element.userResponse?.accountResponse?.birthday);
+                  localStorage.setItem('PhonePatient', element.userResponse?.accountResponse?.phone);
+                  localStorage.setItem('SymptomPatient', element.symptoms);
+                  localStorage.setItem('DescripPatient', element.description);
+                  localStorage.setItem('DayPatient', element.day);
+                  localStorage.setItem('TimePatient', element.time);
                   handleTest();
                 }}
               >

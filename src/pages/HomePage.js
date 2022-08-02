@@ -7,47 +7,32 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react';
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { FaCalendarAlt, FaChild, FaSearch } from 'react-icons/fa';
-import Appointment from '../components/Appointment';
 import Navigation from '../components/Navigation';
 const HomePage = () => {
-  const [infoDoctor, setInfoDoctor] = useState([]);
-  let token = localStorage.getItem('token');
-  useEffect(() => {
-    axios({
-      baseURL: 'https://enclave-encare.herokuapp.com/api/doctor',
-      method: 'get',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then(res => {
-        console.log(res.data.data);
-        setInfoDoctor(res.data.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }, []);
   return (
     <HStack>
       <Navigation />
       <VStack w="80vw" h="100vh">
         <HStack w="100%" h="7%" flexDirection="row-reverse">
           <Avatar
-            name={infoDoctor.accountResponse?.name}
-            src={infoDoctor.accountResponse?.avatar ? infoDoctor.accountResponse?.avatar : "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"}
+            name={localStorage.getItem('Name')}
+            src={
+              localStorage.getItem('Avatar') !== 'string'
+                ? localStorage.getItem('Avatar')
+                : 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80'
+            }
             margin="5px"
             padding="1px"
           />
-          <HStack w='15%' h='100%'>
-          <Text fontSize='16px' fontWeight='600'>{infoDoctor.accountResponse?.name}</Text>
+          <HStack w="15%" h="100%">
+            <Text fontSize="16px" fontWeight="600">
+              {localStorage.getItem('Name')}
+            </Text>
           </HStack>
-          
-          <Input placeholder="Search..." ></Input>
+
+          <Input placeholder="Search..."></Input>
           <Button>
             <FaSearch />
           </Button>
@@ -74,7 +59,7 @@ const HomePage = () => {
                 Total Patients
               </Text>
               <Text fontSize="20px" fontWeight="600">
-                7
+                {localStorage.getItem('total')}
               </Text>
             </Box>
           </HStack>
@@ -90,10 +75,10 @@ const HomePage = () => {
             </HStack>
             <Box>
               <Text fontSize="20px" fontWeight="400">
-                Appointments
+                Waiting Appointments
               </Text>
               <Text fontSize="20px" fontWeight="600">
-                7
+                {localStorage.getItem('waitingPatients')}
               </Text>
             </Box>
           </HStack>
@@ -109,10 +94,10 @@ const HomePage = () => {
             </HStack>
             <Box>
               <Text fontSize="20px" fontWeight="400">
-                Appointments
+                Confirmed Appointments
               </Text>
               <Text fontSize="20px" fontWeight="600">
-                7
+                {localStorage.getItem('confirmedPatients')}
               </Text>
             </Box>
           </HStack>
@@ -128,10 +113,10 @@ const HomePage = () => {
             </HStack>
             <Box>
               <Text fontSize="20px" fontWeight="400">
-                Appointments
+                Done Appointments
               </Text>
               <Text fontSize="20px" fontWeight="600">
-                7
+                {localStorage.getItem('donePatients')}
               </Text>
             </Box>
           </HStack>{' '}
