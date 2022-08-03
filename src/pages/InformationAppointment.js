@@ -168,9 +168,11 @@ const InformationAppointment = () => {
         <VStack w="30%" h="90%">
           <Image
             src={
-              localStorage.getItem('AvatarPatient') !== 'null'
-                ? localStorage.getItem('AvatarPatient')
-                : 'https://images.unsplash.com/photo-1576765974028-008094730ee4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1178&q=80'
+              localStorage.getItem('AvatarPatient') === 'null'
+                ? 'https://images.unsplash.com/photo-1576765974028-008094730ee4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1178&q=80'
+                : localStorage.getItem('AvatarPatient') === ''
+                ? 'https://images.unsplash.com/photo-1576765974028-008094730ee4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1178&q=80'
+                : localStorage.getItem('AvatarPatient')
             }
             w="100%"
             h="32vh"
@@ -313,7 +315,12 @@ const InformationAppointment = () => {
                 fontSize="16"
                 fontWeight="bold"
                 onClick={() => {
-                  localStorage.setItem('waitingPatients',(parseInt(localStorage.getItem('waitingPatients')) - 1).toString());
+                  localStorage.setItem(
+                    'waitingPatients',
+                    (
+                      parseInt(localStorage.getItem('waitingPatients')) - 1
+                    ).toString()
+                  );
                   handleCancel();
                 }}
               >
@@ -325,8 +332,18 @@ const InformationAppointment = () => {
                 fontSize="16"
                 fontWeight="bold"
                 onClick={() => {
-                  localStorage.setItem('confirmedPatients',(parseInt(localStorage.getItem('confirmedPatients')) + 1).toString());
-                  localStorage.setItem('waitingPatients',(parseInt(localStorage.getItem('waitingPatients')) - 1).toString());
+                  localStorage.setItem(
+                    'confirmedPatients',
+                    (
+                      parseInt(localStorage.getItem('confirmedPatients')) + 1
+                    ).toString()
+                  );
+                  localStorage.setItem(
+                    'waitingPatients',
+                    (
+                      parseInt(localStorage.getItem('waitingPatients')) - 1
+                    ).toString()
+                  );
                   handleConfirm();
                 }}
               >
@@ -341,8 +358,18 @@ const InformationAppointment = () => {
                 fontSize="16"
                 fontWeight="bold"
                 onClick={() => {
-                  localStorage.setItem('confirmedPatients',(parseInt(localStorage.getItem('confirmedPatients')) - 1).toString());
-                  localStorage.setItem('donePatients',(parseInt(localStorage.getItem('donePatients')) + 1).toString());
+                  localStorage.setItem(
+                    'confirmedPatients',
+                    (
+                      parseInt(localStorage.getItem('confirmedPatients')) - 1
+                    ).toString()
+                  );
+                  localStorage.setItem(
+                    'donePatients',
+                    (
+                      parseInt(localStorage.getItem('donePatients')) + 1
+                    ).toString()
+                  );
                   handleDone();
                 }}
               >

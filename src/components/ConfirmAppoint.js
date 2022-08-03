@@ -1,129 +1,83 @@
-import { Avatar, Button, HStack, Text, VStack } from '@chakra-ui/react';
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import {
+  Box,
+  HStack,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
+  Text,
+  VStack,
+} from '@chakra-ui/react';
+import React from 'react';
+import Page1 from './ConfirmAppoints/Page1';
+import Page2 from './ConfirmAppoints/Page2';
+import Page3 from './ConfirmAppoints/Page3';
 
 const ConfirmAppoint = () => {
-  const [appconf, setAppConf] = useState([]);
-  const navigate = useNavigate();
-  let token = localStorage.getItem('token');
-  useEffect(() => {
-    axios({
-      baseURL:
-        'https://enclave-encare.herokuapp.com/api/doctor/appointments/status=1',
-      method: 'get',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then(res => {
-        console.log(res.data.data);
-        setAppConf(res.data.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }, []);
-  const handleTest = () => {
-    navigate('/infoapp');
-  };
   return (
-    <VStack w="80vw">
-      <HStack
-        w="95%"
-        h="8%"
-        borderColor="#6AE0D9"
-        borderTopWidth="2px"
-        borderBottomWidth="2px"
-      >
-        <HStack w="25%" h="100%">
-          <Text fontSize="18px" fontWeight="600">
-            Name
-          </Text>
-        </HStack>
-        <HStack w="15%" h="100%">
-          <Text fontSize="18px" fontWeight="600">
-            Date
-          </Text>
-        </HStack>
-        <HStack w="10%" h="100%">
-          <Text fontSize="18px" fontWeight="600">
-            Time
-          </Text>
-        </HStack>
-        <HStack w="25%" h="100%">
-          <Text fontSize="18px" fontWeight="600">
-            Symptoms
-          </Text>
-        </HStack>
-        <HStack w="15%" h="100%">
-          <Text fontSize="18px" fontWeight="600">
-            Description
-          </Text>
-        </HStack>
-        <HStack w="10%" h="100%">
-          <Text fontSize="18px" fontWeight="600">
-            Status
-          </Text>
-        </HStack>
-      </HStack>
-      {appconf.map((element, index) => {
-        return (
-          <HStack w="95%" h="8%" key={index}>
-            <HStack w="25%" h="100%">
-              <Avatar
-                name="Segun Adebayo"
-                src="https://media.istockphoto.com/vectors/health-icon-vector-of-male-person-profile-avatar-symbol-for-patient-vector-id1147248211"
-              />
-              <Text fontSize="15px" fontWeight="400">
-                {element.userResponse?.accountResponse?.name}
-              </Text>
-            </HStack>
-            <HStack w="15%" h="100%">
-              <Text fontSize="15px" fontWeight="400">
-                {element.day?.slice(0, 10)}
-              </Text>
-            </HStack>
-            <HStack w="10%" h="100%">
-              <Text fontSize="18px" fontWeight="700">
-                {element.time}:00
-              </Text>
-            </HStack>
-            <HStack w="20%" h="100%">
-              <Text fontSize="15px" fontWeight="400">
-              {element.symptoms}
-              </Text>
-            </HStack>
-            <HStack w="20%" h="100%" justify='center'>
-              <Text fontSize="15px" fontWeight="400" >
-                {element.description}
-              </Text>
-            </HStack>
-            <HStack w="10%" h="100%">
-              <Button
-                colorScheme="yellow"
-                onClick={() => {
-                  localStorage.setItem('IDAppoint', element.appointmentId);
-                  localStorage.setItem('IDStatus', element.statusResponse?.statusId);
-                  localStorage.setItem('AvatarPatient', element.userResponse?.accountResponse?.avatar);
-                  localStorage.setItem('NamePatient', element.userResponse?.accountResponse?.name);
-                  localStorage.setItem('BirthPatient', element.userResponse?.accountResponse?.birthday);
-                  localStorage.setItem('PhonePatient', element.userResponse?.accountResponse?.phone);
-                  localStorage.setItem('SymptomPatient', element.symptoms);
-                  localStorage.setItem('DescripPatient', element.description);
-                  localStorage.setItem('DayPatient', element.day);
-                  localStorage.setItem('TimePatient', element.time);
-                  handleTest();
-                }}
-              >
-                Waiting
-              </Button>
-            </HStack>
+    <VStack w="78vw" h="100%">       
+        <HStack
+          w="95%"
+          h="8%"
+          borderColor="#6AE0D9"
+          borderTopWidth="2px"
+          borderBottomWidth="2px"
+        >
+          <HStack w="25%" h="100%">
+            <Text fontSize="18px" fontWeight="600">
+              Name
+            </Text>
           </HStack>
-        );
-      })}
-    </VStack>
+          <HStack w="15%" h="100%">
+            <Text fontSize="18px" fontWeight="600">
+              Date
+            </Text>
+          </HStack>
+          <HStack w="10%" h="100%">
+            <Text fontSize="18px" fontWeight="600">
+              Time
+            </Text>
+          </HStack>
+          <HStack w="25%" h="100%">
+            <Text fontSize="18px" fontWeight="600">
+              Symptoms
+            </Text>
+          </HStack>
+          <HStack w="15%" h="100%">
+            <Text fontSize="18px" fontWeight="600">
+              Description
+            </Text>
+          </HStack>
+          <HStack w="10%" h="100%">
+            <Text fontSize="18px" fontWeight="600">
+              Status
+            </Text>
+          </HStack>
+        </HStack>
+        <Box w='100%'>
+        <Tabs  align='center'>
+          <TabPanels>
+            <TabPanel>
+              <Page1 />
+            </TabPanel>
+            <TabPanel>
+              <Page2 />
+            </TabPanel>
+            <TabPanel>
+              <Page3 />
+            </TabPanel>
+          </TabPanels>
+          <Box w='20%' h='7vh' pos='fixed' bottom='10px' right='8vw'>
+          <TabList>
+            <Tab>1</Tab>
+            <Tab>2</Tab>
+            <Tab>3</Tab>
+          </TabList>
+          </Box>
+        </Tabs>
+        </Box>
+      </VStack>
   );
 };
 

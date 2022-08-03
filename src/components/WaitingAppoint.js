@@ -10,11 +10,12 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import React from 'react';
-import Page1 from './HistoryAppoints/Page1';
-import Page2 from './HistoryAppoints/Page2';
-import Page3 from './HistoryAppoints/Page3';
+import Page1 from './WaitingAppoints/Page1';
+import Page2 from './WaitingAppoints/Page2';
+import Page3 from './WaitingAppoints/Page3';
 
-const HistoryAppoint = () => {
+const WaitingAppoint = () => {
+  
   return (
     <VStack w="78vw" h="100%">       
         <HStack
@@ -81,4 +82,4 @@ const HistoryAppoint = () => {
   );
 };
 
-export default HistoryAppoint;
+export default WaitingAppoint;

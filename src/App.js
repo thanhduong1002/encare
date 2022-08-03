@@ -1,5 +1,6 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
+import Page1 from './components/CancelAppoints/Page1';
 import Navigation from './components/Navigation';
 import AppointmentPage from './pages/AppointmentPage';
 import ChangePassword from './pages/ChangePassword';
@@ -26,6 +27,7 @@ function App() {
       <Route path='/changePass' element={<ChangePassword />} />
       <Route path='/infoapp' element={<InformationAppointment />} />
       <Route path='/navi' element={<Navigation />} />
+      <Route path='/page1' element={<Page1 />} />
       <Route path='*' element={<NotFoundPage />} />
     </Routes>
   );

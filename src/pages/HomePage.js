@@ -7,10 +7,15 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react';
-import React from 'react';
+import React, { useState } from 'react';
 import { FaCalendarAlt, FaChild, FaSearch } from 'react-icons/fa';
 import Navigation from '../components/Navigation';
 const HomePage = () => {
+  const [nameSearch, setNameSearch] = useState('');
+  const [appSearch, setAppSearch] = useState([]);
+  const handleSearch = () => {
+    console.log(nameSearch);
+  };
   return (
     <HStack>
       <Navigation />
@@ -32,8 +37,12 @@ const HomePage = () => {
             </Text>
           </HStack>
 
-          <Input placeholder="Search..."></Input>
-          <Button>
+          <Input
+            placeholder="Search name..."
+            value={nameSearch}
+            onChange={e => setNameSearch(e.target.value)}
+          ></Input>
+          <Button onClick={() => handleSearch()}>
             <FaSearch />
           </Button>
         </HStack>
@@ -123,10 +132,47 @@ const HomePage = () => {
         </HStack>
         <Box w="100%" h="7%">
           <Text fontSize="2xl" fontWeight="600">
-            Today's Appointments
+            Search results
           </Text>
         </Box>
-        {/* <Appointment/> */}
+        <HStack
+          w="95%"
+          h="8%"
+          borderColor="#6AE0D9"
+          borderTopWidth="2px"
+          borderBottomWidth="2px"
+        >
+          <HStack w="25%" h="100%">
+            <Text fontSize="18px" fontWeight="600">
+              Name
+            </Text>
+          </HStack>
+          <HStack w="15%" h="100%">
+            <Text fontSize="18px" fontWeight="600">
+              Date
+            </Text>
+          </HStack>
+          <HStack w="10%" h="100%">
+            <Text fontSize="18px" fontWeight="600">
+              Time
+            </Text>
+          </HStack>
+          <HStack w="25%" h="100%">
+            <Text fontSize="18px" fontWeight="600">
+              Symptoms
+            </Text>
+          </HStack>
+          <HStack w="15%" h="100%">
+            <Text fontSize="18px" fontWeight="600">
+              Description
+            </Text>
+          </HStack>
+          <HStack w="10%" h="100%">
+            <Text fontSize="18px" fontWeight="600">
+              Status
+            </Text>
+          </HStack>
+        </HStack>
       </VStack>
     </HStack>
   );

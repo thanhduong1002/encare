@@ -17,9 +17,9 @@ import React from 'react';
 import Navigation from '../components/Navigation';
 import ConfirmAppoint from '../components/ConfirmAppoint';
 import HistoryAppoint from '../components/HistoryAppoint';
-import OverviewAppoint from '../components/OverviewAppoint';
 import { FaCalendarAlt, FaChild, FaSearch } from 'react-icons/fa';
 import CancelAppoint from '../components/CancelAppoint';
+import WaitingAppoint from '../components/WaitingAppoint';
 
 const AppointmentPage = () => {
   return (
@@ -136,14 +136,14 @@ const AppointmentPage = () => {
         <Box w="80vw">
           <Tabs variant="soft-rounded" colorScheme="blue">
             <TabList>
-              <Tab>Overview</Tab>
+              <Tab>Waiting</Tab>
               <Tab>History</Tab>
-              <Tab>Confirm</Tab>
+              <Tab>Confirmed</Tab>
               <Tab>Canceled</Tab>
             </TabList>
             <TabPanels>
               <TabPanel>
-                <OverviewAppoint />
+                <WaitingAppoint />
               </TabPanel>
               <TabPanel>
                 <HistoryAppoint />
