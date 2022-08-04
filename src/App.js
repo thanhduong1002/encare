@@ -11,7 +11,6 @@ import InformationAppointment from './pages/InformationAppointment';
 
 import LoginPage from './pages/LoginPage';
 import NotFoundPage from './pages/NotFoundPage';
-import TestLocalStorage from './pages/testlocalStorage';
 import Test from './pages/TestPage';
 
 function App() {
@@ -23,7 +22,6 @@ function App() {
       <Route path="/chat" element={<ChatPage />} />
       <Route path='/changeProfile' element={<ChangeProfile />} />
       <Route path='/test' element={<Test />} />
-      <Route path='/testlocal' element={<TestLocalStorage />} />
       <Route path='/changePass' element={<ChangePassword />} />
       <Route path='/infoapp' element={<InformationAppointment />} />
       <Route path='/navi' element={<Navigation />} />
