@@ -132,7 +132,7 @@ const InformationAppointment = () => {
   };
   const navigate = useNavigate();
   const handleBack = () => {
-    navigate('/home');
+    navigate('/test');
   };
   return (
     <VStack
@@ -189,14 +189,12 @@ const InformationAppointment = () => {
           <Text fontWeight={'600'} fontSize="md" color={'#2155CD'}>
             {localStorage.getItem('PhonePatient')}
           </Text>
-          <HStack w="100%" h="20%" justifyContent="space-around">
-            <Button bgColor="#395B64" color="#E7F6F2">
-              Info
+          {idStatus === '3' ? (<HStack w="100%" h="20%" justifyContent="center">
+            <Button bgColor="#395B64" color="#E7F6F2" onClick={()=>{navigate('/reexam')}}>
+              Re-Examination
             </Button>
-            <Button bgColor="#395B64" color="#E7F6F2">
-              Medical record
-            </Button>
-          </HStack>
+          </HStack>) : null}
+          
         </VStack>
         <Box
           w="60%"

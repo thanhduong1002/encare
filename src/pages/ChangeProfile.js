@@ -35,7 +35,7 @@ const ChangeProfile = () => {
   const navigate = useNavigate();
   let token = localStorage.getItem('token');
   const handleBack = () => {
-    navigate('/home');
+    navigate('/test');
   };
   const tranferReverseBirthday = birthday => {
     let arraybirthday = birthday.split('-');

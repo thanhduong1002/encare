@@ -42,26 +42,26 @@ const TestAppoint = () => {
             key={index}
           >
             <Image
-              src={
+            src={
                 element.userResponse.accountResponse.avatar !== null
                   ? element.userResponse.accountResponse.avatar
                   : 'https://media.istockphoto.com/vectors/health-icon-vector-of-male-person-profile-avatar-symbol-for-patient-vector-id1147248211'
-              }
+            }
               w={'15%'}
               h={'15vh'}
               borderRadius="8px"
-            />
+          />
 
             <VStack w={'45%'} h={'15vh'} borderRadius={'8px'}>
               <Text fontWeight={'600'} fontSize="xl" color={'#2155CD'}>
                 {element.userResponse.accountResponse.name}
-              </Text>
+            </Text>
               <Text fontSize={'sm'} color={'#2155CD'}>
                 {element.doctorResponse.categoryResponse.name}
-              </Text>
+            </Text>
               <Text fontSize={'sm'} color={'#2155CD'}>
                 {element.userResponse.accountResponse.phone}
-              </Text>
+            </Text>
               <HStack>
                 {element.statusResponse.statusId === 1 ? (
                   <FaClock size={20} />
@@ -70,22 +70,22 @@ const TestAppoint = () => {
                 )}
                 <Text fontSize={'sm'} color={'green.500'}>
                   {element.statusResponse.name}
-                </Text>
-              </HStack>
+            </Text>
+          </HStack>
             </VStack>
             <VStack w={'20%'} h={'15vh'} borderRadius={'8px'}>
               <FaCalendarAlt color={'#2155CD'} size={23} />
 
               <Text fontSize={'sm'} color={'#2155CD'}>
                 {element.day}
-              </Text>
+            </Text>
               <Text fontSize={'sm'} color={'#2155CD'} fontWeight="600">
                 {element.time < 12 ? element.time + " AM" : element.time + " PM"} 
-              </Text>
+            </Text>
               <NavLink to="/infoapp">More</NavLink>
-            </VStack>
-          </HStack>
-        );
+      </VStack>
+    </HStack>
+  );
       })}
     </VStack>
   );

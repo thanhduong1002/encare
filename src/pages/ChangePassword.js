@@ -31,7 +31,7 @@ const ChangePassword = () => {
   const [show3, setShow3] = React.useState(false);
   const handleClick3 = () => setShow3(!show3);
   const handleBack = () => {
-    navigate('/home');
+    navigate('/test');
   };
   let token = localStorage.getItem('token');
   let password = localStorage.getItem('password');

@@ -5,10 +5,16 @@ import {
   HStack,
   Input,
   Text,
+  useToast,
   VStack,
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
-import { FaCalendarAlt, FaChild, FaSearch } from 'react-icons/fa';
+import {
+  FaCalendarAlt,
+  FaChevronLeft,
+  FaChild,
+  FaSearch,
+} from 'react-icons/fa';
 import Navigation from '../components/Navigation';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -18,7 +24,7 @@ const HomePage = () => {
   const [appSearch, setAppSearch] = useState([]);
   const [description, setDescription] = useState('');
   let token = localStorage.getItem('token');
-
+  const toast = useToast();
   const handleSearch = () => {
     localStorage.setItem('NumberPage', 1);
     axios({
@@ -30,12 +36,16 @@ const HomePage = () => {
       },
     })
       .then(res => {
-        console.log(res.data.data);
         setAppSearch(res.data.data);
         setDescription(res.data.description);
       })
       .catch(error => {
         console.log(error);
+        toast({
+          title: 'No matching results',
+          status: 'error',
+          isClosable: true,
+        });
       });
   };
   const handleNextPage = () => {
@@ -50,9 +60,7 @@ const HomePage = () => {
       },
     })
       .then(res => {
-        console.log(res.data.data);
         setAppSearch(res.data.data);
-        setDescription(res.data.description);
       })
       .catch(error => {
         console.log(error);
@@ -438,21 +446,42 @@ const HomePage = () => {
               );
             })
           : null}
-        {description.slice(0, 2) -
-          parseInt(localStorage.getItem('NumberPage')) * 6 >=
-        0 ? (
-          <HStack w="20%" h="7vh" pos="fixed" bottom="10px" right="5vw">
-            <Button onClick={() => handleNextPage()} colorScheme="teal">
+
+        <HStack w="20%" h="7vh" pos="fixed" bottom="10px" right="5vw">
+          {parseInt(localStorage.getItem('NumberPage')) !== 1 ? (
+            <Button
+              colorScheme="teal"
+              leftIcon={<FaChevronLeft />}
+              onClick={() => {
+                localStorage.setItem(
+                  'NumberPage',
+                  parseInt(localStorage.getItem('NumberPage')) - 2
+                );
+                handleNextPage();
+              }}
+            >
+              Previous
+            </Button>
+          ) : null}
+
+          {description.slice(0, 2) -
+            parseInt(localStorage.getItem('NumberPage')) * 6 >=
+          0 ? (
+            <Button
+              onClick={() => handleNextPage()}
+              colorScheme="teal"
+              rightIcon={<FaCalendarAlt />}
+            >
               {description.slice(0, 2) -
                 parseInt(localStorage.getItem('NumberPage')) * 6 >=
               0
                 ? description.slice(0, 2) -
                   parseInt(localStorage.getItem('NumberPage')) * 6
                 : 0}{' '}
-              results left <FaCalendarAlt />
+              results left
             </Button>
-          </HStack>
-        ) : null}
+          ) : null}
+        </HStack>
       </VStack>
     </HStack>
   );

@@ -12,19 +12,29 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react';
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { FaCalendarAlt, FaChild, FaSearch, FaTimesCircle } from 'react-icons/fa';
 import Navigation from '../components/Navigation';
-import { FaCalendarAlt, FaChild, FaSearch } from 'react-icons/fa';
-import Page1 from '../components/CancelAppoints/Page1';
-import Page2 from '../components/CancelAppoints/Page2';
+import Page1 from '../components/SearchAppoints/Page1';
+import Page2 from '../components/SearchAppoints/Page2';
+import Page3 from '../components/SearchAppoints/Page3';
+import Page4 from '../components/SearchAppoints/Page4';
+import Page5 from '../components/SearchAppoints/Page5';
+
 const TestPage = () => {
-  
+  const [nameSearch, setNameSearch] = useState('');
+  const [show, setShow] = useState(false);
+  const [hide, setHide] = useState(false);
+  const handleSearch = () => {
+    console.log(nameSearch);
+    setShow(true);
+    hide === true ? setHide(false) : setHide(true);
+    console.log(show, hide);
+  };
+
   return (
     <HStack>
       <Navigation />
-
       <VStack w="80vw" h="100vh">
         <HStack w="100%" h="7%" flexDirection="row-reverse">
           <Avatar
@@ -43,9 +53,22 @@ const TestPage = () => {
             </Text>
           </HStack>
 
-          <Input placeholder="Search..."></Input>
-          <Button>
-            <FaSearch />
+          {/* <Input
+            placeholder="Search name..."
+            value={nameSearch}
+            onChange={e => setNameSearch(e.target.value)}
+          ></Input> */}
+          {hide === false ? (<Input
+            value={nameSearch}
+            onChange={e => setNameSearch(e.target.value)}
+            isDisabled={true}
+          ></Input>) : (<Input
+            placeholder="Search name..."
+            value={nameSearch}
+            onChange={e => setNameSearch(e.target.value)}
+          ></Input>)}  
+          <Button onClick={() => handleSearch()}>
+            {hide === true ? (<FaSearch />) : (<FaTimesCircle/>)}            
           </Button>
         </HStack>
         <HStack
@@ -132,6 +155,11 @@ const TestPage = () => {
             </Box>
           </HStack>{' '}
         </HStack>
+        <Box w="100%" h="7%">
+          <Text fontSize="2xl" fontWeight="600">
+            Search results
+          </Text>
+        </Box>
         <HStack
           w="95%"
           h="8%"
@@ -170,28 +198,38 @@ const TestPage = () => {
             </Text>
           </HStack>
         </HStack>
-        <Box w='100%' h='80vh'>
-        <Tabs  align='center'>
-          <TabPanels>
-            <TabPanel>
-              <Page1 />
-            </TabPanel>
-            <TabPanel>
-              <Page2 />
-            </TabPanel>
-            <TabPanel>
-              <p>three!</p>
-            </TabPanel>
-          </TabPanels>
-          <Box w='20%' h='7vh' pos='fixed' bottom='10px' right='8vw'>
-          <TabList>
-            <Tab>1</Tab>
-            <Tab>2</Tab>
-            <Tab>3</Tab>
-          </TabList>
+        {show === true && hide === false ? (
+          <Box w="78vw">
+            <Tabs align="center">
+              <TabPanels>
+                <TabPanel>
+                  <Page1 data={nameSearch} />
+                </TabPanel>
+                <TabPanel>
+                  <Page2 data={nameSearch} />
+                </TabPanel>
+                <TabPanel>
+                  <Page3 data={nameSearch} />
+                </TabPanel>
+                <TabPanel>
+                  <Page4 data={nameSearch} />
+                </TabPanel>
+                <TabPanel>
+                  <Page5 data={nameSearch} />
+                </TabPanel>
+              </TabPanels>
+              <Box w="20%" h="7vh" pos="fixed" bottom="10px" right="8vw">
+                <TabList>
+                  <Tab>1</Tab>
+                  <Tab>2</Tab>
+                  <Tab>3</Tab>
+                  <Tab>4</Tab>
+                  <Tab>5</Tab>
+                </TabList>
+              </Box>
+            </Tabs>
           </Box>
-        </Tabs>
-        </Box>
+        ) : null}
       </VStack>
     </HStack>
   );

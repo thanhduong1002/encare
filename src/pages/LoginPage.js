@@ -114,7 +114,7 @@ const LoginPage = () => {
           .catch(error => {
             console.log(error);
           });
-    navigate('/home');
+    navigate('/test');
   };
   const handleLogin = () => {
     postLogin({
@@ -147,7 +147,7 @@ const LoginPage = () => {
     return fetch(url, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json', 
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify(params),
     }).then(response => response.json());
