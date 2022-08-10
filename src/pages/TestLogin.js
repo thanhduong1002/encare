@@ -32,20 +32,19 @@ import {
       navigate('/test');
     };
     const handleLogin = () => {
-        var axios = require('axios');
-        var data = JSON.stringify({
-          "phone": "0336364695",
-          "password": "0336364694"
-        });
+        
         
         var config = {
           method: 'post',
           url: 'https://enclave-encare.herokuapp.com/api/user/login',
-          mode: 'no-cors',
+          mode: 'cores',
           headers: { 
             'Content-Type': 'application/json'
           },
-          data : data
+          data : JSON.stringify({
+            "phone": "0336364695",
+            "password": "0336364694"
+          })
         };
         
         axios(config)

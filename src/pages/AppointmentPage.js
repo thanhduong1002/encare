@@ -26,7 +26,7 @@ const AppointmentPage = () => {
     <HStack>
       <Navigation />
       <VStack w="80vw" h="100vh">
-        <HStack w="100%" h="7%" flexDirection="row-reverse">
+        <HStack w="96%" h="7%" flexDirection="row-reverse">
           <Avatar
             name={localStorage.getItem('Name')}
             src={
@@ -37,16 +37,11 @@ const AppointmentPage = () => {
             margin="5px"
             padding="1px"
           />
-          <HStack w="15%" h="100%">
+          <HStack w="10%" h="100%">
             <Text fontSize="16px" fontWeight="600">
               {localStorage.getItem('Name')}
             </Text>
           </HStack>
-
-          <Input placeholder="Search..."></Input>
-          <Button>
-            <FaSearch />
-          </Button>
         </HStack>
         <HStack
           w="95%"
@@ -86,7 +81,7 @@ const AppointmentPage = () => {
             </HStack>
             <Box>
               <Text fontSize="20px" fontWeight="400">
-                Waiting Appointments
+                Waiting
               </Text>
               <Text fontSize="20px" fontWeight="600">
                 {localStorage.getItem('waitingPatients')}
@@ -105,7 +100,7 @@ const AppointmentPage = () => {
             </HStack>
             <Box>
               <Text fontSize="20px" fontWeight="400">
-                Confirmed Appointments
+                Confirmed
               </Text>
               <Text fontSize="20px" fontWeight="600">
                 {localStorage.getItem('confirmedPatients')}
@@ -124,7 +119,7 @@ const AppointmentPage = () => {
             </HStack>
             <Box>
               <Text fontSize="20px" fontWeight="400">
-                Done Appointments
+                Done
               </Text>
               <Text fontSize="20px" fontWeight="600">
                 {localStorage.getItem('donePatients')}

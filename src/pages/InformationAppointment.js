@@ -132,26 +132,26 @@ const InformationAppointment = () => {
   };
   const navigate = useNavigate();
   const handleBack = () => {
-    navigate('/test');
+    navigate('/home');
   };
   return (
     <VStack
       w="100vw"
       h="100vh"
-      bgGradient="linear(to-r, #E7F6F2, #A5C9CA)"
+      bgGradient="linear(to-b, #EEFBFF, #66BFBF)"
       justify="center"
     >
       <Box w="95%" h="10vh">
         <Button
-          w="10vw"
-          h="100%"
-          bgColor="blackAlpha.200"
+          w="7vw"
+          h="70%"
+          bgColor="#07AEB8"
           justify="center"
           onClick={handleBack}
           letterSpacing="2px"
         >
-          <FaAngleLeft size="30" />
-          <Text fontSize="23" fontWeight="bold">
+          <FaAngleLeft size="30" color='white'/>
+          <Text fontSize="23" fontWeight="bold" color='white'>
             {' '}
             Back
           </Text>
@@ -178,19 +178,19 @@ const InformationAppointment = () => {
             h="32vh"
             borderRadius="8px"
           />
-          <Text fontWeight={'600'} fontSize="xl" color={'#2155CD'}>
+          <Text fontWeight={'600'} fontSize="xl" color={'#07AEB8'}>
             {localStorage.getItem('NamePatient')}
           </Text>
-          <Text fontWeight={'600'} fontSize="md" color={'#2155CD'}>
+          <Text fontWeight={'600'} fontSize="md" color={'#07AEB8'}>
             {localStorage.getItem('BirthPatient') !== 'null'
               ? localStorage.getItem('BirthPatient')?.slice(0, 10)
               : null}
           </Text>
-          <Text fontWeight={'600'} fontSize="md" color={'#2155CD'}>
+          <Text fontWeight={'600'} fontSize="md" color={'#07AEB8'}>
             {localStorage.getItem('PhonePatient')}
           </Text>
           {idStatus === '3' ? (<HStack w="100%" h="20%" justifyContent="center">
-            <Button bgColor="#395B64" color="#E7F6F2" onClick={()=>{navigate('/reexam')}}>
+            <Button bgColor="#07AEB8" color="white" onClick={()=>{navigate('/reexam')}}>
               Re-Examination
             </Button>
           </HStack>) : null}
@@ -199,7 +199,7 @@ const InformationAppointment = () => {
         <Box
           w="60%"
           h="90%"
-          bgColor="#0063EC"
+          bgColor="#05b3be"
           borderRadius="8px"
           letterSpacing="2px"
           boxShadow="dark-lg"
@@ -377,7 +377,7 @@ const InformationAppointment = () => {
           ) : idStatus === '3' ? (
             <HStack w="100%" h="20%" marginTop="5%" justify="center">
               <Button
-                bgColor="blue.300"
+                colorScheme='blue'
                 w="20%"
                 fontSize="16"
                 fontWeight="bold"

@@ -18,6 +18,7 @@ import {
 import axios from 'axios';
 import React, { useState } from 'react';
 import {
+  FaAngleLeft,
   FaArrowDown,
   FaAtom,
   FaBaby,
@@ -130,7 +131,7 @@ const ChangeProfile = () => {
   );
   const [deptDoc, setDeptDoc] = useState(() => localStorage.getItem('Dept'));
   return (
-    <VStack w="100vw" h="100vh" bgColor="#EAF6F6" justify="center">
+    <VStack w="100vw" h="100vh" bgGradient="linear(to-b, #EEFBFF, #66BFBF)" justify="center">
       <Box
         w="80vw"
         h="10vh"
@@ -138,18 +139,21 @@ const ChangeProfile = () => {
         flexDirection="row"
         justifyContent="space-between"
       >
-        <Button w="7vw" h="10vh" bgColor="#6E85B7" onClick={handleBack}>
-          <FaLongArrowAltLeft size="30" />
+        <Button w="7vw" h="7vh" bgColor='#07AEB8' onClick={handleBack} leftIcon={<FaAngleLeft color='white' size='23'/>}>
+          <Text fontSize="23" fontWeight="bold" color='white'>
+            {' '}
+            Back
+          </Text>
         </Button>
-        <Button w="7vw" h="10vh" bgColor="#6E85B7" onClick={handleSave}>
-          <FaSave size="30" />
+        <Button w="7vw" h="7vh" bgColor='#07AEB8' onClick={handleSave}>
+          <FaSave size="30" color='white'/>
         </Button>
       </Box>
       <HStack
         w="80vw"
         h="80vh"
         borderRadius="8px"
-        bgColor="#B2C8DF"
+        bgColor="white"
         boxShadow="dark-lg"
       >
         <VStack w="40%" h="100%" justify="center">
@@ -223,7 +227,7 @@ const ChangeProfile = () => {
               Phone number:
             </Text>
             <InputGroup>
-              <InputLeftAddon children="+84" bgColor="#B2C8DF" />
+              <InputLeftAddon children="+84" bgColor="#07AEB8" fontWeight='600'/>
               <Input
                 id="phone"
                 placeholder="Enter your phone"
@@ -273,8 +277,9 @@ const ChangeProfile = () => {
             <Menu>
               <MenuButton
                 as={Button}
-                bgColor="#B2C8DF"
+                bgColor="#07AEB8"
                 color="black"
+                fontWeight='600'
                 rightIcon={<FaArrowDown />}
               >
                 {deptDoc === '24'

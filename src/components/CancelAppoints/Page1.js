@@ -54,7 +54,7 @@ const Page1 = () => {
                     {element.day?.slice(0, 10)}
                   </Text>
                 </HStack>
-                <HStack w="10%" h="100%">
+                <HStack w="10%" h="100%" justify='left'>
                   <Text fontSize="18px" fontWeight="700">
                     {element.time}:00
                   </Text>

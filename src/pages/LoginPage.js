@@ -38,83 +38,96 @@ const LoginPage = () => {
     })
       .then(res => {
         console.log(res.data.data);
-        localStorage.setItem('Id',res.data.data.doctorId);
-        localStorage.setItem('Name',res.data.data.accountResponse?.name);
-        localStorage.setItem('Birthday',res.data.data.accountResponse?.birthday?.slice(0,10));
-        localStorage.setItem('Phone',res.data.data.accountResponse?.phone);
-        localStorage.setItem('Description',res.data.data.accountResponse?.description);
-        localStorage.setItem('Hospital',res.data.data.hospitalResponse?.name);
-        localStorage.setItem('Dept',res.data.data.categoryResponse?.categoryId);
-        localStorage.setItem('Avatar',res.data.data.accountResponse?.avatar);
+        localStorage.setItem('Id', res.data.data.doctorId);
+        localStorage.setItem('Name', res.data.data.accountResponse?.name);
+        localStorage.setItem(
+          'Birthday',
+          res.data.data.accountResponse?.birthday?.slice(0, 10)
+        );
+        localStorage.setItem('Phone', res.data.data.accountResponse?.phone);
+        localStorage.setItem(
+          'Description',
+          res.data.data.accountResponse?.description
+        );
+        localStorage.setItem('Hospital', res.data.data.hospitalResponse?.name);
+        localStorage.setItem(
+          'Dept',
+          res.data.data.categoryResponse?.categoryId
+        );
+        localStorage.setItem('Avatar', res.data.data.accountResponse?.avatar);
       })
       .catch(error => {
         console.log(error);
       });
-      //Total Patients
-      axios({
-        baseURL: 'https://encare-doctor.herokuapp.com/api/doctor/appointments/size',
-        method: 'get',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
+    //Total Patients
+    axios({
+      baseURL:
+        'https://encare-doctor.herokuapp.com/api/doctor/appointments/size',
+      method: 'get',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then(res => {
+        console.log(res.data.data);
+        localStorage.setItem('total', res.data.data);
       })
-        .then(res => {
-          console.log(res.data.data);
-          localStorage.setItem('total',res.data.data);
-        })
-        .catch(error => {
-          console.log(error);
-        });
-        //Number of patients waiting 
-        axios({
-          baseURL: 'https://encare-doctor.herokuapp.com/api/doctor/appointments/status=1/size',
-          method: 'get',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-        })
-          .then(res => {
-            console.log(res.data.data);
-            localStorage.setItem('waitingPatients',res.data.data);
-          })
-          .catch(error => {
-            console.log(error);
-          });
-        //Number of patients confirmed  
-        axios({
-          baseURL: 'https://encare-doctor.herokuapp.com/api/doctor/appointments/status=2/size',
-          method: 'get',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-        })
-          .then(res => {
-            console.log(res.data.data);
-            localStorage.setItem('confirmedPatients',res.data.data);
-          })
-          .catch(error => {
-            console.log(error);
-          }); 
-        //Number of patients done 
-        axios({
-          baseURL: 'https://encare-doctor.herokuapp.com/api/doctor/appointments/status=3/size',
-          method: 'get',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-        })
-          .then(res => {
-            console.log(res.data.data);
-            localStorage.setItem('donePatients',res.data.data);
-          })
-          .catch(error => {
-            console.log(error);
-          });
-    navigate('/test');
+      .catch(error => {
+        console.log(error);
+      });
+    //Number of patients waiting
+    axios({
+      baseURL:
+        'https://encare-doctor.herokuapp.com/api/doctor/appointments/status=1/size',
+      method: 'get',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then(res => {
+        console.log(res.data.data);
+        localStorage.setItem('waitingPatients', res.data.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    //Number of patients confirmed
+    axios({
+      baseURL:
+        'https://encare-doctor.herokuapp.com/api/doctor/appointments/status=2/size',
+      method: 'get',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then(res => {
+        console.log(res.data.data);
+        localStorage.setItem('confirmedPatients', res.data.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    //Number of patients done
+    axios({
+      baseURL:
+        'https://encare-doctor.herokuapp.com/api/doctor/appointments/status=3/size',
+      method: 'get',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then(res => {
+        console.log(res.data.data);
+        localStorage.setItem('donePatients', res.data.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    navigate('/home');
   };
   const handleLogin = () => {
     postLogin({
@@ -147,7 +160,7 @@ const LoginPage = () => {
     return fetch(url, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(params),
     }).then(response => response.json());

@@ -90,20 +90,20 @@ const ReExaminationPage = () => {
     <VStack
       w="100vw"
       h="100vh"
-      bgGradient="linear(to-r, #E7F6F2, #FEFBF6)"
+      bgGradient="linear(to-b, #EEFBFF, #66BFBF)"
       justify="center"
     >
       <Box w="95%" h="10vh">
         <Button
-          w="10vw"
-          h="100%"
-          bgColor="blackAlpha.200"
+          w="7vw"
+          h="70%"
+          bgColor="#07AEB8"
           justify="center"
           onClick={()=>{navigate('/infoapp')}}
           letterSpacing="2px"
         >
-          <FaAngleLeft size="30" />
-          <Text fontSize="23" fontWeight="bold">
+          <FaAngleLeft size="30" color='white'/>
+          <Text fontSize="23" fontWeight="bold" color='white'>
             {' '}
             Back
           </Text>
@@ -130,22 +130,22 @@ const ReExaminationPage = () => {
             h="32vh"
             borderRadius="8px"
           />
-          <Text fontWeight={'600'} fontSize="xl" color={'#2155CD'}>
+          <Text fontWeight={'600'} fontSize="xl" color={'#07AEB8'}>
             {localStorage.getItem('NamePatient')}
           </Text>
-          <Text fontWeight={'600'} fontSize="md" color={'#2155CD'}>
+          <Text fontWeight={'600'} fontSize="md" color={'#07AEB8'}>
             {localStorage.getItem('BirthPatient') !== 'null'
               ? localStorage.getItem('BirthPatient')?.slice(0, 10)
               : null}
           </Text>
-          <Text fontWeight={'600'} fontSize="md" color={'#2155CD'}>
+          <Text fontWeight={'600'} fontSize="md" color={'#07AEB8'}>
             {localStorage.getItem('PhonePatient')}
           </Text>
         </VStack>
         <Box
           w="60%"
           h="90%"
-          bgColor="#0063EC"
+          bgColor="#05b3be"
           borderRadius="8px"
           letterSpacing="2px"
           boxShadow="dark-lg"
@@ -186,7 +186,7 @@ const ReExaminationPage = () => {
             <MenuButton
               as={Button}
               rightIcon={<FaChevronCircleDown />}
-              colorScheme={'blue'}
+              bgColor='#18978F'
             >
               {time === 7
                 ? '7:00'
@@ -208,7 +208,7 @@ const ReExaminationPage = () => {
                 ? '16:00'
                 : 'Time'}
             </MenuButton>
-            <MenuList bgColor="#3B9AE1">
+            <MenuList bgColor="#18978F">
             <MenuItem
                 onClick={() => {
                   setTime(7);
@@ -276,7 +276,7 @@ const ReExaminationPage = () => {
           </Menu>
           <HStack w="100%" h="10vh" justify="center">
             <Button
-              bgColor="blue.300"
+              bgColor='#18978F'
                 fontSize="16"
                 fontWeight="bold"
               onClick={() => {

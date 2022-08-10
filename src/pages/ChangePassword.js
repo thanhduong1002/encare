@@ -88,35 +88,31 @@ const ChangePassword = () => {
       onSubmit,
     });
   return (
-    <VStack w="100vw" h="100vh" bgColor="#EAEAFF">
-      <HStack
-        w="10vw"
-        h="7vh"
-        bgColor="#2B55BC"
-        borderBottomRightRadius="8px"
-        borderBottomLeftRadius="8px"
-        justify="center"
-        marginBottom="3vh"
-      >
-        <FaExchangeAlt size="35" color="white" />
-        <FaKey size="35" color="white" />
-      </HStack>
-      <VStack w="70%" h="10vh" alignItems="start">
+    <VStack
+      w="100vw"
+      h="100vh"
+      bgGradient="linear(to-b, #EEFBFF, #66BFBF)"
+      justify="center"
+    >
+      <VStack w="80%" h="10vh" alignItems="start">
         <Button
-          h="100%"
-          leftIcon={<FaAngleLeft />}
+          h="70%"
+          w="7vw"
+          leftIcon={<FaAngleLeft color="white" size="23" />}
           color="white"
-          colorScheme="blue"
+          bgColor="#07AEB8"
           onClick={handleBack}
           size="lg"
         >
-          Back
+          <Text fontSize="23" fontWeight="bold" color="white">
+            Back
+          </Text>
         </Button>
       </VStack>
       <HStack
-        w="70vw"
-        h="70vh"
-        bgImg='url("https://scontent.fdad1-1.fna.fbcdn.net/v/t1.15752-9/289429842_1245697359568477_5427190611156351214_n.png?_nc_cat=103&ccb=1-7&_nc_sid=ae9488&_nc_ohc=aNmKPh-4GCMAX-rL8Bz&_nc_ht=scontent.fdad1-1.fna&oh=03_AVK7b7w__JxScifnKpOMzEo3nCdypoHnFkDB0pf-4-vRkw&oe=6304CD61")'
+        w="80vw"
+        h="80vh"
+        bgColor="white"
         opacity="1"
         borderRadius="8px"
         boxShadow="dark-lg"
@@ -128,6 +124,7 @@ const ChangePassword = () => {
             h="50vh"
             borderRadius="8px"
             bgColor="white"
+            boxShadow="dark-lg"
             justify="center"
             padding="2vw"
           >
@@ -209,7 +206,7 @@ const ChangePassword = () => {
             <Button
               paddingX="20px"
               paddingY="10px"
-              bgColor="#2B55BC"
+              bgColor="#07AEB8"
               w="100%"
               onClick={handleChangePass}
               type="submit"
@@ -219,11 +216,11 @@ const ChangePassword = () => {
           </VStack>
         </form>
         <VStack
-          w="30vw"
+          w="100%"
           h="50vh"
           borderRadius="8px"
-          bgImage="url('https://i.pinimg.com/564x/4f/01/3e/4f013e46bf61a8d916234543f4222d14.jpg')"
-          bgPosition="center"
+          bgImage="url('https://scontent.fdad3-6.fna.fbcdn.net/v/t1.15752-9/297388191_1273635776373804_4148720777524601990_n.png?_nc_cat=110&ccb=1-7&_nc_sid=ae9488&_nc_ohc=Y_Mg39ZnlxIAX8Gw5mq&_nc_ht=scontent.fdad3-6.fna&oh=03_AVJ1tGvBqs61iqdHQw6RyifhRGZCc0lvQElVwe2OgOrCqQ&oe=631958D9')"
+          bgPos="top"
         ></VStack>
       </HStack>
     </VStack>

@@ -18,11 +18,11 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<LoginPage />} />
-      <Route path="/home" element={<HomePage />} />
+      <Route path="/test" element={<HomePage />} />
       <Route path="/appointment" element={<AppointmentPage />} />
       <Route path="/chat" element={<ChatPage />} />
       <Route path='/changeProfile' element={<ChangeProfile />} />
-      <Route path='/test' element={<Test />} />
+      <Route path='/home' element={<Test />} />
       <Route path='/testlogin' element={<TestLogin />} />
       <Route path='/changePass' element={<ChangePassword />} />
       <Route path='/infoapp' element={<InformationAppointment />} />
